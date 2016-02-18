@@ -1,0 +1,200 @@
+<!DOCTYPE HTML PUBLIC "-//W3C//DTD HTML 4.01 Transitional//EN" "http://www.w3.org/TR/html4/loose.dtd">
+<meta http-equiv="Content-Type" content="text/html; charset=utf-8"/>
+<html>
+<head>
+<title>Applied Poetics ver 1b.<?php echo date("y.m.d:Hi", filemtime('index.php')); ?></title>
+<link rel="stylesheet" type="text/css" href= "https://maxcdn.bootstrapcdn.com/bootstrap/3.3.6/css/bootstrap.min.css">
+<link rel="stylesheet" type="text/css" href="css/style.css">
+<script src="https://use.typekit.net/vwg0vgf.js"></script>
+<script>try{Typekit.load({ async: true });}catch(e){}</script>
+<script src="https://ajax.googleapis.com/ajax/libs/jquery/2.2.0/jquery.min.js"></script>
+<script src = "https://maxcdn.bootstrapcdn.com/bootstrap/3.3.6/js/bootstrap.min.js"></script>
+<meta property="og:image" content="http://www.appliedpoetics.org/img/ap-og-img.png"></meta>
+<meta property="og:site_name" content="Applied Poetics"></meta>
+<meta property="og:url" content="http://www.appliedpoetics.org"></meta>
+<meta property="og:description" content="The constrained writing platform where something's always bubbling up!"></meta>
+<meta property="og:title" content = "Applied Poetics"></meta>
+<!--<script src = "javascript/line-limit.js"></script>-->
+<script src = "javascript/line-numbers.js"></script>
+<script src = "javascript/form-functions.js"></script>
+<script src = "javascript/text-stats.js"></script>
+<script src = "javascript/function-json.js"></script>
+<script src = "javascript/function-ui.js"></script>
+<link rel="icon" href="img/favicon.ico" type="image/x-icon" />
+<script>
+  (function(i,s,o,g,r,a,m){i['GoogleAnalyticsObject']=r;i[r]=i[r]||function(){
+  (i[r].q=i[r].q||[]).push(arguments)},i[r].l=1*new Date();a=s.createElement(o),
+  m=s.getElementsByTagName(o)[0];a.async=1;a.src=g;m.parentNode.insertBefore(a,m)
+  })(window,document,'script','//www.google-analytics.com/analytics.js','ga');
+
+  ga('create', 'UA-72820302-1', 'auto');
+  ga('send', 'pageview');
+</script>
+<?php header('Content-Type: text/html; charset=utf-8'); ?>
+<?php $firstTimeUser = !isset($_COOKIE["FirstTime"]); setcookie("FirstTime",1,2000000000); ?>
+</head>
+<body>
+<?php 
+	if($_SERVER['HTTP_HOST'] == "dev.appliedpoetics.org") { header("Location:http://www.appliedpoetics.org/debug/dev/index.php"); exit; }
+?>
+<?php  if( $firstTimeUser ) {
+	echo "<div id = 'startup-scrim' style = 'display: block;' onclick = 'javascript: firstTime();'><img src = 'img/ap-first-time-overlay.png' style = 'position: absolute; width: 100%;' id = 'firstTimeImg'><img src = 'img/ap-first-time-overlay-step1.png' style = 'display: none; position: absolute; width: 60%; right:0; bottom: 0;' id = 'step-one'><img src = 'img/ap-first-time-overlay-step2.png' style = 'display: none; position: absolute; width: 60%; right:0; bottom: 0;' id = 'step-two'><img src = 'img/ap-first-time-overlay-step3.png' style = 'display: none; position: absolute; width: 60%; right:0; bottom: 0;' id = 'step-three'><img src = 'img/ap-first-time-overlay-step4.png' style = 'display: none; position: absolute; width: 60%; right:0; bottom: 0;' id = 'step-four'></div>";
+}
+?>
+<div id = "menu">
+		<div id = "masthead">
+			<div id = "logo" onclick = "javascript: tosPopover();"><img src = "img/ap-type-flask-ico-sm.png"></div>
+			<div id = "option-container">
+				<div class = "dropdown" tabindex = "0" id = "oulipo" onclick = 'javascript: expandMenu("oulipo");'>
+					<button class = "drop-btn">Oulipean</button>
+					<div class = "dropdown-content" id = "oulipo-menu">
+						<a href = "#" data-toggle="popover" data-html="true" title = "Tautogram" data-content = "<form onsubmit = 'return runTool(this)' action = '#'><select name = 'lttr' id = 'lttr'><option value = 'a'>a</option><option value = 'b'>b</option><option value = 'c'>c</option><option value = 'd'>d</option><option value = 'e'>e</option><option value = 'f'>f</option><option value = 'g'>g</option><option value = 'h'>h</option><option value = 'i'>i</option><option value ='j'>j</option><option value = 'k'>k</option><option value = 'l'>l</option><option value = 'm'>m</option><option value = 'n'>n</option><option value = 'o'>o</option><option value = 'p'>p</option><option value = 'q'>q</option><option value = 'r'>r</option><option value = 's'>s</option><option value = 't'>t</option><option value = 'u'>u</option><option value= 'v'>v</option><option value = 'w'>w</option><option value = 'x'>x</option><option value = 'y'>y</option><option value='z'>z</option></select><input type = 'hidden' name = 'cmd' value = 'tautogram' id = 'cmd'><input type ='Submit' value = 'Run'><div class = 'tool-explain'>The tautogram is a constraint which sorts out all words beginning with a selected letter.</div></form>">Tautogram</a>
+						<a href = "#" data-toggle="popover" data-html="true" title = "Lipogram" data-content = "<form onsubmit = 'return runTool(this)' action = '#'><select name = 'lttr' id = 'lttr'><option value = 'a'>a</option><option value = 'b'>b</option><option value = 'c'>c</option><option value = 'd'>d</option><option value = 'e'>e</option><option value = 'f'>f</option><option value = 'g'>g</option><option value = 'h'>h</option><option value = 'i'>i</option><option value ='j'>j</option><option value = 'k'>k</option><option value = 'l'>l</option><option value = 'm'>m</option><option value = 'n'>n</option><option value = 'o'>o</option><option value = 'p'>p</option><option value = 'q'>q</option><option value = 'r'>r</option><option value = 's'>s</option><option value = 't'>t</option><option value = 'u'>u</option><option value= 'v'>v</option><option value = 'w'>w</option><option value = 'x'>x</option><option value = 'y'>y</option><option value='z'>z</option></select><input type = 'hidden' name = 'cmd' value = 'lipogram' id = 'cmd'><input type ='Submit' value = 'Run'><div class = 'tool-explain'>Somewhat the opposite of a tautogram, the lipogram is a constraint which erases all words from a text that contain a selected letter.</div></form>">Lipogram</a>
+						<a href = "#" data-toggle="popover" data-html="true" title = "Homoconsonantism" data-content = "<form onsubmit = 'return runTool(this)' action = '#'><input type = 'hidden' name = 'cmd' value = 'homoconsonant' id = 'cmd'><input type ='Submit' value = 'Run'><div class = 'tool-explain'>Ever wondered what a text would look like without vowels? Here's your chance.</div></form>">Homoconsonantism</a>
+						<a href = "#" data-toggle="popover" data-html="true" title = "Fibonacci Seq." data-content = "<form onsubmit = 'return runTool(this)' action = '#'><input type = 'hidden' name = 'cmd' value = 'fibonacci' id = 'cmd'><input type ='Submit' value = 'Run'><div class = 'tool-explain'>This generator reads through a text picking out words of a text correlating to the procession of the Fibonacci Sequence. For example, the beginning of the sequence returns the first (1), first, (1), second (2), then fifth (5) words and continues through the text following the Fibonacci pattern.</div></form>">Fibonnaci Seq.</a>
+						<a href = "#" data-toggle="popover" data-html="true" title = "Prisoner's Constraint" data-content = "<form onsubmit = 'return runTool(this)' action = '#'><input type = 'hidden' name = 'cmd' value = 'prisoners' id = 'cmd'><input type ='Submit' value = 'Run'><div class = 'tool-explain'>Imagine you are a prisoner who is attempting to write letters to the outside conserving both ink and paper. To do so, you would write only the letters which take the smallest amount of space—those without ascenders or descenders (such as j, h, t, et al.). This generator removes all words which contain the offending letters.</div></form>">Prisoner's Constraint</a>
+						<a href = "#" id = 'tutorialLink' data-toggle="popover" data-html="true" title = "Belle Absente" data-content = "<form onsubmit = 'return runTool(this)' action = '#'><input type = 'text' id = 'lttr'><input type = 'hidden' name = 'cmd' value = 'belleabsente' id = 'cmd'><input type ='Submit' value = 'Run'><div class = 'tool-explain'>The Belle Absente, or 'Absent Beloved' is a constraint in which words featuring letters in a selected name or phrase are removed from the text. Terms and letters should not be comma separated.</div></form>">Belle Absente</a>
+						<a href = "#" data-toggle="popover" data-html="true" title = "Beau Presente" data-content = "<form onsubmit = 'return runTool(this)' action = '#'><input type = 'text' id = 'lttr'><input type = 'hidden' name = 'cmd' value = 'beaupresente' id = 'cmd'><input type ='Submit' value = 'Run'><div class = 'tool-explain'>O, happy day—the beloved has returned! This constraint is one in which words can only be made up of letters in a given name or phrase. Terms and letters should not be comma separated.</div></form>">Beau Presente</a>
+						<a href = "#" data-toggle="popover" data-html="true" title = "Univocalism" data-content = "<form onsubmit = 'return runTool(this)' action = '#'><select name = 'lttr' id = 'lttr'><option value = 'a'>a</option><option value = 'e'>e</option><option value = 'i'>i</option><option value = 'o'>o</option><option value = 'u'>u</option></select><input type = 'hidden' name = 'cmd' value = 'univocalism' id = 'cmd'><input type ='Submit' value = 'Run'><div class = 'tool-explain'>Returns only words containing a selected vowel. If selecting 'I', words such as 'big' or 'bin' would appear; selecting 'O' would mean words such as 'bone' or 'boat' would not be allowed, but 'bog' would.</div></form>">Univocalism</a>
+					</div>
+				</div>
+				<div class = "dropdown" tabindex = "0" onclick = 'javascript: expandMenu("grammar");'>
+					<button class = "drop-btn">Grammar/Syntax</button>
+					<div class = "dropdown-content" id = "grammar-menu">
+						<a href = "#" data-toggle="popover" data-html="true" title = "Punctuator" data-content = "<form onsubmit = 'return runTool(this)' action = '#'><input type = 'hidden' name = 'cmd' value = 'punctuator' id = 'cmd'><input type ='Submit' value = 'Run'><div class = 'tool-explain'>Removes all words from a text, leaving only the punctuation behind, preserving the text's original spacing.</div></form>">Punctuator</a>
+						<a href = "#" data-toggle="popover" data-html="true" title = "Isolate Sentence" data-content = "<form onsubmit = 'return runTool(this)' action = '#'><select name = 'punct' id = 'lttr'><option value = '!'>!</option><option value = '?'>?</option><option value = '.'>.</option></select><input type = 'hidden' name = 'cmd' value = 'isolate' id = 'cmd'><input type ='Submit' value = 'Run'><div class = 'tool-explain'>Returns only sentences that end with a punctuation mark of your choosing.</div></form>">Isolate Sentences</a>
+						<a href = "#" data-toggle="popover" data-html="true" title = "Quotes" data-content = "<form onsubmit = 'return runTool(this)' action = '#'><input type = 'hidden' name = 'cmd' value = 'quotes' id = 'cmd'><input type ='Submit' value = 'Run'><div class = 'tool-explain'>Returns all quoted material from the source text.</div></form>">Quotations</a>
+						<a href = "#" data-toggle="popover" data-html="true" title = "Parts of Speech" data-content = "<form onsubmit = 'return runTool(this)' action = '#'><select name = 'lttr' id = 'lttr'><option value = 'JJ'>Adjectives</option><option value = 'RB'>Adverbs</option><option value = 'FW'>Foreign Words</option><option value = 'NN'>Nouns</option><option value = 'VB'>Verbs</option></select><input type = 'hidden' name = 'cmd' value = 'partsofspeech' id = 'cmd'><input type ='Submit' value = 'Run'><div class = 'tool-explain'>All words classified as a given part of speech are filtered and returned. This is an implementation of the Penn Treebank from the Python NLTK toolkit. There may be a short lag time between submission of the request and results.</div></form>">Parts of Speech</a>
+						<a href = "#" data-toggle="popover" data-html="true" title = "Concordance" data-content = "<form onsubmit = 'return runTool(this)' action = '#'><label># words before/after:</label><input type = 'text' id = 'nwords' onkeypress='return event.charCode >= 48 && event.charCode <= 57 || event.charCode == 8 || event.charCode == 46'><br/><br/><label>Word(s) to search:</label><input type = 'text' id = 'word'><input type = 'hidden' name = 'cmd' value = 'concordance' id = 'cmd'><input type ='Submit' value = 'Run'><div class = 'tool-explain'>Though not a true substitute for a concordance, this function will search for a word in a text and pull the corresponding number of words specified on either side of it.</div></form>">Concordance</a>
+						<a href = "#" data-toggle="popover" data-html="true" title = "Regular Expr." data-content = "<form onsubmit = 'return runTool(this)' action = '#'><input type = 'hidden' name = 'cmd' value = 'regexp' id = 'cmd'><input type = 'text' id = 'lttr'><input type ='Submit' value = 'Run'><div class = 'tool-explain'>Enter any regular expression to search a text and return all matches. This requires some knowledge of programmable 'regular expressions.'</div></form>">Regular Expr.</a>
+						<a href = "#" data-toggle="popover" data-html="true" title = "Abecedarian" data-content = "<form onsubmit = 'return runTool(this)' action = '#'><input type = 'hidden' name = 'cmd' value = 'abecedarian' id = 'cmd'><input type ='Submit' value = 'Run'><div class = 'tool-explain'>Searches a text for the first word matching each letter of the alphabet, continuing from the position that the last letter was found.</div></form>">Abecedarian</a>
+						<a href = "#" data-toggle="popover" data-html="true" title = "ABC-quence" data-content = "<form onsubmit = 'return runTool(this)' action = '#'><input type = 'hidden' name = 'cmd' value = 'alphabetron' id = 'cmd'><input type ='Submit' value = 'Run'><div class = 'tool-explain'>Discovers all the words in a text spelt from letters which appear in alphabetical order such as 'effort' or 'abbey'.</div></form>">ABC-quence</a>
+						<a href = "#" data-toggle="popover" data-html="true" title = "Chain Reaction" data-content = "<form onsubmit = 'return runTool(this)' action = '#'><input type = 'hidden' name = 'cmd' value = 'chainreaction' id = 'cmd'><input type ='Submit' value = 'Run'><div class = 'tool-explain'>Grabs the first word in a text, using the last letter to find the next consecutive word starting with that letter, using that word's last letter to continue the search.</div></form>">Chain Reaction</a>
+						<!--<a href = "#" data-toggle="popover" data-html="true" title = "Anagram" data-content = "<form onsubmit = 'return runTool(this)' action = '#'><input type = 'hidden' name = 'cmd' value = 'anagram' id = 'cmd'><input type ='Submit' value = 'Run'><div class = 'tool-explain'>Attempts a best-fit anagram for the given text. As of yet, it's imperfect, but it's getting better.</div></form>">Anagram</a>-->
+					</div>
+				</div>
+				<div class = "dropdown" tabindex = "0" onclick = 'javascript: expandMenu("algo");'>
+					<button class = "drop-btn">Algorithmic</button>
+					<div class = "dropdown-content" id = "algo-menu">
+						<a href = "#" data-toggle="popover" data-html="true" title = "Travesty" data-content = "<form onsubmit = 'return runTool(this)' action = '#'><label># of chars. to output</label><input type = 'text' id = 'outwords' onkeypress='return event.charCode >= 48 && event.charCode <= 57'><br/><br/><label>Granularity</label><input type = 'text' id = 'granular' onkeypress='return event.charCode >= 48 && event.charCode <= 57'><input type = 'hidden' name = 'cmd' value = 'travesty' id = 'cmd'><input type ='Submit' value = 'Run'><br/><div class = 'tool-explain'>Travesty is a tool which examines a text's word frequency and returns a scrambled version of the original. Granularity is the number of words to use as a model. This is a slightly modified version of the PERL Travesty script by Ron Starr.</div></form>">Travesty</a>
+						<!--<a href = "#" data-toggle="popover" data-html="true" title = "Markov" data-content = "<form onsubmit = 'return runTool(this)' action = '#'><label># of chars. to output</label><input type = 'text' id = 'outwords' onkeypress='return event.charCode >= 48 && event.charCode <= 57'><br/><br/><label>Granularity</label><input type = 'text' id = 'granular' onkeypress='return event.charCode >= 48 && event.charCode <= 57'><input type = 'hidden' name = 'cmd' value = 'markov' id = 'cmd'><input type ='Submit' value = 'Run'><br/><div class = 'tool-explain'>I can't really say much other than that this is a generator that uses the statistical model/distribution of letters to disorient and rearrange a text. This is a slightly modified version of the PERL Travesty script by Ron Starr.</div></form>">Markov</a>-->
+					</div>
+				</div>
+				<div tabindex = "0" class = "dropdown" onclick = 'javascript: expandMenu("number");'>
+					<button class = "drop-btn">Numerology</button>
+					<div class = "dropdown-content" id = "number-menu">
+						<a href = "#" data-toggle="popover" data-html="true" title = "N<sup>th</sup> Word" data-content = "<form onsubmit = 'return runTool(this)' action = '#'><label>N<sup>TH</SUP> word to take:<input type = 'text' id = 'lttr' onkeypress='return event.charCode >= 48 && event.charCode <= 57'><input type = 'hidden' name = 'cmd' value = 'nthword' id = 'cmd'><input type ='Submit' value = 'Run'><div class = 'tool-explain'>Begins counting from the start of a text and takes every n<sup>th</sup> word. For example, entering '9' takes the 9<sup>th</sup>, 18<sup>th</sup>, 27<sup>th</sup> word, continuing until the entire text has been read.</div></form>">Nth Word</a>
+						<a href = "#" data-toggle="popover" data-html="true" title = "Pi-thon" data-content = "<form onsubmit = 'return runTool(this)' action = '#'><input type = 'hidden' name = 'cmd' value = 'pi' id = 'cmd'><input type ='Submit' value = 'Run'><div class = 'tool-explain'>Calculates π to the number of decimals as there are words in the text, starting from the first digit of π, taking the third word, then the first after that, then the fourth, and so on.</div></form>">Pi-thon</a>
+						<a href = "#" data-toggle="popover" data-html="true" title = "At Length" data-content = "<form onsubmit = 'return runTool(this)' action = '#'><label># of letters:</label><input type = 'text' id = 'lttr' onkeypress='return event.charCode >= 48 && event.charCode <= 57 || event.charCode == 8 || event.charCode == 46'><br/><input type = 'hidden' name = 'cmd' value = 'strlen' id = 'cmd'><input type ='Submit' value = 'Run'><div class = 'tool-explain'>Searches for words of a given length, retrieving only words of that number of letters.</div></form>">At Length</a>
+						<a href = "#" data-toggle="popover" data-html="true" title = "Birthdate" data-content = "<form onsubmit = 'return runTool(this)' action = '#'><label>Enter a date:<input type = 'date' id = 'lttr' onkeypress='return ((event.charCode >= 47 && event.charCode <= 57) || event.charCode == 8)' placeholder = 'MM/DD/YYYY'><input type = 'hidden' name = 'cmd' value = 'birthdate' id = 'cmd'><input type ='Submit' value = 'Run'><div class = 'tool-explain'>Enter a date in MM/DD/YYYY format.</div></form>">Birthdate</a>
+					</div>
+				</div>
+				<div class = "dropdown"tabindex = "0" onclick = 'javascript: expandMenu("pop");'>
+					<button class = "drop-btn">Pop Culture</button>
+					<div class = "dropdown-content" id = "pop-menu">
+						<a href = "#" data-toggle="popover" data-html="true" title = "Powerball" data-content = "<form onsubmit = 'return runTool(this)' action = '#'><label>The latest numbers are:</label><div id = 'powerball'></div><input type = 'hidden' name = 'cmd' value = 'powerball' id = 'cmd'><input type ='Submit' value = 'Run'><div class = 'tool-explain'>This routine uses the latest Powerball numbers to read a text, taking each non-Powerball number as the n<sup>th</sup> number in the text, cycling once it reaches the end of the sequence, with the Powerball as the title. The latest numbers are courtesy of the New York state lottery API.</div></form>" onclick = "javascript: powerball();">Powerball</a>
+						<a href = "#" data-toggle="popover" data-html="true" title = "The LOST Numbers" data-content = "<form onsubmit = 'return runTool(this)' action = '#'><label>The Numbers are unlucky.</label><br/><div class = 'numbers'>4 8 15 16 23 42</div><input type = 'hidden' name = 'cmd' value = 'lost' id = 'cmd'><input type ='Submit' value = 'Run'><div class = 'tool-explain'>This function cycles through the text taking each subsequent n<sup>th</sup> word, and making a text. While these numbers only brought misfortune to the characters in the television show LOST, may you find poetry through them.</div></form>">The LOST Numbers</a>
+					</div>
+				</div>
+				<div class = "dropdown" tabindex = "0"	onclick = 'javascript: expandMenu("stat"); wordCount(); charCount();'>
+					<button class = "drop-btn">Statistics</button>
+					<div class = "dropdown-content" id = "stat-menu">
+						<a href = "#" onclick = "javascript: wordCount();" id = "wordCount">Word Count</a>
+						<a href = "#" onclick = "javascript: charCount();" id = "charCount">Char. Count</a>
+					</div>
+				</div>
+				<div class = "dropdown" tabindex = "0" onclick = 'javascript: expandMenu("text");'>
+					<button class = "drop-btn file-opts">Text Ops.</button>
+					<div class = "dropdown-content" id = 'text-menu'>
+					<a class = "file-opts" href = '#' data-toggle = "popover" data-html = "true" title = "Really Clear Screen?" data-content = "<form onsubmit = 'return clearScreen(this)'><input type = 'Submit' value = 'Clear Screen'><div class = 'tool-explain'>Really clear the screen?</div></form>"style = "width: inherit;">Clear Screen</a>
+					<a class = "file-opts" href = "#" data-toggle="popover" data-html="true" title = "Reverse Text" data-content = "<form onsubmit = 'return runTool(this)' action = '#'><input type = 'hidden' name = 'cmd' value = 'reverser' id = 'cmd'><input type ='Submit' value = 'Run'><div class = 'tool-explain'>Reverses the entire text.</div></form>">Reverse Text</a>
+					</div>
+				</div>
+				<div class = "dropdown" tabindex = "0"	onclick = ''>
+					<button class = "drop-btn" onclick = 'javascript: window.open("http://mantis.appliedpoetics.org");'><img src = '/img/ap-mantis-logo.png' style = "margin-right: 5px; height: 13px;">REPORT BUGS!</button>
+				</div>
+			</div>
+		</div>
+<div id = "page-wrapper">
+	</div>
+	<div id = "text-console">
+		<form>
+			<textarea name = "editContent" id = "editContent" rel = "popover" onclick = "expandMenu('all');"></textarea>
+		</form>
+		<script type="text/javascript">
+			createTextAreaWithLines('editContent');
+			$("#lineNumbers").prop("disabled", true);
+		</script>	
+	</div>
+</div>
+<div id = "entryContent-warning">Sorry, but we have to limit input to 200 lines; the server's hampster can't run any faster!</div>
+<script>
+	$(window).resize(function() {
+		createTextAreaWithLines('editContent');
+	});
+</script>
+<script>
+$(document).ready(function(){
+    $('[data-toggle="popover"]').popover();
+});
+</script>
+<script>
+function backToTop() { $('#editContent').animate({scrollTop: 0},800);}
+</script>
+<script>
+function backToBttm() { var scrollBottom = document.getElementById('editContent').scrollHeight; $('#editContent').animate({scrollTop: scrollBottom},800);}
+</script>
+<script>
+$('[data-toggle=popover]').popover({
+  trigger:"click"
+});
+
+$('[data-toggle=popover]').on('click', function (e) {
+   $('[data-toggle=popover]').not(this).popover('hide');
+});
+</script>
+<script>
+$('input').attr('autocomplete','off');
+</script>
+<script>
+$('.dropdown').mousedown( function () {
+	$('.dropdown').focus();
+});
+</script>
+<div id = "scrollCtrl">
+<div id = "undoCtrl" onclick = "javascript: execUndo();"><span class = "glyphicon glyphicon-step-backward"></span></div>
+<div id = "redoCtrl" onclick = "javascript: execRedo();"><span class = "glyphicon glyphicon-step-forward"></span></div>
+<div id = "helpCtrl" onclick = "javascript: firstTime();"><span class = "glyphicon glyphicon-question-sign"></span></div>
+<div id = "scrollTop" onclick = "javascript: backToTop();"><span class = "glyphicon glyphicon-triangle-top"></span></div><div id = "scrollBottom" onclick = "javascript: backToBttm();"><span class = "glyphicon glyphicon-triangle-bottom"></span></div>
+</div>
+<div id = "tos-popover">
+	<div id = "tos-img">
+		<center><img src = "img/ap-type-flask.png"></center>
+	</div>
+	<div id = "tos-text" onclick = "javsacript: tosPopover();">
+		<center>Applied Poetics ver 1b.<?php echo date("y.m.d:Hi", filemtime('index.php')); ?><br/>Concocted in Bethesda, Maryland<br/><br/></center>
+		Source texts are briefly logged to the server, and are deleted immediately upon processing. There is also a cookie written on your first visit; it is not a tracking cookie, it just lets me know if I need to show the brief orientation sequence (which is always accessible from the question mark menu in the bottom right). If you have questions, I invite you to email me: admin [at] appliedpoetics.org. My name is Doug Luman. You can find more about me <a href = "http://www.douglasjluman.com" target = "_new">here</a>.
+		<br/><br/>
+		Thanks are in order to far too many people to list here, but particularly Misky Braendeholm, E. Kristen Anderson, James Moore, Margo Roby, Roxanna Bennett, Josh Medsker, Nancy Chen Long, Matt Trease, Ed Bremson, Beth Ayer, and everyone who participates/d in the <a href ="http://www.foundpoetryreview.com/oulipost/" target = "_new">Oulipost</a> project and various <A href = "http://foundpoetryreview.com">Found Poetry Review</a> events and groups. Your feedback, interests, and encouragement are indispensible. And a much-more-than-thank-you to Jenni without whose support and feedback none of the visions and aspirations behind AppliedPoetics would be more than scattered bits of code.
+		<Br/><Br/>
+		This page is typeset in Proxima Nova (Mark Simonsen), Filson Pro (Olivier Gourvat), and saxMono (s.a.x. Software).
+		<br/><br/>
+		AppliedPoetics is coded using Python, PERL, and PHP. It is hosted on a droplet at <a href = "https://www.digitalocean.com/" target = "_new">Digital Ocean</a>.
+		<br/><br/>
+		<center>
+		Want to help feed the hamster? 
+		<form action="https://www.paypal.com/cgi-bin/webscr" method="post" target="_top" id = "donate-form">
+		<input type="hidden" name="cmd" value="_s-xclick">
+		<input type="hidden" name="hosted_button_id" value="A8Q7TCE829B3U">
+		<input type="image" src="http://www.appliedpoetics.org/img/ap-donate-btn.png" border="0" name="submit" alt="PayPal - The safer, easier way to pay online!" class = "donate-form-input">
+		<img alt="" border="0" src="https://www.paypalobjects.com/en_US/i/scr/pixel.gif" width="1" height="1">
+		</form>
+		Click anywhere to close this notice.</center>
+
+	</div>
+</div>
+<div id = "scrim" onclick = "javascript: tosPopover();"></div>
+<div id = "loading"><img src = 'img/ap-type-loading.gif' width="101" height="159"></div>
+<div id = 'startup-scrim' style = 'display: none;' onclick = 'javascript: firstTime();'><img src = 'img/ap-first-time-overlay.png' style = 'position: absolute; width: 100%;' id = 'firstTimeImg'><img src = 'img/ap-first-time-overlay-step1.png' style = 'display: none; position: absolute; width: 60%; right:0; bottom: 0;' id = 'step-one'><img src = 'img/ap-first-time-overlay-step2.png' style = 'display: none; position: absolute; width: 60%; right:0; bottom: 0;' id = 'step-two'><img src = 'img/ap-first-time-overlay-step3.png' style = 'display: none; position: absolute; width: 60%; right:0; bottom: 0;' id = 'step-three'><img src = 'img/ap-first-time-overlay-step4.png' style = 'display: none; position: absolute; width: 60%; right:0; bottom: 0;' id = 'step-four'></div>
+</body>
+</html>

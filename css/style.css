@@ -1,0 +1,89 @@
+html { font-family: 'proxima-nova'; }	
+body { height: 100%; width: 100%; background: #444444; overflow: hidden;}
+h1, h2, h3, h4, h5 { font-family: 'proxima-nova'; font-weight: 700; color: #f9f9f9;}
+canvas { height: 100%; width: 150%; }
+label { font-family: 'proxima-nova'; font-weight: 700; text-transform: uppercase; font-size: 8pt;}
+input { border: 2px solid #444444; -webkit-box-shadow: inset 0 0 8px  rgba(0,0,0,0.1), 0 0 16px rgba(0,0,0,0.1); -moz-box-shadow: inset 0 0 8px  rgba(0,0,0,0.1), 0 0 16px rgba(0,0,0,0.1); box-shadow: inset 0 0 8px  rgba(0,0,0,0.1), 0 0 16px rgba(0,0,0,0.1); padding: 5px; width: 100%; font-size: 110%; font-family: 'proxima-nova'; }
+select { width: 100%; font-size: 110%; font-family: 'proxima-nova'; background: none; border: 2px solid #444444; text-transform: uppercase; font-weight: 700;}
+
+*:focus { outline: none; }
+::selection { background: #FFCC11 !important; }
+::-moz-selection { background: #FFCC11 !important; }
+
+.tool-explain {font-family: 'proxima-nova'; font-weight: 700; text-transform: uppercase; font-size: 8pt; margin-top: 10px;}
+
+.popover-title {font-family: 'proxima-nova'; font-weight: 700; text-transform: uppercase; font-size: 8pt;}
+
+.popover.right { margin-left: 0px;}
+
+#page-wrapper { position: absolute; height: 100%; width: 100%; overflow: hidden; top: 0; left: 0;}
+
+#landing-page { position: absolute; height: 100%; width: 100%; overflow: hidden; top:0; left: 0;  background-color: rgba(2,34,34,1); background: @include filter-gradient(#022222, #022222, vertical); background: @include background-image(linear-gradient(top, rgba(2,34,34,1) 0%, rgba(68,68,68,1) 38%, rgba(68,68,68,1) 59%, rgba(2,34,34,1) 100%)); z-index: 999; font-family: 'proxima-nova'; }
+
+#landing-page img { margin-top: 15%; width: 500px; }
+
+#menu { background-color: rgba(0,159,143,1); background: @include filter-gradient(#009f8f, #009f8f, vertical); background: @include background-image(linear-gradient(top, rgba(0,159,143,1) 0%, rgba(0,159,143,1) 0%, rgba(0,57,52,1) 100%)); height: 100%; width: 100%; position: absolute; top: 0; left: 0; z-index: 999; font-family: 'proxima-nova';}
+
+#masthead { position: relative; font-family: 'industry'; color: #f9f9f9; font-size: 150%;  text-transform: uppercase; display: inline-block; margin-top: 3px; margin-left: 10px; z-index: 999; margin-bottom: 0px; }
+
+#logo {width:24px; float: left;}
+#logo img {height: 24px;  margin-top: 3px;}
+#logo:hover { cursor:pointer; }
+
+#option-container { float:left; margin-left: 10px; top: 0px; margin-bottom: 0px; cursor: pointer;}
+
+.drop-btn { border: none; cursor: pointer; background: none; width: inherit; color: #f9f9f9; font-size: 13px; font-family: 'proxima-nova'; text-transform: uppercase;}
+.drop-btn img {height: 24px; cursor: pointer;}
+.dropdown { position: relative; display: inline-block; padding: 5px 0px 0px 0px; height: 39px;}
+.dropdown span {color: #c9c9c9; text-shadow: 2px 2px 2px #222; }
+.dropdown:hover { background: #222;}
+.dropdown-content { position: absolute; min-width: 150px; box-shadow: 0px 8px 16px 0px rgba(0,0,0,0.3); padding: 6px 0px; z-index: 2; background: #222; font-family: 'proxima-nova'; display: block; visibility: hidden; transition: visibility .1s ease-in-out; -moz-transition: visbility .1s ease-in-out; -webkit-transition: visbility .1s ease-in-out}
+.dropdown-content a {color: #f9f9f9; padding: 12px 16px; text-decoration: none; display: block; font-size: 12px; padding: 12px 16px; width: 100%; }
+.dropdown-content a:hover { text-decoration:none; color: #fff; background-color: #000; }
+.dropdown-content a:visited { text-decoration:none; color: #fff; }
+
+#console-wrapper { height: 95%; margin-top: 5px;}
+#text-console { width: 100%; position: fixed; background-color: rgba(2,34,34,1); background: @include filter-gradient(#022222, #022222, vertical); background: @include background-image(linear-gradient(top, rgba(2,34,34,1) 0%, rgba(68,68,68,1) 38%, rgba(68,68,68,1) 59%, rgba(2,34,34,1) 100%)); height: 95%; overflow: hidden; }
+#editContent { margin-left: 5%; padding-left: 5%; width: 98%; height: 100%; font-family: 'sax-mono', fixed width; background: none; border: none; color: #fff; margin-top: 5px; font-size: 15px; overflow-y: scroll; resize: none;	}
+
+.textAreaWithLines{ display:block; margin:0; border:none; border-right: 1px solid #aaa; background:none; color: #ffff00; overflow: hidden; font-size: 15px; resize: none; font-family: 'sax-mono', fixed width; min-width: 40px;}
+
+.popover { color: #222; width: 200px;}
+.popover-title {color: #222;}
+/*.popover-title { background: #009F8F; } */
+.popover-content input[type="submit"] { width: 100%; background: #009F8F; text-transform: uppercase; border: none; margin-top: 10px; color: #fff; font-family: 'proxima-nova'; }
+
+#scrollCtrl { position: absolute; z-index: 1000; right: 0; bottom: 0; }
+#scrollTop { float: left; padding: 10px; color: #f9f9f9; background: #222; cursor: pointer; font-family: 'proxima-nova'; text-transform: uppercase; font-weight: 700;}
+#scrollBottom { float: right; padding: 10px; color: #f9f9f9; background: #222; cursor: pointer; font-family: 'proxima-nova'; text-transform: uppercase; font-weight: 700;}
+#undoCtrl { float: left; padding: 10px; color: #f9f9f9; background: #222; cursor: pointer; font-family: 'proxima-nova'; text-transform: uppercase; font-weight: 700;}
+#redoCtrl { float: left; padding: 10px; color: #f9f9f9; background: #222; cursor: pointer; font-family: 'proxima-nova'; text-transform: uppercase; font-weight: 700;}
+#helpCtrl { float: left; padding: 10px; color: #f9f9f9; background: #222; cursor: pointer; font-family: 'proxima-nova'; text-transform: uppercase; font-weight: 700;}
+
+#login { float: right; background: #FFCC11; text-align: center; width: 150px; height: 35px; font-weight: 700; color: #fff; padding: 14px; font-size: 20px; cursor: pointer; display: inline block; }
+.login-text { margin-top: -10px; cursor: pointer;}
+
+#entryContent-warning { position: absolute; z-index: 1001; width: 50%; bottom: 0; background: #fff; padding: 5px; font-family: 'proxima-nova'; color: #222;  -webkit-border-radius: 12px 12px 0px 0px; -moz-border-radius: 12px 12px 0px 0px; border-radius: 12px 12px 0px 0px; background-color: #FFCC11; font-weight: 700; text-align: center; visibility: visible; opacity: 0; -webkit-transition: visibility 1s linear, opacity 3s linear; transition: visibility 1s linear, opacity 3s linear; }
+
+.file-opts { color: #FFCC11; font-weight: 700;}
+.normal-opts { font-weight: 400;}
+
+#powerball {font-family: 'proxima-nova'; text-align: center; font-size: 110%;}
+.numbers {font-family: 'proxima-nova'; text-align: center; font-size: 110%;}
+
+.inline-link a { text-decoration: 1px dashed #009F8F; background: none; color: #222; text-shadow: none; }
+
+#tos-popover { position: absolute; z-index: 1002; margin: 0 auto; top: 5%; display: none; left: 0; right: 0;  height: 40%; width: 40%; -webkit-transition: visibility 1s linear, opacity 3s linear; transition: visibility 1s linear, opacity 3s linear; -moz-transition: visibility 1s linear, opacity 3s linear;}
+#tos-img img { position: relative;}
+#tos-text { font-family: 'proxima-nova', sans-serif; font-size: 8pt; color: #fff; text-shadow: 1px 1px #222; position: relative; text-align: left; }
+#tos-text a { color: #009f8f; text-decoration: 1px dashed #fff;}
+#tos-img { position: relative;}
+
+#scrim { position: absolute; height: 100%; width: 100%; z-index: 1001; opacity: .9; display: none; background: #222; -webkit-transition: visibility 1s linear, opacity 3s linear; transition: visibility 1s linear, opacity 3s linear; -moz-transition: visibility 1s linear, opacity 3s linear;}
+#startup-scrim { position: absolute; height: 100%; width: 100%; z-index: 1001; opacity: .8; display: none; background-color: #222; -webkit-transition: visibility 1s linear, opacity 3s linear; transition: visibility 1s linear, opacity 3s linear; -moz-transition: visibility 1s linear, opacity 3s linear;}
+
+.donate-form-input { width: 121px; height: auto;}
+.donate-form-input { border: 0; }
+
+#loading { position: absolute; height: 100%; width: 100%; z-index: 1001; display: none; opacity: .9; background: #222;}
+#loading img {position: absolute; }

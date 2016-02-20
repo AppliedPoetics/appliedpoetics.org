@@ -3,20 +3,21 @@
 import getopt, re, sys, ap_encoding 
 
 def isolate(text,punct):
+	#create continuous string from text, & initialize containers
 	text = ' '.join(text.split())
 	results = ""
-        statements = re.findall(r'[^.!\?]+[\.!\?]',text)
 	collection = []
+	#create regular expression
+        statements = re.findall(r'[^.!\?]+[\.!\?]',text)
+	#loop through text running test on punctuation
 	for x in range (0,len(statements)):
 		pnct = statements[x][-1:]
 		if pnct == punct:
 			collection.append(statements[x])
-	for i in range (0,len(collection)):
-		results = results + collection[i] + "\n"
- 	return results
+ 	return "\n".join(collection)
 
 def main(argv):
-        input_text = ''
+        #get arguments passed, where "text" is path to scratch/ and "pnct" is the desired punctuation to isolate
         try:
                 opts,args = getopt.getopt(argv,"t:l:",["text=","pnct="])
         except getopt.GetoptError:
@@ -31,6 +32,7 @@ def main(argv):
 			punct = arg
                 else:
                         sys.exit(2)
+	#read text from path
 	text = ap_encoding.read_file(text)
         print isolate(text,punct)
 

@@ -3,6 +3,7 @@
 import getopt, re, sys, ap_encoding
 
 def lipogram(text,lttr):
+	#set and test lipogram constraint in regular expressions (all words containing "lttr" erased)
 	try:
                 results = re.sub(r'\w*'+lttr+'\w*', "", text,flags=re.I)
 		results = re.sub(r'  '," ", results)
@@ -12,7 +13,7 @@ def lipogram(text,lttr):
                 print ""
 
 def main(argv):
-        input_text = ''
+        #get arguments passed, where "text" is path to scratch/, "lttr" is the letter to avoid
         try:
                 opts,args = getopt.getopt(argv,"t:l:",["text=","lttr="])
         except getopt.GetoptError:
@@ -27,6 +28,7 @@ def main(argv):
                         lttr = arg
                 else:
                         sys.exit(2)
+	#read text from path
         text = ap_encoding.read_file(text)
 	lipogram(text,lttr)
 

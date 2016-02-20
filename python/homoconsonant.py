@@ -3,11 +3,12 @@
 import getopt, re, sys, ap_encoding
 
 def consonant(text):
+	#set up and execute regular expression for vowels
 	result = re.sub("[aeiou]"," ",text,flags=re.I)
 	return result
 
 def main(argv):
-        input_text = ''
+        #get arguments passed, where "text" is path to scratch/
         try:
                 opts,args = getopt.getopt(argv,"t:",["text="])
         except getopt.GetoptError:
@@ -20,6 +21,7 @@ def main(argv):
                         text = arg
                 else:
                         sys.exit(2)
+	#read file from path
 	text = ap_encoding.read_file(text)
 	print consonant(text)
 

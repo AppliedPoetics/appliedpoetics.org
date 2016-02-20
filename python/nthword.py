@@ -2,10 +2,12 @@
 
 import getopt, sys, re, ap_encoding
 
-def nthword(text,nth):	
+def nthword(text,nth):
+	#initialize containers, mod, and create word array	
 	words = text.split(" ")
 	modnum = int(nth)	
 	results = ""
+	#loop for every nth word as defined by mod operation
 	for x in range(0,len(words)):
 		if x%modnum == 0:
 			if x != 0:
@@ -13,7 +15,7 @@ def nthword(text,nth):
 	return results
 
 def main(argv):
-        input_text = ''
+        #get arguments passed, where "text" is path to scratch/, "lttr" is the number of "nth" word
         try:
                 opts,args = getopt.getopt(argv,"t:l:",["text=","lttr="])
         except getopt.GetoptError:
@@ -28,6 +30,7 @@ def main(argv):
                         lttr = arg
                 else:
                         sys.exit(2)
+	#read text from file
 	text = ap_encoding.read_file(text)
         print nthword(text,lttr) 
 

@@ -3,14 +3,17 @@
 import getopt, string, sys, ap_encoding
 
 def birthdate(text,bdate):
+	#remove punctuation, split into array
 	exclude = set(string.punctuation)
 	text = ''.join(ch for ch in text if ch not in exclude)
 	words = text.split()
+	#format birthdate
 	bdate = ''.join(bdate.split("/"))
 	mdy = list(bdate)
+	#initialize containers
 	result = []
 	indx = 0
-
+	#loop through text to select correct numerical positions
 	for x in range(indx,len(words)):
 		for i in range(0,len(mdy)):
 			try:
@@ -21,7 +24,7 @@ def birthdate(text,bdate):
 	return result
 
 def main(argv):
-        input_text = ''
+        #get arguments passed, where "text" is path to scratch/, "lttr" is the birthdate in MM-DD-YYYY form
         try:
                 opts,args = getopt.getopt(argv,"t:l:",["text=","lttr="])
         except getopt.GetoptError:
@@ -36,6 +39,7 @@ def main(argv):
 			bdate = arg
                 else:
                         sys.exit(2)
+	#read file from path
 	text = ap_encoding.read_file(text)
         print ', '.join(birthdate(text,bdate)) 
 	

@@ -3,18 +3,17 @@
 import getopt, re, sys, ap_encoding
 
 def tautogram(text,lttr):
+	#initialize container
 	results = ""
-	
 	try:
+		#do the regex to only select words starting with the given letter
 		results = re.findall(r'\b'+lttr+'[\w]*',text,re.I)
 	except:
 		pass
-
 	return results	
 
 def main(argv):
-	input_text = ''
-
+	#get arguments passed, where "text" is path to scratch/, "lttr" is the letter to use in the tautogram
 	try:
 		opts,args = getopt.getopt(argv,"t:l:",["text=","lttr="])
 	except getopt.GetoptError:
@@ -29,6 +28,7 @@ def main(argv):
 			lttr = arg
 		else:
 			sys.exit(2)
+	#read tet from file
 	text = ap_encoding.read_file(text)
 	result = ""
 	results = tautogram(text,lttr)

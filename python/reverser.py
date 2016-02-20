@@ -5,10 +5,11 @@ import cgitb, getopt, os, sys, ap_encoding
 cgitb.enable()
 
 def reverse(text):
+	#REVERSE! REVERSE!
 	return text[::-1]
 
 def main(argv):
-        input_text = ''
+        #get arguments passed, where "text" is path to scratch/
         try:
                 opts,args = getopt.getopt(argv,"t:",["text="])
         except getopt.GetoptError:
@@ -21,6 +22,7 @@ def main(argv):
                         text = arg
                 else:
                         sys.exit(2)
+	#read text from file
         text = ap_encoding.read_file(text)
         print reverse(text)
 

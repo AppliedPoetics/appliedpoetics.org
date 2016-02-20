@@ -3,11 +3,12 @@
 import getopt, re, sys, ap_encoding
 
 def regexp(text,regex):
+	#run the specified regex
 	result = re.findall(regex,text,flags=re.I)
 	return "\n".join(result)
 
 def main(argv):
-        input_text = ''
+        #get passed arguments, where "text"  is path to scratch/, "lttr" is the defined regex
         try:
                 opts,args = getopt.getopt(argv,"t:l:",["text=","lttr="])
         except getopt.GetoptError:
@@ -22,6 +23,7 @@ def main(argv):
                         regex = arg
                 else:
                         sys.exit(2)
+	#read text from file
 	text = ap_encoding.read_file(text)
         print regexp(text,regex) 
 

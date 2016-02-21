@@ -13,7 +13,7 @@ def weather():
 
 def short_forecast(text,terms):
 	#intialize container, explode text into word array
-	report []
+	report = []
 	text = ' '.join(text.split())
 	#search the text for sentences containing the terms
 	for i in range(0,len(terms)):

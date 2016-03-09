@@ -13,7 +13,8 @@ def dial(text,number):
 	dialed_text = []
 	# get total to move pointer
 	for num in numbers:
-		total = total + int(num)
+		total = total + 1
+		#total = total + int(num)
 	# "dial" the text
 	for j in range(index,len(full_text)):
 		for i in range(0,len(numbers)):

@@ -6,8 +6,8 @@ cgitb.enable()
 
 #create number correspondence
 toll_lttrs = [10]
-toll_lttrs.append(" ")
-toll_lttrs.append(" ")
+toll_lttrs.append("")
+toll_lttrs.append("")
 toll_lttrs.append("abc")
 toll_lttrs.append("def")
 toll_lttrs.append("ghi")

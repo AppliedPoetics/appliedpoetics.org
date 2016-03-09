@@ -4,7 +4,7 @@ h1, h2, h3, h4, h5 { font-family: 'proxima-nova'; font-weight: 700; color: #f9f9
 canvas { height: 100%; width: 150%; }
 label { font-family: 'proxima-nova'; font-weight: 700; text-transform: uppercase; font-size: 8pt;}
 input { border: 2px solid #444444; -webkit-box-shadow: inset 0 0 8px  rgba(0,0,0,0.1), 0 0 16px rgba(0,0,0,0.1); -moz-box-shadow: inset 0 0 8px  rgba(0,0,0,0.1), 0 0 16px rgba(0,0,0,0.1); box-shadow: inset 0 0 8px  rgba(0,0,0,0.1), 0 0 16px rgba(0,0,0,0.1); padding: 5px; width: 100%; font-size: 110%; font-family: 'proxima-nova'; }
-select { width: 100%; font-size: 110%; font-family: 'proxima-nova'; background: none; border: 2px solid #444444; text-transform: uppercase; font-weight: 700;}
+select { width: 110%; font-size: 100%; font-family: 'proxima-nova'; background: transparent; border: 0; text-transform: uppercase; font-weight: 300; }
 
 *:focus { outline: none; }
 ::selection { background: #FFCC11 !important; }
@@ -15,6 +15,8 @@ select { width: 100%; font-size: 110%; font-family: 'proxima-nova'; background: 
 .popover-title {font-family: 'proxima-nova'; font-weight: 700; text-transform: uppercase; font-size: 8pt;}
 
 .popover.right { margin-left: 0px;}
+
+.styled-select { overflow: hidden; width: 168px; background: url(/img/ap-select-arrow.png) no-repeat right;}
 
 #page-wrapper { position: absolute; height: 100%; width: 100%; overflow: hidden; top: 0; left: 0;}
 

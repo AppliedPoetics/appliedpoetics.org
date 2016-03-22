@@ -30,7 +30,7 @@ $file = fopen($filename,"w");
 
 	//$text = join(' ', $chunks[$i]);
 
-	if($cmd == 'tautogram' || $cmd == 'lipogram' || $cmd == 'isolate' || $cmd == 'beaupresente' || $cmd == 'univocalism' || $cmd == 'nthword' || $cmd == 'belleabsente' || $cmd == 'powerball' || $cmd == 'regexp' || $cmd == 'strlen' || $cmd == 'birthdate' || $cmd == "alternator" || $cmd == 'tollfree' || $cmd == 'dialer') 
+	if($cmd == 'tautogram' || $cmd == 'lipogram' || $cmd == 'isolate' || $cmd == 'beaupresente' || $cmd == 'univocalism' || $cmd == 'nthword' || $cmd == 'belleabsente' || $cmd == 'powerball' || $cmd == 'regexp' || $cmd == 'strlen' || $cmd == 'birthdate' || $cmd == "alternator" || $cmd == 'tollfree' || $cmd == 'dialer' || $cmd == 'snowball') 
 	{ 
 		//$cmd_line = 'python python/'.$cmd.'.py -t """'.$text.'""" -l "'.$lttr.'"';
 		$cmd_line = 'python python/'.$cmd.'.py -t /var/www/html/'.$filename.' -l "'.$lttr.'"';

@@ -1,3 +1,8 @@
 #! /usr/bin/python
 
-import curses, getopt, re, sys, nltk
+import cgitb, curses, getopt, re, sys, nltk
+
+cgitb.enable()
+
+def syllabize(text):
+	

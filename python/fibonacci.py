@@ -1,6 +1,8 @@
 #! /usr/bin/python
 
-import getopt,re,sys,ap_encoding
+import cgitb, getopt,re,sys,ap_encoding
+
+cgitb.enable()
 
 def fibonacci(full_text):
 	#initialize containers

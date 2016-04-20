@@ -5,6 +5,8 @@ import cgitb, getopt, re, string, sys, ap_encoding
 cgitb.enable()
 
 def sort_list(text,method):
+	punct = set(string.punctuation)
+	text = ''.join(ch for ch in text if not ch in punct)
 	text = text.split()
 	if method == "asc":
 		text = sorted(text,reverse=False)

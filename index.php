@@ -2,7 +2,7 @@
 <meta http-equiv="Content-Type" content="text/html; charset=utf-8"/>
 <html>
 <head>
-<title>Applied Poetics ver 1b.<?php echo date("y.m.d:Hi", filemtime('index.php')); ?></title>
+<title>Applied Poetics</title>
 <link rel="stylesheet" type="text/css" href= "https://maxcdn.bootstrapcdn.com/bootstrap/3.3.6/css/bootstrap.min.css">
 <link rel="stylesheet" type="text/css" href="css/style.css">
 <script src="https://use.typekit.net/vwg0vgf.js"></script>
@@ -115,7 +115,8 @@
 					<div class = "dropdown-content" id = 'text-menu'>
 					<a class = "file-opts" href = '#' data-toggle = "popover" data-html = "true" title = "Really Clear Screen?" data-content = "<form onsubmit = 'return clearScreen(this)'><input type = 'Submit' value = 'Clear Screen'><div class = 'tool-explain'>Really clear the screen?</div></form>"style = "width: inherit;">Clear Screen</a>
 					<a class = "file-opts" href = "#" data-toggle="popover" data-html="true" title = "De-duplicate" data-content = "<form onsubmit = 'return runTool(this)' action = '#'><input type = 'hidden' name = 'cmd' value = 'dedupe' id = 'cmd'><input type ='Submit' value = 'Run'><div class = 'tool-explain'>Removes duplicate words from a text or list.</div></form>">De-duplicate</a>
-					<a class = "file-opts" href = "#" data-toggle="popover" data-html="true" title = "Sort List" data-content = "<form onsubmit = 'return runTool(this)' action = '#'><div class = 'styled-select'><select name = 'lttr' id = 'lttr'><option value = 'asc'>Ascending</option><option value = 'desc'>Descending</option></select></div><input type = 'hidden' name = 'cmd' value = 'listsort' id = 'cmd'><input type ='Submit' value = 'Run'><div class = 'tool-explain'>Removes duplicate words from a text or list.</div></form>">Sort List</a>
+					<a class = "file-opts" href = "#" data-toggle="popover" data-html="true" title = "Sort List" data-content = "<form onsubmit = 'return runTool(this)' action = '#'><div class = 'styled-select'><select name = 'lttr' id = 'lttr'><option value = 'asc'>Ascending</option><option value = 'desc'>Descending</option></select></div><input type = 'hidden' name = 'cmd' value = 'listsort' id = 'cmd'><input type ='Submit' value = 'Run'><div class = 'tool-explain'>Sort a list or text in ascending or descending alphabetical order.</div></form>">Sort List</a>
+					<a class = "file-opts" href = "#" data-toggle="popover" data-html="true" title = "List Unique Letters" data-content = "<form onsubmit = 'return runTool(this)' action = '#'><input type = 'hidden' name = 'cmd' value = 'listchars' id = 'cmd'><input type ='Submit' value = 'Run'><div class = 'tool-explain'>Returns a string containing list of unique letters in a text.</div></form>">Unique Letters</a>
 					<a class = "file-opts" href = "#" data-toggle="popover" data-html="true" title = "Reverse Text" data-content = "<form onsubmit = 'return runTool(this)' action = '#'><input type = 'hidden' name = 'cmd' value = 'reverser' id = 'cmd'><input type ='Submit' value = 'Run'><div class = 'tool-explain'>Reverses the entire text.</div></form>">Reverse Text</a>
 					<a class = "file-opts" href = "#" data-toggle="popover" data-html="true" title = "Default Text" data-content = "<form onsubmit = 'return runTool(this)' action = '#'><input type = 'hidden' name = 'cmd' value = 'defaulttext' id = 'cmd'><input type ='Submit' value = 'Run'><div class = 'tool-explain'>Don't have a text in mind? Use one of our favorites: Robert Louis Stevenson's <i>The Strange Case of Dr. Jekyll and Mr. Hyde</i>.</div></form>">Default Text</a>
 					</div>

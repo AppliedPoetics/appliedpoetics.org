@@ -156,3 +156,7 @@ function firstTimeSteps(step) {
 		$('#startup-scrim').hide();
 	}
 }
+
+function functionLink(fx) {
+	$('#'+fx).click();
+}

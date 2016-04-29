@@ -7,7 +7,6 @@ cgitb.enable()
 #create number correspondence
 toll_lttrs = [10]
 toll_lttrs.append("")
-toll_lttrs.append("")
 toll_lttrs.append("abc")
 toll_lttrs.append("def")
 toll_lttrs.append("ghi")
@@ -20,11 +19,12 @@ toll_lttrs.append("wxyz")
 def tollFreeCall(text, number):
 	#create string container, number/letter list
 	toll_string = ""
-	numbers = list(number)
+	numbers = "".join(set(number))
 	for num in numbers:
 		toll_string = toll_string + str(toll_lttrs[int(num)])
 	#find all the strings
-	return re.findall(r"\w+["+toll_string+"]\w+",text,flags=re.I)
+	matches = re.findall(r'(\b['+toll_string+']+\\b)',text,flags=re.I)
+	return matches
 
 def main(argv):
         #get arguments passed, where "text" is path to scratch/
@@ -44,7 +44,7 @@ def main(argv):
                         sys.exit(2)
         #read file from path
         text = ap_encoding.read_file(text)
-        print ' '.join(tollFreeCall(text,lttr)) 
+        print ' '.join(tollFreeCall(text,lttr))
 
 if __name__ == "__main__":
         main(sys.argv[1:])

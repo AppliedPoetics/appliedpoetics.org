@@ -127,7 +127,7 @@ function firstTimeSteps(step) {
 		$('#step-one').show();
 	} else if (step==2) {
 		$('#step-one').hide();
-		$('#tutorialLink').click();
+		$('#belleabsente').click();
 		$('#lttr').val('Hyde');
 		$('#step-two').show();
 	} else if (step==3) {
@@ -159,4 +159,10 @@ function firstTimeSteps(step) {
 
 function functionLink(fx) {
 	$('#'+fx).click();
+}
+
+function shareTool(shareForm) {
+	var tool = $('#util').val();
+	$('#shareFld').val('http://www.appliedpoetics.org/?ref='+tool);
+	return false;
 }

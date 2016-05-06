@@ -70,7 +70,7 @@ select { width: 110%; font-size: 100%; font-family: 'proxima-nova'; background: 
 .file-opts { color: #FFCC11; font-weight: 700;}
 .normal-opts { font-weight: 400;}
 
-#powerball {font-family: 'proxima-nova'; text-align: center; font-size: 110%;}
+/*#powerball {font-family: 'proxima-nova'; text-align: center; font-size: 110%;}*/
 .numbers {font-family: 'proxima-nova'; text-align: center; font-size: 110%;}
 
 .inline-link a { text-decoration: 1px dashed #009F8F; background: none; color: #222; text-shadow: none; }

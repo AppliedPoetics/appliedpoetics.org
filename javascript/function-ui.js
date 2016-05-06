@@ -19,7 +19,7 @@ $(document).ready( function () {
 });
 
 function expandMenu(menuName){
-	var menus = ["oulipo-menu","grammar-menu","number-menu","pop-menu","algo-menu","stat-menu","text-menu"]
+	var menus = ["oulipo-menu","grammar-menu","number-menu","pop-menu","algo-menu","stat-menu","text-menu","share-menu"]
 	if(menuName == "all")
 	{
 		
@@ -36,7 +36,10 @@ function expandMenu(menuName){
 }
 
 function collapseMenu(menuName){
-	document.getElementById(menuName).style.visibility = "hidden";
+	if(menuName != "share-menu"){
+		document.getElementById(menuName).style.visibility = "hidden";
+		$('#share-menu').popover('hide');
+	}
 	//$('#'+menuName+' .popover').toggle();
 	$('#'+menuName+' .popover').popover('hide');
 }

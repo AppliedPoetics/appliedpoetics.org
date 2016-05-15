@@ -15,7 +15,7 @@ def test(line):
 		attempt,answer = generation(line)
 		shaHash.update(attempt)
 		solution = shaHash.hexdigest()
-		if solution.startswith('00000'):			
+		if solution.startswith('000'):			
 			found = True
 	print answer
 

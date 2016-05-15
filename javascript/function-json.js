@@ -11,10 +11,10 @@ function powerball() {
 					balls = obj.data[0][9].split(" ");
 					powerball = balls[5].toString();
 					balls.splice(-1,1);
-					$('#powerball').html(balls.join(" ") + " <div style = 'color:#d72e27; display: inline-block;'>"+powerball+"</div>");
+					$('#powerball_numbers').html(balls.join(" ") + " <div style = 'color:#d72e27; display: inline-block;'>"+powerball+"</div>");
 			}
 		});
 	} else {
-		$('#powerball').html(balls + ",<div style = 'color: #d72e27; display: inline-block;'>"+powerball+"</div>");
+		$('#powerball_numbers').html(balls + ",<div style = 'color: #d72e27; display: inline-block;'>"+powerball+"</div>");
 	}
 }

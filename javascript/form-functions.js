@@ -16,7 +16,7 @@ function runTool(inc_form) {
 		stackMe(inc_text);
 	if(cmd == 'powerball')
 	{
-		lttr = $('#powerball').text();
+		lttr = $('#powerball_numbers').text();
 	}
 	if(cmd == 'regexp')
 	{

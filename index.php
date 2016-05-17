@@ -180,7 +180,11 @@ $('[data-toggle=popover]').on('click', function (e) {
 });
 </script>
 <script>
-$('input').attr('autocomplete','off');
+$(document).ready(function () {
+	$(document).on('focus',':input', function(){
+		$(this).attr('autocomplete','off');
+	});
+});
 </script>
 <script>
 $('.dropdown').mousedown( function () {

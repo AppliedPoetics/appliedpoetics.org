@@ -182,3 +182,15 @@ function shareTool(shareForm) {
 	$('#shareFld').val('http://www.appliedpoetics.org/?ref='+tool);
 	return false;
 }
+
+function restrictNumberKeys(formElement) {
+	var input = $(formElement);
+	input.on('keydown', function(event) {
+		var key = event.charCode || event.keyCode;
+		if(key >= 48 &&  key <= 57 || key == 8 || key == 46 || key == 37 || key == 39){
+			return key;
+		} else {
+			return false;
+		}
+	});
+}

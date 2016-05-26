@@ -174,7 +174,7 @@ function firstTimeSteps(step) {
 }
 
 function functionLink(fx) {
-	$('#'+fx).click();
+	$('#'+fx).click(); 
 }
 
 function shareTool(shareForm) {
@@ -187,7 +187,7 @@ function restrictNumberKeys(formElement) {
 	var input = $(formElement);
 	input.on('keydown', function(event) {
 		var key = event.charCode || event.keyCode;
-		if(key >= 48 &&  key <= 57 || key == 8 || key == 46 || key == 37 || key == 39){
+		if(key >= 48 &&  key <= 57 || key == 8 || key == 46 || key == 37 || key == 39 || key >= 96 && key <= 105){
 			return key;
 		} else {
 			return false;

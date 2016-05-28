@@ -5,10 +5,25 @@ var step = 1;
 var preHelpText = "";
 
 $(document).on('click', function(event){
+	try{
+		var width = $(event.target).popover().width();
+		var id = $(event.target).context.id;
+		var parentid = $('#'+id).last().parent().prop('id');
+		if(parentid){
+			var offsetleft = $('#'+parentid).offset();
+			if( (width+offsetleft.left) >= ($(window).width() - 150) ){
+				var options = { placement: function () { return "left"; } };
+				$(event.target).popover(options);
+			} else {
+				//alert((width + offsetleft.left) + " " + ($(window).width() - 150) );
+			}
+		}
+	}
+	catch(err) {
+	}
 	$('.dropdown-content').not(this).popover('toggle');
 	$(event.target).popover('toggle');
 });
-
 
 $(document).ready( function () {
 	$('#undoCtrl').popover('hide');
@@ -19,17 +34,14 @@ $(document).ready( function () {
 });
 
 $(document).ready( function () {
-	$('.dropdown-content a').on('click',function(e){	
+	$('.dropdown-content a').each(function(){
 		var fxID = $(this).attr('id');
 		var popoverID = $(this).attr('aria-describedby');
-		if($('#' + popoverID + ' .tool-explain .share').length < 1){
-			$('#' + popoverID + ' .tool-explain').append('<br/><div class = "share">Share this function: <a href = "#" onclick="window.open(\'https://www.facebook.com/sharer/sharer.php?u=http%3A//www.appliedpoetics.org/?ref='+fxID+'\',\'apshare\',\'width = 550, height = 250\'); return false"><img src = "img/ap-facebook-ico.png">to Facebook</a><a href = "#" onclick="window.open(\'https://twitter.com/home?status=http%3A//www.appliedpoetics.org/?ref='+fxID+'\',\'apshare\',\'width = 550, height = 250\'); return false"><img src = "img/ap-twitter-ico.png">to Twitter</a></div>');
-		} else {
-			$('#' + popoverID + ' .tool-explain .share').show()
+		if($('#' + popoverID + '.share').length < 1){
+			$(this).attr('data-content',$(this).attr('data-content') + '<div class = "share">Share this function: <a href = "#" onclick="window.open(\'https://www.facebook.com/sharer/sharer.php?u=http%3A//www.appliedpoetics.org/?ref='+fxID+'\',\'apshare\',\'width = 550, height = 250\'); return false"><img src = "img/ap-facebook-ico.png">to Facebook</a><a href = "#" onclick="window.open(\'https://twitter.com/home?status=http%3A//www.appliedpoetics.org/?ref='+fxID+'\',\'apshare\',\'width = 550, height = 250\'); return false"><img src = "img/ap-twitter-ico.png">to Twitter</a></div>');
 		}
 	});
 });
-	
 
 function expandMenu(menuName){
 	var menus = ["oulipo-menu","grammar-menu","number-menu","pop-menu","algo-menu","stat-menu","text-menu","share-menu"]

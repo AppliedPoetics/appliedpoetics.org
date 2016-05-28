@@ -115,8 +115,8 @@
 				<div class = "dropdown" tabindex = "0"	onclick = 'javascript: expandMenu("stat"); wordCount(); charCount();'>
 					<button class = "drop-btn">Statistics</button>
 					<div class = "dropdown-content" id = "stat-menu">
-						<a href = "#" onclick = "javascript: wordCount();" id = "wordCount">Word Count</a>
-						<a href = "#" onclick = "javascript: charCount();" id = "charCount">Char. Count</a>
+						<a href = "#" id = "wordCount">Word Count</a>
+						<a href = "#" id = "charCount">Char. Count</a>
 					</div>
 				</div>
 				<div class = "dropdown" tabindex = "0" onclick = 'javascript: expandMenu("text");'>

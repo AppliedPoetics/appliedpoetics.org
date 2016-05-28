@@ -5,6 +5,8 @@ var step = 1;
 var preHelpText = "";
 
 $(document).on('click', function(event){
+	$('.dropdown-content').not(this).popover('toggle');
+	$(event.target).popover('toggle');
 	try{
 		var width = $(event.target).popover().width();
 		var id = $(event.target).context.id;
@@ -12,17 +14,18 @@ $(document).on('click', function(event){
 		if(parentid){
 			var offsetleft = $('#'+parentid).offset();
 			if( (width+offsetleft.left) >= ($(window).width() - 150) ){
-				var options = { placement: function () { return "left"; } };
-				$(event.target).popover(options);
+				var popoverID = $(event.target).attr('aria-describedby');
+				$('#'+popoverID).attr('class','popover fade left in');
+				$('#'+popoverID).css({left: offsetleft.left*-.25});
+				console.log(popoverID + ": Outside screen size...");
 			} else {
 				//alert((width + offsetleft.left) + " " + ($(window).width() - 150) );
 			}
 		}
 	}
 	catch(err) {
+		console.log(err.toString());
 	}
-	$('.dropdown-content').not(this).popover('toggle');
-	$(event.target).popover('toggle');
 });
 
 $(document).ready( function () {
@@ -36,9 +39,11 @@ $(document).ready( function () {
 $(document).ready( function () {
 	$('.dropdown-content a').each(function(){
 		var fxID = $(this).attr('id');
-		var popoverID = $(this).attr('aria-describedby');
-		if($('#' + popoverID + '.share').length < 1){
-			$(this).attr('data-content',$(this).attr('data-content') + '<div class = "share">Share this function: <a href = "#" onclick="window.open(\'https://www.facebook.com/sharer/sharer.php?u=http%3A//www.appliedpoetics.org/?ref='+fxID+'\',\'apshare\',\'width = 550, height = 250\'); return false"><img src = "img/ap-facebook-ico.png">to Facebook</a><a href = "#" onclick="window.open(\'https://twitter.com/home?status=http%3A//www.appliedpoetics.org/?ref='+fxID+'\',\'apshare\',\'width = 550, height = 250\'); return false"><img src = "img/ap-twitter-ico.png">to Twitter</a></div>');
+		if(fxID !== "wordCount" && fxID !== "charCount"){
+			var popoverID = $(this).attr('aria-describedby');
+			if($('#' + popoverID + '.share').length < 1){
+				$(this).attr('data-content',$(this).attr('data-content') + '<div class = "share">Share this function: <a href = "#" onclick="window.open(\'https://www.facebook.com/sharer/sharer.php?u=http%3A//www.appliedpoetics.org/?ref='+fxID+'\',\'apshare\',\'width = 550, height = 250\'); return false"><img src = "img/ap-facebook-ico.png">to Facebook</a><a href = "#" onclick="window.open(\'https://twitter.com/home?status=http%3A//www.appliedpoetics.org/?ref='+fxID+'\',\'apshare\',\'width = 550, height = 250\'); return false"><img src = "img/ap-twitter-ico.png">to Twitter</a></div>');
+			}
 		}
 	});
 });

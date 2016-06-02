@@ -24,33 +24,33 @@
 #
 ###########################################################
  
-use Getopt::Std; 
+use Getopt::Std;
+use CGI::Carp qw(fatalsToBrowser); 
 getopts ("g:o:");
 
 # Set the max letters of output.
-$MAXWORDS = ($opt_o)? $opt_o : 25;
-
+$MAXWORDS = ($opt_o)? $opt_o : 100;
+print "start.";
 # Set the granularity
-$GRAIN = ($opt_g)? $opt_g : 3; if( $GRAIN < 1 ) { die "granularity must be >= 1\n"; }
+$GRAIN = ($opt_g)? $opt_g : 3; 
+if( $GRAIN < 1 ) { die "granularity must be >= 1\n"; }
 
 # Set number of letters per line in output
-$LETTERS_LINE = 65;
-
-# Set $_ as $opt_t
-
-#$_ = $opt_t ;
+$LETTERS_LINE = 70;
 
 #
 # pull in the text, break it into words, put in word array
 #
 while(<>) { 
+
 	chop; 
 	$text = $_ . " ";
 	#$text = $opt_t;
 
-#
-# regularize whitespace in order to split text into words
-#
+	#
+	# regularize whitespace in order to split text into words
+	#
+	
 	$text =~ s/^\s+//g; # remove leading blanks 
 	$text =~ s/\s+/ /g; # convert any whitespace to blanks 
 	$text =~ s/ +/ /g; # eliminate any multiple blanks... 
@@ -85,10 +85,7 @@ for ($j = 0; $j < $loopmax; $j++) {
 $buffer="";
 
 # start with a seed of the first $GRAIN words from the text
-for ($i = 0; $i < $GRAIN; $i ++) { 
-	push @lastwords, $textwords[$i]; 
-	$buffer .= ($textwords[$i] . " ");
-}
+for ($i = 0; $i < $GRAIN; $i++) { push @lastwords, $textwords[$i]; $buffer .= ($textwords[$i] . " ");}
 
 # now, do the actual generation
 for ($i = 0; $i < $MAXWORDS; $i++) {
@@ -110,6 +107,7 @@ if ( exists $frequency_table{$key_string} ) {
 	$buffer .= ($nextword . " "); 
 	if( ( length $buffer ) >= $LETTERS_LINE ) { 
 		print $buffer,"\n"; 
+		open(my $fh, '>>markov.txt'); say $fh $buffer; close $fh;
 		$buffer="";
 }
 
@@ -128,5 +126,6 @@ else { # we drew a blank
 	}
 }
 } # end $i loop
-if( (length $buffer) > 0) { print $buffer, "\n"; $buffer = ""; }
+if((length $buffer) > 0) { print $buffer, "\n"; $buffer = ""; }
+unlink $ARGV;
 exit (0);

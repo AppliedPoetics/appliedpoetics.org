@@ -54,6 +54,7 @@ select { width: 110%; font-size: 100%; font-family: 'proxima-nova'; background: 
 .popover-title {color: #222;}
 /*.popover-title { background: #009F8F; } */
 .popover-content input[type="submit"] { width: 100%; background: #009F8F; text-transform: uppercase; border: none; margin-top: 10px; color: #fff; font-family: 'proxima-nova'; }
+.popover-content input[type="submit"]:focus { background: #FFCC11; }
 
 #scrollCtrl { position: absolute; z-index: 1000; right: 0; bottom: 0; }
 #scrollTop { float: left; padding: 10px; color: #f9f9f9; background: #222; cursor: pointer; font-family: 'proxima-nova'; text-transform: uppercase; font-weight: 700;}

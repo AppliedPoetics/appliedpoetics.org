@@ -265,3 +265,46 @@ function delFile(filename){
 		error: function(xhr,ajaxOptions,thrownError) { console.log(xhr.status + " " + xhr.responseText); } 
 	});
 }
+
+function updatePointer(update,expire){
+	var isCookie = getCookie(update);
+	console.log(isCookie);
+	if( !isCookie ){	
+		$.ajax({
+			url: '../majorupdate.php',
+			type: 'GET',
+			dataType: 'text',
+			success: function(data) { $('#updateModal-body').html(data); }
+		});
+		$('#updateModal').modal('show');
+		setCookie(update);
+	}
+}
+
+function setCookie(update,expire){
+	var d = new Date();
+	d.setTime(d.getTime() + (180*24*60*60*1000));
+	var expires = "expires="+d.toUTCString();
+	document.cookie = "update="+update+";"+ expires;
+}
+
+function getCookie(update){
+	var name = "update=";
+	var ca = document.cookie.split(';');
+	for(i=0;i<ca.length;i++){
+		var c = ca[i];
+		while(c.charAt(0) == ' '){
+			c = c.substring(1);
+			if(c.indexOf(name) == 0){
+				var date = c.substring(name.length,c.length);
+				if(update>date){
+					console.log("Write cookie.");
+					return false;
+				}else{
+					return true;
+				}
+			}
+		}
+	}
+	return false;
+}

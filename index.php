@@ -79,7 +79,6 @@
   };
 
   function attachSignin(element) {
-    console.log(element.id);
     auth2.attachClickHandler(element, {},
         function(googleUser) {
 				var id = googleUser.getBasicProfile().getId();
@@ -110,6 +109,8 @@ function appLoaded(appLoadedEventArgs) {
 	echo "<div id = 'startup-scrim' style = 'display: block;' onclick = 'javascript: firstTime();'><img src = 'img/ap-first-time-overlay.png' style = 'position: absolute; width: 100%;' id = 'firstTimeImg'><img src = 'img/ap-first-time-overlay-step1.png' style = 'display: none; position: absolute; width: 60%; right:0; bottom: 0;' id = 'step-one'><img src = 'img/ap-first-time-overlay-step2.png' style = 'display: none; position: absolute; width: 60%; right:0; bottom: 0;' id = 'step-two'><img src = 'img/ap-first-time-overlay-step3.png' style = 'display: none; position: absolute; width: 60%; right:0; bottom: 0;' id = 'step-three'><img src = 'img/ap-first-time-overlay-step4.png' style = 'display: none; position: absolute; width: 60%; right:0; bottom: 0;' id = 'step-four'></div>";
 }
 ?>
+<script>
+</script>
 <script>$(document).ready(function () {var ref = $('#referral').val(); if(ref){ $( '#'+ref.toLowerCase() ).click(); } });</script>
 <div id = "menu">
 		<div id = "masthead">
@@ -194,11 +195,10 @@ function appLoaded(appLoadedEventArgs) {
 					<a class = "file-opts" id = "default" href = "#" data-toggle="popover" data-html="true" title = "Default Text" data-content = "<form onsubmit = 'return runTool(this)' action = '#'><input type = 'hidden' name = 'cmd' value = 'defaulttext' id = 'cmd'><input type ='Submit' value = 'Run'><div class = 'tool-explain'>Don't have a text in mind? Use one of our favorites: Robert Louis Stevenson's <i>The Strange Case of Dr. Jekyll and Mr. Hyde</i>.</div></form>">Default Text</a>
 					</div>
 				</div>
-				<div class = "dropdown" tabindex = "0"	onclick = ''>
+				<!-- <div class = "dropdown" tabindex = "0"	onclick = ''>
 					<button class = "drop-btn" onclick = 'javascript: window.open("http://mantis.appliedpoetics.org");'><img src = '/img/ap-mantis-logo.png' style = "margin-right: 5px; height: 13px;">REPORT BUGS!</button>
-				</div>
+				</div> -->
 				<div class = "dropdown" tabindex = "0" onclick = ''>
-					<!-- <button class = "drop-btn file-opts" onclick = 'startLogin()' id = 'login-btn'> <img src = '/img/ap-menu-loading.gif' style = "margin-right: 5px; height: 4px;"></button> -->
 					<button class = "drop-btn file-opts" id = 'login-btn' data-toggle="modal" data-target="#loginModal" name = 'login-btn'>Log In</button>
 				</div>
 			</div>
@@ -253,6 +253,11 @@ $('.dropdown').mousedown( function () {
 	$('.dropdown').focus();
 });
 </script>
+<?php
+if(!$firstTimeUser && !$ref){
+	echo "<script> $(document).ready(function() { var update = Date.parse($('#lastUpdate').val()); var expire = new Date(); expire.setTime = (expire.getTime()*24*60*60*1000); updatePointer(update,expire);});</script>";
+}
+?>
 <div id = "scrollCtrl">
 <div id = "saveCtrl"><span class="glyphicon glyphicon-save-file" data-toggle="modal" data-target="#saveModal" style = "background: none; border: none;" ></span></div>
 <div id = "loadCtrl" onclick = "javascript:loadNotes();"><span class = "glyphicon glyphicon-level-up" data-toggle="modal" data-target="#loadModal" style = "background: none; border: none;" ></span></div>
@@ -363,9 +368,35 @@ $('.dropdown').mousedown( function () {
   </div>
 </div>
 <!-- LOGIN MODAL -->
+
+<!-- LOGIN MODAL -->
+<div id="updateModal" class="modal fade" role="dialog">
+  <div class="modal-dialog">
+
+    <!-- Modal content-->
+    <div class="modal-content">
+      <div class="popover-title">
+        <button type="button" class="close" data-dismiss="modal">&times;</button>
+        <h4 class="popover-title" style = "border-bottom: none;">New Features!</h4>
+      </div>
+		  <div class="modal-body" id = "updateModal-body">
+			<div style = "text-align: center;">
+				<div><img src = "/img/ap-menu-loading.gif"></div>
+			</div>
+		  </div>
+      <div class="modal-footer">
+        <button type="button" class="btn btn-default" data-dismiss="modal">Close</button>
+      </div>
+    </div>
+
+  </div>
+</div>
+<!-- LOGIN MODAL -->
+
 <script>startApp();</script>
 <input type = 'hidden' value = '' id = 'userID'></input>
 <div id = "loading"><img src = 'img/ap-type-loading.gif' width="101" height="159"></div>
 <div id = 'startup-scrim' style = 'display: none;' onclick = 'javascript: firstTime();'><img src = 'img/ap-first-time-overlay.png' style = 'position: absolute; width: 100%;' id = 'firstTimeImg'><img src = 'img/ap-first-time-overlay-step1.png' style = 'display: none; position: absolute; width: 60%; right:0; bottom: 0;' id = 'step-one'><img src = 'img/ap-first-time-overlay-step2.png' style = 'display: none; position: absolute; width: 60%; right:0; bottom: 0;' id = 'step-two'><img src = 'img/ap-first-time-overlay-step3.png' style = 'display: none; position: absolute; width: 60%; right:0; bottom: 0;' id = 'step-three'><img src = 'img/ap-first-time-overlay-step4.png' style = 'display: none; position: absolute; width: 60%; right:0; bottom: 0;' id = 'step-four'></div>
+<?php echo "<input type = 'hidden' value = '".date("Y/m/d H:i:s", filemtime('majorupdate.php'))."' id = 'lastUpdate'>"; ?>
 </body>
 </html>

@@ -3,23 +3,29 @@
 <html>
 <head>
 <title>Applied Poetics</title>
+<link rel="stylesheet" href="https://cdnjs.cloudflare.com/ajax/libs/font-awesome/4.6.3/css/font-awesome.css">
 <link rel="stylesheet" type="text/css" href= "https://maxcdn.bootstrapcdn.com/bootstrap/3.3.6/css/bootstrap.min.css">
 <link rel="stylesheet" type="text/css" href="css/style.css">
+<link rel="stylesheet" type="text/css" href="css/bootstrap-social.css">
 <script src="https://use.typekit.net/vwg0vgf.js"></script>
 <script>try{Typekit.load({ async: true });}catch(e){}</script>
 <script src="https://ajax.googleapis.com/ajax/libs/jquery/2.2.0/jquery.min.js"></script>
 <script src = "https://maxcdn.bootstrapcdn.com/bootstrap/3.3.6/js/bootstrap.min.js"></script>
+<script type="text/javascript" src="//js.live.net/v5.0/wl.js"></script>
+<script src="https://apis.google.com/js/api:client.js"></script>
 <meta property="og:image" content="http://www.appliedpoetics.org/img/ap-og-img.png"></meta>
 <meta property="og:site_name" content="Applied Poetics"></meta>
 <meta property="og:url" content="http://www.appliedpoetics.org"></meta>
 <meta property="og:description" content="The constrained writing platform where something's always bubbling up!"></meta>
 <meta property="og:title" content = "Applied Poetics"></meta>
-<!--<script src = "javascript/line-limit.js"></script>-->
-<script src = "javascript/line-numbers.js"></script>
-<script src = "javascript/form-functions.js"></script>
-<script src = "javascript/text-stats.js"></script>
-<script src = "javascript/function-json.js"></script>
-<script src = "javascript/function-ui.js"></script>
+<meta name="description" content="The constrained writing platform where something's always bubbling up!" />
+<meta name="google-signin-client_id" content="appliedpoetics-1378.apps.googleusercontent.com">
+<script src = "js/line-numbers.js"></script>
+<script src = "js/form-functions.js"></script>
+<script src = "js/text-stats.js"></script>
+<script src = "js/function-json.js"></script>
+<script src = "js/function-ui.js"></script>
+<script src = "js/function-login.js"></script>
 <link rel="icon" href="img/favicon.ico" type="image/x-icon" />
 <script>
   (function(i,s,o,g,r,a,m){i['GoogleAnalyticsObject']=r;i[r]=i[r]||function(){
@@ -34,6 +40,64 @@
 <?php $firstTimeUser = !isset($_COOKIE["FirstTime"]); setcookie("FirstTime",1,2000000000); ?>
 </head>
 <body>
+<!-- LOGIN SCRIPTS -->
+	<!-- FACEBOOK SDK -->
+<script>
+  window.fbAsyncInit = function() {
+	  FB.init({
+		appId      : '1785071761712564',
+		cookie     : true,  // enable cookies to allow the server to access 
+							// the session
+		xfbml      : true,  // parse social plugins on this page
+		version    : 'v2.5' // use graph api version 2.5
+	  });
+  };
+
+  // Load the SDK asynchronously
+  (function(d, s, id) {
+    var js, fjs = d.getElementsByTagName(s)[0];
+    if (d.getElementById(id)) return;
+    js = d.createElement(s); js.id = id;
+    js.src = "//connect.facebook.net/en_US/sdk.js";
+    fjs.parentNode.insertBefore(js, fjs);
+  }(document, 'script', 'facebook-jssdk'));
+</script>
+	<!-- GOOGLE SDK -->
+<script>
+  var googleUser = {};
+  var startApp = function() {
+    gapi.load('auth2', function(){
+      // Retrieve the singleton for the GoogleAuth library and set up the client.
+      auth2 = gapi.auth2.init({
+        client_id: '643712538601-c6p38mgn1rm2n94neibiag290n37fbug.apps.googleusercontent.com',
+        cookiepolicy: 'single_host_origin',
+        // Request scopes in addition to 'profile' and 'email'
+        //scope: 'additional_scope'
+      });
+      attachSignin(document.getElementById('googleBtn'));
+    });
+  };
+
+  function attachSignin(element) {
+    console.log(element.id);
+    auth2.attachClickHandler(element, {},
+        function(googleUser) {
+				var id = googleUser.getBasicProfile().getId();
+				var email = googleUser.getBasicProfile().getEmail();
+				var imgURL = googleUser.getBasicProfile().getImageUrl();
+				startGoogleLogin(id,email,imgURL);
+        }, function(error) {
+          alert(JSON.stringify(error, undefined, 2));
+        });
+  }
+  </script>
+	<!-- MICROSOFT SDK -->
+<script type="text/javascript">
+function appLoaded(appLoadedEventArgs) {
+    alert('app tag initialized');
+}
+</script>
+<!-- LOGIN SCRIPTS -->
 <?php 
 	$ref = rawurldecode($_GET['ref']);
 	if(!$firstTimeUser && $ref){
@@ -133,6 +197,10 @@
 				<div class = "dropdown" tabindex = "0"	onclick = ''>
 					<button class = "drop-btn" onclick = 'javascript: window.open("http://mantis.appliedpoetics.org");'><img src = '/img/ap-mantis-logo.png' style = "margin-right: 5px; height: 13px;">REPORT BUGS!</button>
 				</div>
+				<div class = "dropdown" tabindex = "0" onclick = ''>
+					<!-- <button class = "drop-btn file-opts" onclick = 'startLogin()' id = 'login-btn'> <img src = '/img/ap-menu-loading.gif' style = "margin-right: 5px; height: 4px;"></button> -->
+					<button class = "drop-btn file-opts" id = 'login-btn' data-toggle="modal" data-target="#loginModal" name = 'login-btn'>Log In</button>
+				</div>
 			</div>
 		</div>
 <div id = "page-wrapper">
@@ -147,7 +215,7 @@
 		</script>	
 	</div>
 </div>
-<div id = "entryContent-warning">Sorry, but we have to limit input to 200 lines; the server's hampster can't run any faster!</div>
+<div id = "entryContent-warning"></div>
 <script>
 	$(window).resize(function() {
 		createTextAreaWithLines('editContent');
@@ -186,6 +254,8 @@ $('.dropdown').mousedown( function () {
 });
 </script>
 <div id = "scrollCtrl">
+<div id = "saveCtrl"><span class="glyphicon glyphicon-save-file" data-toggle="modal" data-target="#saveModal" style = "background: none; border: none;" ></span></div>
+<div id = "loadCtrl" onclick = "javascript:loadNotes();"><span class = "glyphicon glyphicon-level-up" data-toggle="modal" data-target="#loadModal" style = "background: none; border: none;" ></span></div>
 <div id = "undoCtrl" onclick = "javascript: execUndo();"><span class = "glyphicon glyphicon-step-backward"></span></div>
 <div id = "redoCtrl" onclick = "javascript: execRedo();"><span class = "glyphicon glyphicon-step-forward"></span></div>
 <div id = "helpCtrl" onclick = "javascript: firstTime();"><span class = "glyphicon glyphicon-question-sign"></span></div>
@@ -218,6 +288,83 @@ $('.dropdown').mousedown( function () {
 	</div>
 </div>
 <div id = "scrim" onclick = "javascript: tosPopover();"></div>
+<!-- SAVE MODAL -->
+<div id="saveModal" class="modal fade" role="dialog">
+  <div class="modal-dialog">
+
+    <!-- Modal content-->
+    <div class="modal-content">
+      <div class="popover-title">
+        <button type="button" class="close" data-dismiss="modal">&times;</button>
+        <h4 class="popover-title" style = "border-bottom: none;">Save Text</h4>
+      </div>
+      <div class="modal-body">
+		<P><input type = 'text' id = 'saveName' placeholder = 'Name this text.' style = "border: none; border-bottom: #222 1px solid; box-shadow: none;"></input></p>
+		<p><input type = 'text' id = 'saveCmmt' placeholder = 'Leave a comment about this text.' style = "border: none; border-bottom: #222 1px solid; box-shadow:none; "></input></p>
+      </div>
+      <div class="modal-footer">
+		<button type="button" class = "btn btn-default" data-dismiss="modal" onclick = "javascript: saveNote();">Save</button>
+        <button type="button" class="btn btn-default" data-dismiss="modal">Close</button>
+      </div>
+    </div>
+
+  </div>
+</div>
+<!-- SAVE MODAL -->
+
+<!-- LOAD MODAL -->
+<div id="loadModal" class="modal fade" role="dialog">
+  <div class="modal-dialog">
+
+    <!-- Modal content-->
+    <div class="modal-content">
+      <div class="popover-title">
+        <button type="button" class="close" data-dismiss="modal">&times;</button>
+        <h4 class="popover-title" style = "border-bottom: none;">Load Text</h4>
+      </div>
+      <div class="modal-body" id = "loadModal-body">
+      </div>
+      <div class="modal-footer">
+        <button type="button" class="btn btn-default" data-dismiss="modal">Close</button>
+      </div>
+    </div>
+
+  </div>
+</div>
+<!-- LOAD MODAL -->
+
+<!-- LOGIN MODAL -->
+<div id="loginModal" class="modal fade" role="dialog">
+  <div class="modal-dialog">
+
+    <!-- Modal content-->
+    <div class="modal-content">
+      <div class="popover-title">
+        <button type="button" class="close" data-dismiss="modal">&times;</button>
+        <h4 class="popover-title" style = "border-bottom: none;">Choose your login method</h4>
+      </div>
+		  <div class="modal-body" id = "loginModal-body" style = 'text-align: center;'>
+			<div class = "login-type">
+				<a href = "#" class="btn btn-block btn-social btn-facebook" onclick = "javascript: chooseLogin('Facebook');" data-dismiss = "modal">
+					<span class="fa fa-facebook"></span>Facebook
+				</a>
+			</div>
+			<div id = "googleBtn" class = "login-type">
+				<a class="btn btn-block btn-social btn-google" onclick = "javascript: chooseLogin('Google');" data-dismiss = "modal" data-dismiss="modal">
+					<span class="fa fa-google"></span>Google
+				</a>
+			</div>
+		  </div>
+      <div class="modal-footer">
+        <button type="button" class="btn btn-default" data-dismiss="modal">Close</button>
+      </div>
+    </div>
+
+  </div>
+</div>
+<!-- LOGIN MODAL -->
+<script>startApp();</script>
+<input type = 'hidden' value = '' id = 'userID'></input>
 <div id = "loading"><img src = 'img/ap-type-loading.gif' width="101" height="159"></div>
 <div id = 'startup-scrim' style = 'display: none;' onclick = 'javascript: firstTime();'><img src = 'img/ap-first-time-overlay.png' style = 'position: absolute; width: 100%;' id = 'firstTimeImg'><img src = 'img/ap-first-time-overlay-step1.png' style = 'display: none; position: absolute; width: 60%; right:0; bottom: 0;' id = 'step-one'><img src = 'img/ap-first-time-overlay-step2.png' style = 'display: none; position: absolute; width: 60%; right:0; bottom: 0;' id = 'step-two'><img src = 'img/ap-first-time-overlay-step3.png' style = 'display: none; position: absolute; width: 60%; right:0; bottom: 0;' id = 'step-three'><img src = 'img/ap-first-time-overlay-step4.png' style = 'display: none; position: absolute; width: 60%; right:0; bottom: 0;' id = 'step-four'></div>
 </body>

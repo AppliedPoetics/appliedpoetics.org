@@ -211,3 +211,57 @@ function restrictNumberKeys(formElement) {
 		}
 	});
 }
+
+function saveNote(){
+	if( $('#userID').val() ){
+		$.ajax({
+				url: '../accounts/ap-notes.php',
+				type: 'POST',
+				data: { user: $('#userID').val(), name: $('#saveName').val(), comment: $('#saveCmmt').val(), txt: $('#editContent').val() },
+				dataType: 'text',
+				success: function(data) {$('#entryContent-warning').html($('#saveName').val() + " saved to user file."); document.getElementById("entryContent-warning").style.opacity = 1;},
+				error: function(xhr,ajaxOptions,thrownError) { console.log(xhr.status + " " + xhr.responseText); }
+			});
+		$('#saveCtrl').html("<span class = 'glyphicon glyphicon-floppy-saved'></span>");
+		setInterval(function(){ 
+			document.getElementById("entryContent-warning").style.opacity = 0;
+			$('#saveCtrl').html("<span class = 'glyphicon glyphicon-save-file'></span>");
+		},3500);
+	} else {
+		$('#entryContent-warning').html("Cannot save file—you haven't connected your Facebook account!"); 
+		document.getElementById("entryContent-warning").style.opacity = 1;
+		setInterval(function(){ 
+			document.getElementById("entryContent-warning").style.opacity = 0;
+			$('#saveCtrl').html("<span class = 'glyphicon glyphicon-save-file'></span>");
+		},3500);
+	}
+}
+
+function loadNotes(){
+	$.ajax({
+		url: '../accounts/ap-notes-load.php',
+		type: 'POST',
+		data: { user: $('#userID').val() },
+		dataType: 'text',
+		success: function(data) { $('#loadModal-body').html(data); },
+		error: function(xhr,ajaxOptions,thrownError) { console.log(xhr.status + " " + xhr.responseText); }
+	});
+}
+
+function loadFile(filename){
+	$.ajax({
+		url: '../accounts/' + $('#userID').val() + '/' + filename,
+		type: 'GET',
+		success: function(data) { $('#editContent').val(data.replace(new RegExp("\\\\", "g"), "")); }
+	});
+}
+
+function delFile(filename){
+	$.ajax({
+		url: '../accounts/ap-notes-mgmt.php',
+		type: 'POST',
+		data: { user: $('#userID').val(), file: filename, act: 'rm' },
+		success: function(data) { $('#entryContent-warning').html(filename + " deleted successfully.") },
+		error: function(xhr,ajaxOptions,thrownError) { console.log(xhr.status + " " + xhr.responseText); } 
+	});
+}

@@ -7,7 +7,7 @@ cgitb.enable()
 substitutions = [('a','a'),('b','be/bee'),('c','sea/see'),('g','gee'),('i','i'),('o','oh'),('q','queue/cue'),('r','are'),('t','tee'),('u','you/ewe'),('y','why')]
 regex = re.compile("[a-z]*")
 
-def getHex(text):
+def spellings(text):
         translated = []
         words = text.split()
         for word in words:

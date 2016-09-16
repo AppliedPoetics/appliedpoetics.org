@@ -249,10 +249,12 @@ function loadNotes(){
 }
 
 function loadFile(filename){
+	$('#loading').show();
 	$.ajax({
 		url: '../accounts/' + $('#userID').val() + '/' + filename,
 		type: 'GET',
-		success: function(data) { $('#editContent').val(data.replace(new RegExp("\\\\", "g"), "")); }
+		success: function(data) { $('#editContent').val(data.replace(new RegExp("\\\\", "g"), "")); $('#loading').hide();},
+		error: function(data) { $('#loading').hide(); }
 	});
 }
 

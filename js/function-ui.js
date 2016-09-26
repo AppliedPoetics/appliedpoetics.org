@@ -225,14 +225,16 @@ function saveNote(){
 		$('#saveCtrl').html("<span class = 'glyphicon glyphicon-floppy-saved'></span>");
 		setInterval(function(){ 
 			document.getElementById("entryContent-warning").style.opacity = 0;
-			$('#saveCtrl').html("<span class = 'glyphicon glyphicon-save-file'></span>");
+			$('#saveCtrl').html('<span class="glyphicon glyphicon-save-file" data-toggle="modal" data-target="#saveModal" style = "background: none; border: none;" ></span>');
+			$('#saveName').val("");
+			$('#saveCmmt').val("");
 		},3500);
 	} else {
 		$('#entryContent-warning').html("Cannot save file—you haven't connected your Facebook account!"); 
 		document.getElementById("entryContent-warning").style.opacity = 1;
 		setInterval(function(){ 
 			document.getElementById("entryContent-warning").style.opacity = 0;
-			$('#saveCtrl').html("<span class = 'glyphicon glyphicon-save-file'></span>");
+			$('#saveCtrl').html('<span class="glyphicon glyphicon-save-file" data-toggle="modal" data-target="#saveModal" style = "background: none; border: none;" ></span>');
 		},3500);
 	}
 }

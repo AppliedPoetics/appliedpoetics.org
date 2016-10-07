@@ -56,6 +56,36 @@ function runTool(inc_form) {
 			success: function(data) { $('#editContent').val(data); unstackMe(data); $('#loading').hide();},
 			error: function(xhr,ajaxOptions,thrownError) { console.log(xhr.status + " " + xhr.responseText); }
 		});
+	} else if (cmd == 'colorfield') {
+		files = $('input[type=file]').get(0).files;
+		event.stopPropagation();
+		event.preventDefault();
+		var data = new FormData();
+		$.each(files,function(key,value){
+			data.append(key,value);
+		});
+		$.ajax({
+			url: 'ap-file.php?files',
+			type: 'POST',
+			data: data,
+			cache: false,
+			dataType: 'json',
+			processData: false,
+			contentType: false,
+			success: function(data) {
+				var filename = data.success;
+				$.ajax({
+				url: 'ap-py.php',
+				type: 'POST',
+				timeout: 120000,	
+				data: { cmd: cmd, txt: inc_text, lttr: filename, word: lttr }, 
+				dataType: 'text',
+				success: function(data) { $('#editContent').val(data); unstackMe(data); $('#loading').hide();},
+				error: function(xhr,ajaxOptions,thrownError) { console.log(xhr.status + " " + xhr.responseText); }
+				});
+			},
+			error: function (data) { console.log("?"); $('#loading').hide(); }
+		});
 	} else {
 		// REGULAR TWO-PARAMETER PYTHON
 		$.ajax({

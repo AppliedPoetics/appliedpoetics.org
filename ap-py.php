@@ -36,7 +36,7 @@ $file = fopen($filename,"w");
 		$cmd_line = 'python python/'.$cmd.'.py -t /var/www/html/'.$filename.' -l "'.$lttr.'"';
 	} elseif ($cmd == 'partsofspeech') {
 		$cmd_line = 'python python/'.$cmd.'.py "/var/www/html/'.$filename.'" "'.$lttr.'"';
-	} elseif ($cmd == 'concordance') {
+	} elseif ($cmd == 'concordance' || $cmd == 'colorfield') {
 		$cmd_line = 'python python/'.$cmd.'.py -t /var/www/html/'.$filename.' -l '.$lttr.' -w "'.$word.'"';
 	} elseif ($cmd == 'texturl') {
 		$cmd_line = 'python python/'.$cmd.'.py -t "'.$url.'"';

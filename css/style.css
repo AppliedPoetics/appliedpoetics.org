@@ -53,7 +53,7 @@ select { width: 110%; font-size: 100%; font-family: 'proxima-nova'; background: 
 .popover { color: #222; width: 200px;}
 .popover-title {color: #222;}
 /*.popover-title { background: #009F8F; } */
-.popover-content input[type="submit"] { width: 100%; background: #009F8F; text-transform: uppercase; border: none; margin-top: 10px; color: #fff; font-family: 'proxima-nova'; }
+.popover-content input[type="submit"], .form-button { width: 100%; background: #009F8F; text-transform: uppercase; border: none; margin-top: 10px; color: #fff; font-family: 'proxima-nova'; }
 .popover-content input[type="submit"]:focus { background: #FFCC11; }
 
 #scrollCtrl { position: absolute; z-index: 1000; right: 0; bottom: 0; }
@@ -108,3 +108,9 @@ select { width: 110%; font-size: 100%; font-family: 'proxima-nova'; background: 
 .file-opt:hover { background-color: #FFCC11;}
 
 .login-type { display: inline-block; width: 30%; }
+
+.fileupload { position: relative; overflow: hidden; margin-top: 10px; width: 100%; }
+.fileupload input.upload { position: absolute; top: 0; right: 0; margin: 0; padding: 0; font-size: 20px; cursor: pointer; opacity: 0; filter: alpha(opacity=0); }
+
+.btn-primary { background-color: #009F8F; border-color: #009F8F; font-family: 'proxima-nova'; text-transform: uppercase; border-radius: 0px; -moz-border-radius: 0px;}
+.btn-primary:hover { background-color: #FFCC11; border-color: #FFCC11; }

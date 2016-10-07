@@ -17,7 +17,7 @@ $(document).on('click', function(event){
 				var popoverID = $(event.target).attr('aria-describedby');
 				$('#'+popoverID).attr('class','popover fade left in');
 				$('#'+popoverID).css({left: offsetleft.left*-.25});
-				console.log(popoverID + ": Outside screen size...");
+				//console.log(popoverID + ": Outside screen size...");
 			} else {
 				//alert((width + offsetleft.left) + " " + ($(window).width() - 150) );
 			}
@@ -46,6 +46,10 @@ $(document).ready( function () {
 			}
 		}
 	});
+});
+
+$(document).on('change','#uploadbtn', function() {
+	$('#filename').val($('#uploadbtn').val());
 });
 
 function expandMenu(menuName){
@@ -82,7 +86,7 @@ function prettyText() {
 		.replace(/[\u2026]/g,"...")
 		.replace(/[\u2012-\u2014]/g,"-");
 		$("#editContent").val(sanitizeText);
-	console.log('Sanitizing UTF-8...');
+	//console.log('Sanitizing UTF-8...');
 }
 
 function clearScreen(form){
@@ -226,8 +230,6 @@ function saveNote(){
 		setInterval(function(){ 
 			document.getElementById("entryContent-warning").style.opacity = 0;
 			$('#saveCtrl').html('<span class="glyphicon glyphicon-save-file" data-toggle="modal" data-target="#saveModal" style = "background: none; border: none;" ></span>');
-			$('#saveName').val("");
-			$('#saveCmmt').val("");
 		},3500);
 	} else {
 		$('#entryContent-warning').html("Cannot save file—you haven't connected your Facebook account!"); 
@@ -237,6 +239,8 @@ function saveNote(){
 			$('#saveCtrl').html('<span class="glyphicon glyphicon-save-file" data-toggle="modal" data-target="#saveModal" style = "background: none; border: none;" ></span>');
 		},3500);
 	}
+	$('#saveName').val("");
+	$('#saveCmmt').val("");
 }
 
 function loadNotes(){
@@ -272,7 +276,7 @@ function delFile(filename){
 
 function updatePointer(update,expire){
 	var isCookie = getCookie(update);
-	console.log(isCookie);
+	//console.log(isCookie);
 	if( !isCookie ){	
 		$.ajax({
 			url: '../majorupdate.php',

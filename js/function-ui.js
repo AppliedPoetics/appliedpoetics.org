@@ -49,7 +49,9 @@ $(document).ready( function () {
 });
 
 $(document).on('change','#uploadbtn', function() {
-	$('#filename').val($('#uploadbtn').val());
+	var fullpath = $('#uploadbtn').val();
+	var pathpart = fullpath.split("\\");
+	$('#filename').val(pathpart[2]);
 });
 
 function expandMenu(menuName){

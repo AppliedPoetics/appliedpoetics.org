@@ -1,6 +1,6 @@
 #! usr/bin/python
 
-import beaupresente, cgitb, color, getopt, PIL, string, sys, webcolors, ap_encoding
+import beaupresente, cgitb, color, getopt, os, PIL, string, sys, webcolors, ap_encoding
 from PIL import Image
 
 cgitb.enable()
@@ -65,6 +65,7 @@ def main(argv):
 	if method == "sentences":
 		result = '\n\n'.join(result)
 		print result
+	os.remove('scratch/img/'+filename)
 
 if __name__ == "__main__":
         main(sys.argv[1:])

@@ -6,7 +6,7 @@ cgitb.enable()
 
 def scrapetopics(topic):
 	search_buffer = []
-	url = "https://en.wikipedia.org/w/index.php?title=Special%3AWhatLinksHere/"+topic+"&limit=1000"
+	url = "https://en.wikipedia.org/w/index.php?title=Special%3AWhatLinksHere/"+topic+"&limit=5000"
 	try:
 		page = requests.get(url)
 		source = BeautifulSoup.BeautifulSoup(page.text)
@@ -31,7 +31,7 @@ def scraperefs(topic):
 	result = ""
 	search_buffer = []
 	topic = topic.replace(" ","_")
-	url = "https://en.wikipedia.org/w/index.php?title=Special%3AWhatLinksHere/"+topic+"&limit=1000"
+	url = "https://en.wikipedia.org/w/index.php?title=Special%3AWhatLinksHere/"+topic+"&limit=5000"
 	try:
 		page = requests.get(url)
 		source = BeautifulSoup.BeautifulSoup(page.text)

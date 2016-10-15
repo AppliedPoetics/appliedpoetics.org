@@ -40,6 +40,8 @@ $file = fopen($filename,"w");
 		$cmd_line = 'python python/'.$cmd.'.py -t /var/www/html/'.$filename.' -l '.$lttr.' -w "'.$word.'"';
 	} elseif ($cmd == 'texturl') {
 		$cmd_line = 'python python/'.$cmd.'.py -t "'.$url.'"';
+	} elseif ($cmd == 'wiki') {
+		$cmd_line = 'python python/'.$cmd.'.py -t "'.$lttr.'" -w "'.$word.'"';
 	} else { 
 		$cmd_line = 'python python/'.$cmd.'.py -t /var/www/html/'.$filename.''; 
 	}
@@ -56,7 +58,7 @@ $file = fopen($filename,"w");
 //$out = utf8_decode($out);
 //$out = trim(preg_replace('/\s+/', ' ', $out));
 
-echo rtrim($out);
+echo rtrim(urldecode($out));
 //echo $cmd_line;
 //echo $text;
 

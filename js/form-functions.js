@@ -22,6 +22,10 @@ function runTool(inc_form) {
 	{
 		lttr = '"'+$('#lttr').val()+'"';
 	}
+	if(cmd == 'wiki')
+	{
+		nwords = $('#lttr').val();
+	}
 	if(cmd == 'travesty' || cmd == 'markov')
 	{
 		//PERL
@@ -34,12 +38,12 @@ function runTool(inc_form) {
 			success: function(data) { $('#editContent').val(data); unstackMe(data); $('#loading').hide();},
 			error: function(xhr,ajaxOptions,thrownError) { console.log(xhr.status + " " + xhr.responseText); }
 		});
-	} else if (cmd == 'concordance') {
+	} else if (cmd == 'concordance' || cmd == 'wiki') {
 		// THREE-PARAMETER PYTHON
 		$.ajax({
 			url: 'ap-py.php',
 			type: 'POST',
-			timeout: 120000,
+			timeout: 300000,
 			data: { cmd: cmd, txt: inc_text, lttr: nwords, word: word },
 			dataType: 'text',
 			success: function(data) { $('#editContent').val(data); unstackMe(data); $('#loading').hide();},

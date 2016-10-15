@@ -113,4 +113,4 @@ select { width: 110%; font-size: 100%; font-family: 'proxima-nova'; background: 
 .fileupload input.upload { position: absolute; top: 0; right: 0; margin: 0; padding: 0; font-size: 20px; cursor: pointer; opacity: 0; filter: alpha(opacity=0); }
 
 .btn-primary { background-color: #009F8F; border-color: #009F8F; font-family: 'proxima-nova'; text-transform: uppercase; border-radius: 0px; -moz-border-radius: 0px;}
-.btn-primary:hover { background-color: #FFCC11; border-color: #FFCC11; }
+.btn-primary:hover, .btn-primary:active { background-color: #FFCC11; border-color: #FFCC11; }

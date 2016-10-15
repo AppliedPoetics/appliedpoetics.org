@@ -61,10 +61,12 @@ def main(argv):
         text = ap_encoding.read_file(text)
 	#get colors
 	colors = read('scratch/img/'+filename)
-	result = colormatch(text,colors,method)
+	if method != "list":
+		result = colormatch(text,colors,method)
 	if method == "sentences":
-		result = '\n\n'.join(result)
-		print result
+		print '\n\n'.join(result)
+	if method == "list":
+		print '\n'.join(colors)
 	os.remove('scratch/img/'+filename)
 
 if __name__ == "__main__":

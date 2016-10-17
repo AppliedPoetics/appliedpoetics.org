@@ -103,6 +103,7 @@ function runTool(inc_form) {
 		});
 	}
 	$('.dropdown-content').hide();
+	backToTop();
 	// REDO STACK
 	expandMenu('all');
 	return false;

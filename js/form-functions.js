@@ -26,7 +26,12 @@ function runTool(inc_form) {
 	{
 		nwords = $('#lttr').val();
 	}
-	if(cmd == 'travesty' || cmd == 'markov')
+	if(cmd == 'markov')
+	{
+		nwords = $('#granular').val();
+		word = $('#outwords').val();
+	}
+	if(cmd == 'travesty')
 	{
 		//PERL
 		$.ajax({
@@ -38,7 +43,7 @@ function runTool(inc_form) {
 			success: function(data) { $('#editContent').val(data); unstackMe(data); $('#loading').hide();},
 			error: function(xhr,ajaxOptions,thrownError) { console.log(xhr.status + " " + xhr.responseText); }
 		});
-	} else if (cmd == 'concordance' || cmd == 'wiki') {
+	} else if (cmd == 'concordance' || cmd == 'wiki' || cmd == 'markov') {
 		// THREE-PARAMETER PYTHON
 		$.ajax({
 			url: 'ap-py.php',

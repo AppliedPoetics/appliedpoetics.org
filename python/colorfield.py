@@ -1,6 +1,6 @@
 #! usr/bin/python
 
-import beaupresente, cgitb, color, getopt, os, PIL, string, sys, webcolors, ap_encoding
+import beaupresente, cgitb, color, getopt, os, permutations, PIL, string, sys, webcolors, ap_encoding
 from PIL import Image
 
 cgitb.enable()
@@ -37,6 +37,10 @@ def colormatch(text,colors,method):
 	if method == "letters":
 		colors = ' '.join(colors)
 		result = beaupresente.bpres(text,colors)
+	if method == "anagrams":
+		result = ""
+		for color in colors:
+			result += "[" + color + "]\n" + permutations.all_anagrams(color) + "\n\n"
 	return result
 
 def main(argv):
@@ -67,6 +71,8 @@ def main(argv):
 		print '\n\n'.join(result)
 	if method == "list":
 		print '\n'.join(colors)
+	if method == "anagrams":
+		print result
 	os.remove('scratch/img/'+filename)
 
 if __name__ == "__main__":

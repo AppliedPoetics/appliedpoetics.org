@@ -23,3 +23,14 @@ function charCount()
 	}
 	$('#charCount').text("Char. Count: " + count.toString() );
 }
+function lineCount()
+{
+	var chunk = parseInt(.12 * parseInt($('#editContent').width()));
+	var regex = new RegExp('\\b.{1,'+chunk+'}\\b|\\s?.{1,'+chunk+'}[\r\n](.*?)|(.*?)[\r\n]\\b','g');
+	try{
+		var count = $('#editContent').val().match(regex);
+	} catch(err){
+		count = 0;
+	}
+	$('#lineCount').text("Line Count: " + (count.length+1).toString());
+}

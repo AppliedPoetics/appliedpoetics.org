@@ -28,7 +28,7 @@ def main(argv):
                         sys.exit(2)
         #read file from path
         text = ap_encoding.read_file(text)
-        print ''.join(list_unique_chars(text))
+        print ''.join(list_unique_chars(text)).replace("\r","").replace("\n","").replace(" ","")
 
 if __name__ == "__main__":
         main(sys.argv[1:])

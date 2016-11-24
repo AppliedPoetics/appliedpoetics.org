@@ -39,7 +39,7 @@ $(document).ready( function () {
 $(document).ready( function () {
 	$('.dropdown-content a').each(function(){
 		var fxID = $(this).attr('id');
-		if(fxID !== "wordCount" && fxID !== "charCount"){
+		if(fxID !== "wordCount" && fxID !== "charCount" && fxID !== "lineCount"){
 			var popoverID = $(this).attr('aria-describedby');
 			if($('#' + popoverID + '.share').length < 1){
 				$(this).attr('data-content',$(this).attr('data-content') + '<div class = "share">Share this function: <a href = "#" onclick="window.open(\'https://www.facebook.com/sharer/sharer.php?u=http%3A//www.appliedpoetics.org/?ref='+fxID+'\',\'apshare\',\'width = 550, height = 250\'); return false"><img src = "img/ap-facebook-ico.png">to Facebook</a><a href = "#" onclick="window.open(\'https://twitter.com/home?status=http%3A//www.appliedpoetics.org/?ref='+fxID+'\',\'apshare\',\'width = 550, height = 250\'); return false"><img src = "img/ap-twitter-ico.png">to Twitter</a></div>');
@@ -55,7 +55,7 @@ $(document).on('change','#uploadbtn', function() {
 });
 
 function expandMenu(menuName){
-	var menus = ["oulipo-menu","grammar-menu","number-menu","pop-menu","algo-menu","stat-menu","text-menu","share-menu"]
+	var menus = ["oulipo-menu","grammar-menu","number-menu","pop-menu","algo-menu","stat-menu","text-menu","share-menu","form-menu"]
 	if(menuName == "all")
 	{
 		

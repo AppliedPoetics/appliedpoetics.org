@@ -158,12 +158,12 @@ function appLoaded(appLoadedEventArgs) {
 						<a href = "#" id = "colorfield" data-toggle="popover" data-html="true" title = "Color Field" data-content = "<form onsubmit = 'return runTool(this)' action = '#'><input type = 'hidden' name = 'cmd' value = 'colorfield' id = 'cmd'><input id='filename' placeholder='Choose file.' disabled='disabled' /><div class = 'fileupload btn btn-primary'>Choose Image<input type = 'file' class = 'upload' id = 'uploadbtn' accept = 'image/*' /></div><br/><br/><div class = 'styled-select'><select name = 'lttr' id = 'lttr'><option value = 'sentences'>Containing</option><option value = 'letters'>Spelled By</option><option value = 'anagrams'>Anagrams</option><option value = 'list'>List Colors</option></select></div><hr/><input type ='Submit' value = 'Run'><br/><div class = 'tool-explain'>'Color Field' scans through an uploaded image to find all of the distinct colors present.<br/><Br/> The 'Sentences' option pulls out sentences containing colors found in that image; the 'Spelled By' image finds all words spelled from the letters which make up these colors.</div></form>">Color Field</a>
 					</div>
 				</div>
-				<!--<div tabindex = "0" class = "dropdown" onclick = 'javascript: expandMenu("form");'>
+				<div tabindex = "0" class = "dropdown" onclick = 'javascript: expandMenu("form");'>
 					<button class = "drop-btn">Formic</button>
 					<div class = "dropdown-content" id = "form-menu">
-						<a href = "#" id = "sestina" data-toggle="popover" data-html="true" title = "Sestina" data-content = "<form onsubmit = 'return runTool(this)' action = '#'><input type = 'hidden' name = 'cmd' value = 'sestina' id = 'cmd'><input type ='Submit' value = 'Run'><div class = 'tool-explain'>Creates a random sestina from a given text.</div></form>">Sestina</a>
+						<!--<a href = "#" id = "sestina" data-toggle="popover" data-html="true" title = "Sestina" data-content = "<form onsubmit = 'return runTool(this)' action = '#'><input type = 'hidden' name = 'cmd' value = 'sestina' id = 'cmd'><input type ='Submit' value = 'Run'><div class = 'tool-explain'>Creates a random sestina from a given text.</div></form>">Sestina</a>-->
 					</div>
-				</div>-->
+				</div>
 				<div tabindex = "0" class = "dropdown" onclick = 'javascript: expandMenu("number");'>
 					<button class = "drop-btn">Numerology</button>
 					<div class = "dropdown-content" id = "number-menu">

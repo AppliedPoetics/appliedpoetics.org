@@ -159,8 +159,8 @@ function appLoaded(appLoadedEventArgs) {
 					</div>
 				</div>
 				<div tabindex = "0" class = "dropdown" onclick = 'javascript: expandMenu("form");'>
-					<button class = "drop-btn">Formic</button>
-					<!--<div class = "dropdown-content" id = "form-menu">
+					<!--<button class = "drop-btn">Formic</button>
+					<div class = "dropdown-content" id = "form-menu">
 						<a href = "#" id = "sestina" data-toggle="popover" data-html="true" title = "Sestina" data-content = "<form onsubmit = 'return runTool(this)' action = '#'><input type = 'hidden' name = 'cmd' value = 'sestina' id = 'cmd'><input type ='Submit' value = 'Run'><div class = 'tool-explain'>Creates a random sestina from a given text.</div></form>">Sestina</a>
 					</div>-->
 				</div>

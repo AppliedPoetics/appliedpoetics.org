@@ -3,9 +3,7 @@ sys.path.insert(0,'/home/poetics/src/listener/')
 import listener
 from collections import OrderedDict
 from nltk.corpus import cmudict
-#from pocketsphinx import get_model_path
-from unidecode import unidecode
-from fuzzywuzzy import process
+from pocketsphinx import get_model_path
 
 cgitb.enable()
 
@@ -92,12 +90,14 @@ def get_translation(text):
 			sentence += ' %s' % (values[0])
 	sentence = sentence.lstrip().rstrip()
 	terms = sentence.split()
-	pool = multiprocessing.Pool(2)
+	pool_size = multiprocessing.cpu_count()
+	pool = multiprocessing.Pool(pool_size)
 	for term in terms:
 		phonic = random.choice(inventory[term.lower()])
-		num_sylls = nsyl(term)
-		lst_sylls = lsyl(phonic,num_sylls)
-		for syll in lst_sylls: phonics.append(syll)
+		phonics.append(phonic)
+		#num_sylls = nsyl(term)
+		#lst_sylls = lsyl(phonic,num_sylls)
+		#for syll in lst_sylls: phonics.append(syll)
 	matches = pool.imap(search_sphinx,phonics)
 	results.append(' '.join(matches))
 	return results

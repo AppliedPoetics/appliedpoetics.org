@@ -3,7 +3,7 @@ sys.path.insert(0,'/home/poetics/src/listener/')
 import listener
 from collections import OrderedDict
 from nltk.corpus import cmudict
-from pocketsphinx import get_model_path
+#from pocketsphinx import get_model_path
 from unidecode import unidecode
 from fuzzywuzzy import process
 
@@ -158,7 +158,7 @@ def main(argv):
 	elif method == "phonics":
 		results = get_phonics(text)
 	_end = time.time()
-	print _end - _start
+	#print _end - _start
 	print ' '.join([val for val in results])
 
 init_sphinx()

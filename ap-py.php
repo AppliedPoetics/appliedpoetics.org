@@ -8,9 +8,16 @@ $lttr = $_POST['lttr'];
 $word = $_POST['word'];
 $url = $_POST['geturl'];
 
+require_once('scripts/code/Unidecode.php');
+
 // DECODE/ENCODE TEXT AS APPROPRIATE
 
+$u = new Unidecode;
+$text = utf8_encode($text);
+$text = str_replace("'","",$text);
 $text = addslashes($text);
+$text = $u -> decode($text);
+if($cmd == 'homophonic'){ $text = strtolower($text);}
 
 // MAKE TEMP FILE
 
@@ -30,8 +37,9 @@ $file = fopen($filename,"w");
 
 	//$text = join(' ', $chunks[$i]);
 
-	if($cmd == 'tautogram' || $cmd == 'lipogram' || $cmd == 'isolate' || $cmd == 'beaupresente' || $cmd == 'univocalism' || $cmd == 'nthword' || $cmd == 'belleabsente' || $cmd == 'powerball' || $cmd == 'regexp' || $cmd == 'strlen' || $cmd == 'birthdate' || $cmd == "alternator" || $cmd == 'tollfree' || $cmd == 'dialer' || $cmd == 'snowball' || $cmd == 'listsort') 
-	{ 
+	if($cmd == 'tautogram' || $cmd == 'lipogram' || $cmd == 'isolate' || $cmd == 'beaupresente' || $cmd == 'univocalism' || $cmd == 'nthword' || $cmd == 'belleabsente' || $cmd == 'powerball' || $cmd == 'regexp' || $cmd == 'strlen' || $cmd == 'birthdate' || $cmd == "alternator" || $cmd == 'tollfree' || $cmd == 'dialer' || $cmd == 'snowball' || $cmd == 'listsort' || $cmd == 'homophonic' || $cmd == 'levdistance') 
+	{
+		if($cmd == 'homophonic'){$hash = substr(md5(rand()),0,4); $sh = shell_exec('sh python/homophonic.sh '.$filename.' '.$hash); $filename = 'scratch/'.$hash;}
 		//$cmd_line = 'python python/'.$cmd.'.py -t """'.$text.'""" -l "'.$lttr.'"';
 		$cmd_line = 'python python/'.$cmd.'.py -t /var/www/html/'.$filename.' -l "'.$lttr.'"';
 	} elseif ($cmd == 'partsofspeech') {

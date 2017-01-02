@@ -32,15 +32,16 @@ def read(filename):
 	return colors
 
 def colormatch(text,colors,method):
+	result = ""
 	if method == "sentences":
-		result = color.color_in(text,colors) 	
+		result = color.color_in(text,colors)
 	if method == "letters":
 		colors = ' '.join(colors)
 		result = beaupresente.bpres(text,colors)
 	if method == "anagrams":
 		result = ""
-		for color in colors:
-			result += "[" + color + "]\n" + permutations.all_anagrams(color) + "\n\n"
+		for hue in colors:
+			result += "[" + hue + "]\n" + permutations.all_anagrams(hue) + "\n\n"
 	return result
 
 def main(argv):

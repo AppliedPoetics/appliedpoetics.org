@@ -12,6 +12,8 @@ function runTool(inc_form) {
 	var word = $('#word').val();
 	inc_text = inc_text.replace(/"/g, "'");
 	inc_text = escape(inc_text);
+	// SET GLOBAL TIMEOUT
+	var global_timeout = 600000;
 	// UNDO STACK
 		stackMe(inc_text);
 	if(cmd == 'powerball')
@@ -37,7 +39,7 @@ function runTool(inc_form) {
 		$.ajax({
 			url: 'ap-pl.php',
 			type: 'POST',
-			timeout: 120000,	
+			timeout: global_timeout,
 			data: { cmd: cmd,txt: inc_text, granular: granular, outwords: outwords }, 
 			dataType: 'text',
 			success: function(data) { $('#editContent').val(data); unstackMe(data); $('#loading').hide();},
@@ -48,7 +50,7 @@ function runTool(inc_form) {
 		$.ajax({
 			url: 'ap-py.php',
 			type: 'POST',
-			timeout: 300000,
+			timeout: global_timeout,
 			data: { cmd: cmd, txt: inc_text, lttr: nwords, word: word },
 			dataType: 'text',
 			success: function(data) { $('#editContent').val(data); unstackMe(data); $('#loading').hide();},
@@ -59,7 +61,7 @@ function runTool(inc_form) {
 		$.ajax({
 			url: 'ap-py.php',
 			type: 'POST',
-			timeout: 120000,
+			timeout: global_timeout,
 			data: { cmd: cmd, txt: inc_text },
 			dataType: 'text',
 			success: function(data) { $('#editContent').val(data); unstackMe(data); $('#loading').hide();},
@@ -86,7 +88,7 @@ function runTool(inc_form) {
 				$.ajax({
 				url: 'ap-py.php',
 				type: 'POST',
-				timeout: 120000,	
+				timeout: global_timeout,
 				data: { cmd: cmd, txt: inc_text, lttr: filename, word: lttr }, 
 				dataType: 'text',
 				success: function(data) { $('#editContent').val(data); unstackMe(data); $('#loading').hide();},
@@ -100,7 +102,7 @@ function runTool(inc_form) {
 		$.ajax({
 			url: 'ap-py.php',
 			type: 'POST',
-			timeout: 120000,	
+			timeout: global_timeout,
 			data: { cmd: cmd, txt: inc_text, lttr: lttr }, 
 			dataType: 'text',
 			success: function(data) { $('#editContent').val(data); unstackMe(data); $('#loading').hide();},

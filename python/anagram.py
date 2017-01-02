@@ -9,7 +9,7 @@ def iterator():
 	return iter(_DICT)
 
 def children(prefix):
-	return _DICT.childre(prefix)
+	return _DICT.children(prefix)
 
 def anagram(letters):
 	for word in _DICT.anagram(letters):

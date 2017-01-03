@@ -96,10 +96,11 @@ def get_translation(text):
 	pool = multiprocessing.Pool(pool_size)
 	for term in terms:
 		phonic = random.choice(inventory[term.lower()])
-		#phonics.append(phonic)
-		num_sylls = nsyl(term)
-		lst_sylls = lsyl(phonic,num_sylls)
-		for syll in lst_sylls: phonics.append(syll)
+		phonics.append(phonic)
+		#Below code is syllable-for-syllable matching.
+		#num_sylls = nsyl(term)
+		#lst_sylls = lsyl(phonic,num_sylls)
+		#for syll in lst_sylls: phonics.append(syll)
 	matches = pool.imap(search_sphinx,phonics)
 	results.append(' '.join(matches))
 	return results

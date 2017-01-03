@@ -5,12 +5,14 @@ from collections import OrderedDict
 from nltk.corpus import cmudict
 from pocketsphinx import get_model_path
 from cfuzzyset import cFuzzySet as FuzzySet
+from pkg_resources import resource_stream
 #from fuzzyset import FuzzySet
 
 cgitb.enable()
 
 d = cmudict.dict()
-DICT_PATH = '/usr/local/lib/python2.7/dist-packages/pocketsphinx/model/cmudict-en-us.dict'
+DICT_PATH = '/var/www/html/python/resources/cmudict-0.7b'
+#DICT_PATH = '/usr/local/lib/python2.7/dist-packages/pocketsphinx/model/cmudict-en-us.dict'
 pronunciations = None
 words, phones = None, None
 
@@ -96,12 +98,12 @@ def get_translation(text):
 	pool = multiprocessing.Pool(pool_size)
 	for term in terms:
 		phonic = random.choice(inventory[term.lower()])
-		phonics.append(phonic)
+		#phonics.append(phonic)
 		#Below code is syllable-for-syllable matching.
-		#num_sylls = nsyl(term)
-		#lst_sylls = lsyl(phonic,num_sylls)
-		#for syll in lst_sylls: phonics.append(syll)
-	matches = pool.imap(search_sphinx,phonics)
+		num_sylls = nsyl(term)
+		lst_sylls = lsyl(phonic,num_sylls)
+		for syll in lst_sylls: phonics.append(syll.lstrip().rstrip())
+	matches = pool.map(search_sphinx,phonics)
 	results.append(' '.join(matches))
 	return results
 
@@ -112,7 +114,7 @@ def init_sphinx(filehandle=None):
 	if pronunciations is None:
 		if filehandle is None:
 			with open(DICT_PATH,'rb') as fh:
-				contents = fh.read()
+				contents = fh.read()		
 		pronunciations = parse_sphinx(contents)
 
 def parse_sphinx(cmufh):
@@ -132,7 +134,7 @@ def parse_sphinx(cmufh):
 
 def search_sphinx(pattern):
 	_start = time.time()
-	pattern = pattern.replace(" ","")
+	if len(pattern) == 1: pattern = ' %s' % (pattern)
 	result = random.choice(phones.get(unicode(pattern),(3,4)))
 	match = words[unicode(result[1])]
 	_end = time.time()

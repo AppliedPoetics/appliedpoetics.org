@@ -1,9 +1,11 @@
-import cgitb, fuzzyset, getopt, multiprocessing, os, pronouncing, random, re, string, sys, time, ap_encoding
+import cgitb, getopt, multiprocessing, os, pronouncing, random, re, string, sys, time, ap_encoding
 sys.path.insert(0,'/home/poetics/src/listener/')
 import listener
 from collections import OrderedDict
 from nltk.corpus import cmudict
 from pocketsphinx import get_model_path
+from cfuzzyset import cFuzzySet as FuzzySet
+#from fuzzyset import FuzzySet
 
 cgitb.enable()
 
@@ -94,10 +96,10 @@ def get_translation(text):
 	pool = multiprocessing.Pool(pool_size)
 	for term in terms:
 		phonic = random.choice(inventory[term.lower()])
-		phonics.append(phonic)
-		#num_sylls = nsyl(term)
-		#lst_sylls = lsyl(phonic,num_sylls)
-		#for syll in lst_sylls: phonics.append(syll)
+		#phonics.append(phonic)
+		num_sylls = nsyl(term)
+		lst_sylls = lsyl(phonic,num_sylls)
+		for syll in lst_sylls: phonics.append(syll)
 	matches = pool.imap(search_sphinx,phonics)
 	results.append(' '.join(matches))
 	return results
@@ -129,7 +131,8 @@ def parse_sphinx(cmufh):
 
 def search_sphinx(pattern):
 	_start = time.time()
-	result = random.choice(phones.get(unicode(pattern)))
+	pattern = pattern.replace(" ","")
+	result = random.choice(phones.get(unicode(pattern),(3,4)))
 	match = words[unicode(result[1])]
 	_end = time.time()
 	#print _end - _start
@@ -163,7 +166,7 @@ def main(argv):
 
 init_sphinx()
 words = {}
-phones = fuzzyset.FuzzySet()
+phones = FuzzySet()
 for word, phone in pronunciations: 
 	try: words[phone] = word
 	except KeyError: words[phone] += word	

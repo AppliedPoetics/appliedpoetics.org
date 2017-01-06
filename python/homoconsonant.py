@@ -4,7 +4,7 @@ import getopt, re, sys, ap_encoding
 
 def consonant(text):
 	#set up and execute regular expression for vowels
-	result = re.sub("[aeiou]"," ",text,flags=re.I)
+	result = re.sub("[aeiou]","",text,flags=re.I)
 	return result
 
 def main(argv):

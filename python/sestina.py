@@ -5,16 +5,18 @@ import cgitb, collections, getopt, itertools, random, re, sentencesim, string, s
 cgitb.enable()
 
 def generate_freq_table(text):
+	index = 0
 	endwords = list()
 	exclude = set(string.punctuation)
 	text = ''.join(ch for ch in text if ch not in exclude)
 	words = re.findall('\w+',text)
 	inventory = collections.Counter(words)
 	#print sum(inventory.values())
-	while len(endwords) < 6:
+	while len(endwords) < 6 and index < len(words):
 		seed = random.randrange(sum(inventory.values()))
 		choice = next(itertools.islice(inventory.elements(),seed,None))
 		if inventory[choice] >= 6 and len(choice) >=4 and choice not in endwords: endwords.append(choice)
+		index += 1
 	random.shuffle(endwords)
 	return endwords
 
@@ -56,7 +58,10 @@ def main(argv):
 	#print inventory
 	for stanza in form:
 		for word in stanza:
-			print strip_string(random.choice(inventory[endwords[int(word)-1]]))
+			if len(endwords) == 6: print strip_string(random.choice(inventory[endwords[int(word)-1]]))
+			else: 
+				print 'Text not long enough! Please enter more text to sample.'
+				break
 		print "\n"
 
 if __name__ == "__main__":

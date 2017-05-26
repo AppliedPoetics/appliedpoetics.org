@@ -9,6 +9,7 @@ $word = $_POST['word'];
 $url = $_POST['geturl'];
 
 require_once('scripts/code/Unidecode.php');
+include('statistics/ap-stats-mgmt.php');
 
 // DECODE/ENCODE TEXT AS APPROPRIATE
 
@@ -25,6 +26,15 @@ $filename = "scratch/".substr(md5(rand()),0,4);
 $file = fopen($filename,"w");
 		fwrite($file,$text);
 		fclose($file);
+		
+// GATHER STATS
+
+	if($lttr or $word)
+	{
+		check_table($cmd,$lttr.','.$word);
+	} else {
+		check_table($cmd,$cmd);
+	}
 
 // MAKE TEXT BLOCKS
 

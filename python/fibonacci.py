@@ -26,7 +26,7 @@ def fibonacci(full_text):
 		if sequence[y] > len(text):
 			pass
 		else:
-			product = product + text[sequence[y]] + " "
+			product = product + text[sequence[y]-1] + " "
 	return product 	
 	
 def main(argv):

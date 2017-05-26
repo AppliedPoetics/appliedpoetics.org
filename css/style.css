@@ -114,3 +114,12 @@ select { width: 110%; font-size: 100%; font-family: 'proxima-nova'; background: 
 
 .btn-primary { background-color: #009F8F; border-color: #009F8F; font-family: 'proxima-nova'; text-transform: uppercase; border-radius: 0px; -moz-border-radius: 0px;}
 .btn-primary:hover, .btn-primary:active { background-color: #FFCC11; border-color: #FFCC11; }
+
+@media (max-width: 800px) {
+	#masthead { height: 20%; }
+	#logo { margin-left: 50%; }
+}
+@media (max-width:500px) {
+	#masthead { height: 30%; }
+	#logo { margin-left: 50%; }
+}

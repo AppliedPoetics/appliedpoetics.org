@@ -5,6 +5,8 @@ $cmd = $_POST['cmd'];
 $granular = $_POST['granular'];
 $outwords = $_POST['outwords'];
 
+include('statistics/ap-stats-mgmt.php');
+
 $text = urldecode($text);
 $text = str_replace("%u2019","'",$text);
 $text = preg_replace_callback(
@@ -66,6 +68,15 @@ $rpl = array_values($chr_map); // pre-calculate these two arrays
 $text = str_replace($chr, $rpl, html_entity_decode($text, ENT_NOQUOTES, "UTF-8"));
 	
 $text = addslashes($text);
+
+// GATHER STATS
+
+	if($granular or $outwords)
+	{
+		check_table($cmd,$granular.','.$outwords);
+	} else {
+		check_table($cmd,$cmd);
+	}
 
 // MAKE TEMP FILE
 

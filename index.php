@@ -293,11 +293,11 @@ if(!$firstTimeUser && !$ref){
 		AppliedPoetics is coded using Python, PERL, and PHP. It is hosted on a droplet at <a href = "https://www.digitalocean.com/" target = "_new">Digital Ocean</a>. The server reboots every week on Sunday mornings at 05:00 A.M. Eastern Standard Time and may be briefly unresponsive.
 		<br/><br/>
 		<center>
-		Want to help feed the hamster? 
+		Want to help feed the hamster?
 		<form action="https://www.paypal.com/cgi-bin/webscr" method="post" target="_top" id = "donate-form">
 		<input type="hidden" name="cmd" value="_s-xclick">
 		<input type="hidden" name="hosted_button_id" value="A8Q7TCE829B3U">
-		<input type="image" src="http://www.appliedpoetics.org/img/ap-donate-btn.png" border="0" name="submit" alt="PayPal - The safer, easier way to pay online!" class = "donate-form-input">
+		<input type="image" src="/img/ap-donate-btn.png" border="0" name="submit" alt="PayPal - The safer, easier way to pay online!" class = "donate-form-input">
 		<img alt="" border="0" src="https://www.paypalobjects.com/en_US/i/scr/pixel.gif" width="1" height="1">
 		</form>
 		Click anywhere to close this notice.</center>

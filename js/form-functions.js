@@ -69,12 +69,13 @@ function runTool(inc_form) {
 		});
 	} else if (cmd == 'colorfield') {
 		files = $('input[type=file]').get(0).files;
-		event.stopPropagation();
-		event.preventDefault();
+		//event.stopPropagation();
+		//event.preventDefault();
 		var data = new FormData();
 		$.each(files,function(key,value){
 			data.append(key,value);
 		});
+		console.log("TO UPLOAD.");
 		$.ajax({
 			url: 'ap-file.php?files',
 			type: 'POST',

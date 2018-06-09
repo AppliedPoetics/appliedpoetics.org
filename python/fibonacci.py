@@ -14,6 +14,8 @@ def fibonacci(full_text):
 	b= 1
 	result = b	
 	#create word array
+	regexp = re.compile(r"[\r\n]+")
+	text = re.sub(regexp,' ',full_text)
 	text = full_text.split(' ')
 	#create sequence equal to the length of text
 	for x in range(0,len(text)):

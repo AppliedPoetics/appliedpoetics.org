@@ -1,7 +1,7 @@
 #! /usr/bin/python
 # Code in this routine is adapted from: https://realpython.com/blog/python/lyricize-a-flask-app-to-create-lyrics-using-markov-chains/
 
-import cgitb, getopt, string, sys, ap_encoding
+import cgitb, getopt, os, string, sys, ap_encoding
 from random import choice
 
 cgitb.enable()
@@ -40,7 +40,8 @@ def generate_text(text,order,length):
 	#output = output.replace('\t\t',' ')
 	#output = output.replace('\t',' ')
 	markov_array = ' '.join(output.split(" "))
-	return '\r\n'.join([markov_array[j:j+70] for j in range(0,len(markov_array),70)])
+	return markov_array
+	#return '\r\n'.join([markov_array[j:j+70] for j in range(0,len(markov_array),70)])
 
 def main(argv):
         #get arguments passed, where "text" is path to scratch/
@@ -63,7 +64,8 @@ def main(argv):
         #read file from path
         text = ap_encoding.read_file(text)
         #handle results
-        print generate_text(text,order,length)
+        #print os.system('fold -s -w 100 "%s"' % generate_text(text,order,length))
+	print generate_text(text,order,length)
 
 if __name__ == "__main__":
         main(sys.argv[1:])

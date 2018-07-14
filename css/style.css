@@ -1,0 +1,307 @@
+html, body{
+    height: 100%;
+    background: rgba(2,34,34,1);
+    font-color: rgba(255,255,255,1);
+}
+
+body {
+    overflow: hidden;
+}
+
+a, a:visited{
+    text-decoration: none;
+    color: rgba(255,255,255,1);
+}
+
+a:hover {
+    color: #FFCC11;
+    text-decoration: none;
+}
+
+*:focus { 
+    outline: none; 
+}
+::selection {
+    background: #FFCC11 !important;
+}
+::-moz-selection {
+    background: #FFCC11 !important;
+}
+
+body{
+    font-family: 'proxima-nova';
+}
+
+label {
+    font-family: 'proxima-nova';
+    font-weight: 700; text-transform:
+    uppercase; font-size: 8pt;
+}
+
+input {
+    border: 2px solid #444444;
+    -webkit-box-shadow: inset 0 0 8px rgba(0,0,0,0.1), 0 0 16px rgba(0,0,0,0.1);
+    -moz-box-shadow: inset 0 0 8px  rgba(0,0,0,0.1), 0 0 16px rgba(0,0,0,0.1);
+    box-shadow: inset 0 0 8px  rgba(0,0,0,0.1), 0 0 16px rgba(0,0,0,0.1);
+    padding: 5px;
+    width: 100%;
+    font-size: 110%;
+    font-family: 'proxima-nova';
+}
+
+select {
+    width: 110%;
+    font-size: 100%;
+    font-family: 'proxima-nova';
+    background: transparent;
+    border: 0; 
+    text-transform: uppercase;
+    font-weight: 300;
+}
+
+#wrapper {
+    height: 100%;
+}
+
+#masthead {
+    height: 7.5vw;
+    background: rgba(0,159,143,1);
+    display: inline-flex;
+    align-items: center;
+    width: 100%;
+}
+
+#masthead img {
+    position: relative;
+    max-height: 100%;
+    float: left;
+}
+
+#menu {
+    float: left;
+    width: 100%;
+    height: 3vw;
+    min-height: 3vw;
+    background: rgba(0,159,143,1);
+    display: inline-flex;
+    align-items: center;
+    vertical-align: bottom;
+}
+
+#menu ul {
+    list-style-type:none;
+}
+
+#menu li {
+    display: inline;
+    text-transform: uppercase;
+    margin-right: 5%;
+    color: rgba(255,255,255,1);
+    font-size: .95em;
+    font-weight: 600;
+}
+
+#console{
+    height: 95%;
+}
+
+#console form {
+    height: 100%;
+}
+
+#text-console {
+    width: 100%;
+    position: fixed;
+    background-color: rgba(2,34,34,1);
+    background: @include filter-gradient(#022222, #022222, vertical);
+    background: @include background-image(linear-gradient(top, rgba(2,34,34,1) 0%, rgba(68,68,68,1) 38%, rgba(68,68,68,1) 59%, rgba(2,34,34,1) 100%));
+    height: 100%%;
+    overflow: hidden; }
+
+#editContent {
+    margin-left: 5%; 
+    padding-left: 5%;
+    width: 98%;
+    height: 100%;
+    font-family: 'sax-mono', fixed width;
+    background: none;
+    border: none;
+    color: #fff;
+    margin-top: 5px;
+    font-size: 15px;
+    overflow-y: scroll;
+    resize: none;}
+
+.drop-btn {
+    border: none;
+    cursor: pointer;
+    background: none;
+    width: inherit;
+    color: #f9f9f9;
+    font-size: 13px;
+    font-family:'proxima-nova';
+    text-transform: uppercase;
+}
+
+.drop-btn img { 
+    height: 24px; 
+    cursor: pointer;
+}
+
+.dropdown {
+    position: relative;
+    display: inline-block;
+    height: 2vw;
+}
+
+.dropdown:hover div {
+    visibility: visible;
+}
+
+.dropdown span {
+    color: #c9c9c9;
+    text-shadow: 2px 2px 2px #222;
+}
+
+.dropdown-content {
+    position: absolute;
+    min-width: 150px;
+    box-shadow: 0px 8px 16px 0px rgba(0,0,0,0.3);
+    padding: 6px 0px;
+    z-index: 2;
+    background: #222;
+    font-family: 'proxima-nova';
+    display: block;
+    visibility: hidden;
+    transition: visibility .1s ease-in-out;
+    -moz-transition: visbility .1s ease-in-out;
+    -webkit-transition: visbility .1s ease-in-out
+}
+
+.dropdown-content a {
+    color: #f9f9f9;
+    padding: 12px 16px;
+    text-decoration: none;
+    display: block;
+    font-size: 12px;
+    padding: 12px 16px;
+    width: 100%;
+}
+
+.dropdown-content a:hover {
+    text-decoration:none;
+    color: #fff;
+    background-color: #000;
+}
+
+.dropdown-content a:visited {
+    text-decoration:none;
+    color: #fff;
+}
+
+.drop-btn {
+    border-top: solid 10px rgba(0,159,143,0);
+}
+
+.drop-btn:hover {
+    border-top: solid 10px #222;
+    color: #FFCC11;
+}
+
+.popover {
+    color: #222;
+    width: 200px;
+}
+
+.popover-title {
+    color: #222;
+}
+
+.popover-content input[type="submit"], .form-button {
+    width: 100%;
+    background: #009F8F;
+    text-transform: uppercase;
+    border: none;
+    margin-top: 10px;
+    color: #fff;
+    font-family: 'proxima-nova';
+}
+
+.popover-content input[type="submit"]:focus {
+    background: #FFCC11;
+}
+
+.tool-explain {
+    font-family: 'proxima-nova';
+    font-weight: 700;
+    text-transform: uppercase;
+    font-size: 8pt;
+    margin-top: 10px;
+}
+
+.popover-title {
+    font-family: 'proxima-nova';
+    font-weight: 700;
+    text-transform: uppercase;
+    font-size: 8pt;
+}
+
+.popover.right { 
+    margin-left: 0px;
+}
+
+.styled-select {
+    overflow: hidden;
+    width: 168px;
+    background: url(/img/ap-select-arrow.png)
+    no-repeat right;
+}
+
+.textAreaWithLines{
+    display:block;
+    margin:0;
+    border:none;
+    border-right: 1px solid #aaa;
+    background:none;
+    color: #ffff00;
+    overflow: hidden;
+    font-size: 15px;
+    resize: none;
+    font-family: 'sax-mono', fixed width;
+    min-width: 40px;
+}
+
+.file-opts { 
+    color: #FFCC11;
+    font-weight: 700;
+}
+
+.normal-opts { 
+    font-weight: 400;
+}
+
+.share {
+    font-family: 'proxima-nova';
+    font-weight: 700;
+    text-transform: uppercase;
+    font-size: 8pt;
+    margin-top: 10px;
+    margin-top: 5px;
+}
+
+.share img {
+    height: 10px;
+    width: 10px;
+    margin-right: 10px;
+}
+
+.share a , .share a:visited{
+    text-decoration: none;
+    background: none;
+    color: #222;
+}
+
+.share a:hover {
+    background: #999;
+    color: #fff;
+}

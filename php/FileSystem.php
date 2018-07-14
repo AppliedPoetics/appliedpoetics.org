@@ -18,5 +18,8 @@
             return $filename;
         }
     
+        public function Remove($filename){
+            unlink($filename);
+        }
     }
 ?>

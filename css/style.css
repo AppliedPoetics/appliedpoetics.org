@@ -1,5 +1,6 @@
 html, body{
     height: 100%;
+    width: 100%;
     background: rgba(2,34,34,1);
     font-color: rgba(255,255,255,1);
 }
@@ -60,7 +61,12 @@ select {
 }
 
 #wrapper {
-    height: 100%;
+    position: absolute; 
+    height: 100%; 
+    width: 100%; 
+    overflow: hidden;
+    top: 0; 
+    left: 0;}
 }
 
 #masthead {
@@ -131,6 +137,22 @@ select {
     font-size: 15px;
     overflow-y: scroll;
     resize: none;}
+
+#loading { 
+    position: absolute; 
+    height: 100%; 
+    width: 100%; 
+    z-index: 1001; 
+    display: none; 
+    opacity: .9; 
+    background: #222; 
+    top: 0; 
+    left: 0;
+}
+
+#loading img {
+    position: absolute;
+}
 
 .drop-btn {
     border: none;

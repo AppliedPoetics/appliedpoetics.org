@@ -19,5 +19,6 @@
         $filename = $resource->Save();
         $output = shell_exec($request->Command($filename));
         echo $output;
+        $resource->Remove($filename);
     }
 ?>

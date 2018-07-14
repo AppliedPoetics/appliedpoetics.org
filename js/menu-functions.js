@@ -54,6 +54,18 @@ function powerball(){
     }
 }
 
+function loadText(){
+    $.get("resources/0000",function(data){
+        $('#editContent').val(data);
+    });
+    return false;
+}
+
+function clearScreen(){
+    $('#editContent').val('');
+    return false;
+}
+
 function restrictNumberKeys(formElement) {
     var input = $(formElement);
     input.on('keydown', function(event) {

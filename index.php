@@ -16,12 +16,18 @@
             <link rel="stylesheet" href = "css/style.css">
         <!-- STYLESHEET -->
         <!-- JAVASCRIPT -->
+            <script src = "js/ui-functions.js"></script>
             <script src = "js/menu-functions.js"></script>
             <script src = "js/line-numbers.js"></script>
             <script src = "js/app-router.js"></script>
         <!-- JAVASCTIPT -->
         <!-- META -->
-        <title>Applied Poetics</title>
+        <title>Applied Poetics: 
+        <?php 
+            $git_head = file('.git/HEAD',FILE_USE_INCLUDE_PATH);
+            echo explode("/",$git_head[0])[2];
+        ?>
+        </title>
         <!-- META -->
     </head>
     <body>
@@ -111,12 +117,12 @@
                         <div class = "dropdown" tabindex = "0">
                             <button class = "drop-btn file-opts">Text Ops.</button>
                             <div class = "dropdown-content" id = 'text-menu'>
-                            <a class = "file-opts" id = "clear" href = '#' data-toggle = "popover" data-html = "true" title = "Really Clear Screen?" data-content = "<form onsubmit = 'return clearScreen(this)'><input type = 'Submit' value = 'Clear Screen'><div class = 'tool-explain'></div></form>"style = "width: inherit;">Clear Screen</a>
+                            <a class = "file-opts" id = "clear" href = '#' data-toggle = "popover" data-html = "true" title = "Really Clear Screen?" data-content = "<form onsubmit = 'return clearScreen()'><input type = 'Submit' value = 'Clear Screen'><div class = 'tool-explain'></div></form>"style = "width: inherit;">Clear Screen</a>
                             <a class = "file-opts" id = "dedupe" href = "#" data-toggle="popover" data-html="true" title = "De-duplicate" data-content = "<form onsubmit = 'return processForm(this)' action = '#'><input type = 'hidden' name = 'cmd' value = 'dedupe' id = 'cmd'><input type ='Submit' value = 'Run'><div class = 'tool-explain'>Removes duplicate words from a text or list.</div></form>">De-duplicate</a>
                             <a class = "file-opts" id = "sort" href = "#" data-toggle="popover" data-html="true" title = "Sort List" data-content = "<form onsubmit = 'return processForm(this)' action = '#'><div class = 'styled-select'><select name = 'param' id = 'param'><option value = 'asc'>Ascending</option><option value = 'desc'>Descending</option></select></div><input type = 'hidden' name = 'cmd' value = 'listsort' id = 'cmd'><input type ='Submit' value = 'Run'><div class = 'tool-explain'>Sort a list or text in ascending or descending alphabetical order.</div></form>">Sort List</a>
                             <a class = "file-opts" id = "unique" href = "#" data-toggle="popover" data-html="true" title = "List Unique Letters" data-content = "<form onsubmit = 'return processForm(this)' action = '#'><input type = 'hidden' name = 'cmd' value = 'listchars' id = 'cmd'><input type ='Submit' value = 'Run'><div class = 'tool-explain'>Returns a string containing list of unique letters in a text.</div></form>">Unique Letters</a>
                             <a class = "file-opts" id = "reverse" href = "#" data-toggle="popover" data-html="true" title = "Reverse Text" data-content = "<form onsubmit = 'return processForm(this)' action = '#'><input type = 'hidden' name = 'cmd' value = 'reverser' id = 'cmd'><input type ='Submit' value = 'Run'><div class = 'tool-explain'>Reverses the entire text.</div></form>">Reverse Text</a>
-                            <a class = "file-opts" id = "default" href = "#" data-toggle="popover" data-html="true" title = "Default Text" data-content = "<form onsubmit = 'return processForm(this)' action = '#'><input type = 'hidden' name = 'cmd' value = 'defaulttext' id = 'cmd'><input type ='Submit' value = 'Run'><div class = 'tool-explain'>Don't have a text in mind? Use one of our favorites: Robert Louis Stevenson's <i>The Strange Case of Dr. Jekyll and Mr. Hyde</i>.</div></form>">Default Text</a>
+                            <a class = "file-opts" id = "default" href = "#" data-toggle="popover" data-html="true" title = "Default Text" data-content = "<form onsubmit = 'return loadText()' action = '#'><input type = 'hidden' name = 'cmd' value = 'defaulttext' id = 'cmd'><input type ='Submit' value = 'Run'><div class = 'tool-explain'>Don't have a text in mind? Use one of our favorites: Robert Louis Stevenson's <i>The Strange Case of Dr. Jekyll and Mr. Hyde</i>.</div></form>">Default Text</a>
                             <a class = "file-opts" href = "#" id = "wiki" data-toggle="popover" data-html="true" title = "Wikipedia" data-content = "<form onsubmit = 'return processForm(this)' action = '#'><input type = 'hidden' name = 'cmd' value = 'wiki' id = 'cmd'><input type = 'text' autocomplete = 'off' id = 'param' placeholder = 'Article topic'><br/><br/><div class = 'styled-select'><select name = 'word' id = 'word'><option value = 'single'>Single Topic Page</option><option value = 'pageref'>Page + Linked Topics</option><option value = 'refonly'>Only Linked Topics</option><option value = 'list'>List Topics Only</option></select></div><hr/><input type ='Submit' value = 'Run'><div class = 'tool-explain'>Fetches a Wikipedia page and (optionally) all of its references as a source text. Depending on how many links there are in the topic, this can take a fair amount of time.</div></form>">Wikipedia</a>
                             </div>
                         </div>
@@ -144,5 +150,6 @@
                 createTextAreaWithLines('editContent');
             });
         </script>
+        <div id = "loading"><img src = 'img/ap-type-loading.gif' width="101" height="159"></div>
     </body>
 </html>

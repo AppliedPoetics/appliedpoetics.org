@@ -14,7 +14,6 @@
      */
     $request = new Controller($_POST);
     $resource = new ScratchFile($_POST['text']);
-    
     if($request->Routing()){
         $filename = $resource->Save();
         $output = shell_exec($request->Command($filename));

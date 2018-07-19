@@ -2,16 +2,14 @@
 
 include("Main.jl")
 using Controller
+using Common
 
 function main()
     args = Controller.arg_parse()
-    p = args["p"]
+    p = Set(split(strip(args["p"]),","))
     t = Controller.read_file(args["t"])
-    c = String[]
-    c = Set(split(strip(p),","))
-    chars = join(c,"")
-    pattern = Regex("\\w*[$chars]\\w*","ism")
-    t = replace(t,pattern,"")
+    chars = join(p,"")
+    t = Common.word_by_word(t,"[$chars]")
     println(strip(t))
 end
 

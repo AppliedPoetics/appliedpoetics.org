@@ -2,6 +2,7 @@
 
 include("Main.jl")
 using Controller
+using Common
 
 function main()
     args = Controller.arg_parse()
@@ -11,8 +12,7 @@ function main()
                     "4","5","6","7","8","9"]
     for i=1:length(prisoners)
         prisoner = prisoners[i]
-        pattern = Regex("\\w*$prisoner\\w*","ism")
-        t = replace(t,pattern,"")
+        t = Common.word_by_word(t,prisoner)
     end
     println(strip(t))
 end

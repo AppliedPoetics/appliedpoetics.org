@@ -39,5 +39,24 @@ using ArgParse
         )
         return parse_args(s)
     end
+
+end
+
+module Common
+
+    function depunctuate(t::String)
+        pattern = Regex("[^0-9A-Za-z]","ism")
+        return replace(t,pattern," ")
+    end
     
+    function tight_spaces(t::String)
+        pattern = Regex("(\\s+)","ism")
+        return replace(t,pattern," ")
+    end
+    
+    function word_by_word(t::String,p::String)
+        pattern = Regex("\\w*$p\\w*","ism")
+        return replace(t,pattern,"")
+    end
+
 end

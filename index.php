@@ -25,7 +25,8 @@
         <title>Applied Poetics: 
         <?php 
             $git_head = file('.git/HEAD',FILE_USE_INCLUDE_PATH);
-            echo explode("/",$git_head[0])[2];
+            $date_mod = filemtime(".");
+            echo explode("/",$git_head[0])[2]." ".date("y.m.d:Hi", $date_mod);
         ?>
         </title>
         <!-- META -->
@@ -46,7 +47,7 @@
                                 <a href = "#" id = 'belleabsente' data-toggle="popover" data-html="true" title = "Belle Absente" data-content = "<form onsubmit = 'return processForm(this)' action = '#'><input type = 'text' autocomplete = 'off' id = 'param'><input type = 'hidden' name = 'cmd' value = 'absente' id = 'cmd'><input type ='Submit' value = 'Run'><div class = 'tool-explain'>The Belle Absente, or 'Absent Beloved' is a constraint in which words featuring letters in a selected name or phrase are removed from the text. Terms and letters should not be comma separated.</div></form>">Belle Absente</a>
                                 <a href = "#" id = "beaupresente" data-toggle="popover" data-html="true" title = "Beau Presente" data-content = "<form onsubmit = 'return processForm(this)' action = '#'><input type = 'text' autocomplete = 'off' id = 'param'><input type = 'hidden' name = 'cmd' value = 'presente' id = 'cmd'><input type ='Submit' value = 'Run'><div class = 'tool-explain'>O, happy day—the beloved has returned! This constraint is one in which words can only be made up of letters in a given name or phrase. Terms and letters should not be comma separated.</div></form>">Beau Presente</a>
                                 <a href = "#" id = "univocalism" data-toggle="popover" data-html="true" title = "Univocalism" data-content = "<form onsubmit = 'return processForm(this)' action = '#'><div class = 'styled-select'><select name = 'param' id = 'param'><option value = 'a'>a</option><option value = 'e'>e</option><option value = 'i'>i</option><option value = 'o'>o</option><option value = 'u'>u</option></select></div><input type = 'hidden' name = 'cmd' value = 'univocalism' id = 'cmd'><input type ='Submit' value = 'Run'><div class = 'tool-explain'>Returns only words containing a selected vowel. If selecting 'I', words such as 'big' or 'bin' would appear; selecting 'O' would mean words such as 'bone' or 'boat' would not be allowed, but 'bog' would.</div></form>">Univocalism</a>
-                                <a href = "#" id = "snowball" data-toggle="popover" data-html="true" title = "Snowball" data-content = "<form onsubmit = 'return processForm(this)' action = '#'><div class = 'styled-select'><select name = 'param' id = 'param'><option value = 'melt'>Melt</option><option value = 'freeze'>Standard</option></select></div><input type = 'hidden' name = 'cmd' value = 'snowball' id = 'cmd'><input type ='Submit' value = 'Run'><div class = 'tool-explain'>Sorts words in a text by length returning the list in descending order (melt) or ascending order (standard).</div></form>">Snowball</a>
+                                <a href = "#" id = "snowball" data-toggle="popover" data-html="true" title = "Snowball" data-content = "<form onsubmit = 'return processForm(this)' action = '#'><div class = 'styled-select'><select name = 'param' id = 'param'><option value = 'true'>Melt</option><option value = 'false'>Freeze</option></select></div><input type = 'hidden' name = 'cmd' value = 'snowball' id = 'cmd'><input type ='Submit' value = 'Run'><div class = 'tool-explain'>Sorts words in a text by length returning the list in descending order (melt) or ascending order (freeze).</div></form>">Snowball</a>
                             </div>
                         </div>
                         <div class = "dropdown" tabindex = "0">

@@ -2,29 +2,21 @@
 
 include("Main.jl")
 using Controller
+using Common
 
-function sort_len(p::String,t::String)
+function sort_len(p::Bool,t::String)
     t = collect(Set(split(t)))
-    if p == "melt"
-        return sort(t,by=length)
-    end
-    if p == "freeze"
-        return sort(t,by=length,rev=true)
-    end
+    return sort(t,by=length,rev=p)
 end
 
 function main()
     args = Controller.arg_parse()
-    p = args["p"]
+    p = args["p"] == "true" ? true: false
     t = Controller.read_file(args["t"])
-    punct = Regex("[.!?(),';\\[\\]\":;-]","ism")
-    t = replace(t,punct," ")
-    space = Regex("(\\s)+","ism")
-    t = replace(t,space," ")
+    t = Common.depunctuate(t)
+    t = Common.tight_spaces(t)
     t = sort_len(p,t)
-    for i=1:length(t)
-        println(t[i])
-    end
+    println(join(t,"\r\n"))
 end
 
 main()

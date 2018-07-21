@@ -44,7 +44,9 @@
         public function Legacy(){
             $legacy = array(
                 "travesty" => "perl",
-                "quotes" => "python"
+                "quotes" => "python",
+                "partsofspeech" => "python",
+                "concordance" => "python"
             );
             return $legacy[$this->obj['cmd']];
         }

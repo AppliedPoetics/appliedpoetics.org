@@ -1,5 +1,4 @@
 <?php
-
     class Controller{
         private $obj;
         private $interpreter;

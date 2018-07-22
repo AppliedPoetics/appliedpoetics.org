@@ -1,4 +1,5 @@
 <?php
+
     class Controller{
         private $obj;
         private $interpreter;
@@ -18,7 +19,7 @@
         public function __construct($data){
             $this->obj = $data;
         }
-        
+
         public function Routing(){
             $path;
             if(self::Legacy()){
@@ -27,10 +28,10 @@
                 $path = "julia";
             }
             $this->interpreter = $path;
-            $path = "../".$path."/".$this->obj['cmd'].".".$this->ext[$path];
+            $path = EXEC_DIR.$path."/".$this->obj['cmd'].".".$this->ext[$path];
             return $path;
         }
-        
+
         public function Parameters($filename){
             $parameters = array(
                 "param" => (string)$this->obj['param'],
@@ -40,7 +41,7 @@
             );
             return $parameters;
         }
-        
+
         public function Legacy(){
             $legacy = array(
                 "travesty" => "perl",
@@ -50,7 +51,7 @@
             );
             return $legacy[$this->obj['cmd']];
         }
-        
+
         public function Command($filename){
             $path = self::Routing();
             $params = self::Parameters($filename);

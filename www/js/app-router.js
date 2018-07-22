@@ -24,7 +24,7 @@ function processForm(incForm){
     console.log(fields);
     $('#loading').show();
     $.ajax({
-        url: 'php/Processor.php',
+        url: 'php/Handler.php',
         type: 'POST',
         timeout: globalTimeout,
         data: fields,

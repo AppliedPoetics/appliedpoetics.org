@@ -143,7 +143,7 @@
                 <script type="text/javascript">
                     createTextAreaWithLines('editContent');
                     $("#lineNumbers").prop("disabled", true);
-                </script>	
+                </script>
             </div>
         </div>
         <script>

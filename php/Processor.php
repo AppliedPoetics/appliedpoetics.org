@@ -1,10 +1,10 @@
 <?php
-    error_reporting(E_ALL);
+
     include('Controller.php');
     include('FileSystem.php');
     /*
      * Controller.php methods
-     * 
+     *
      * Routing
      * Parameters
      * Legacy

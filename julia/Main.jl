@@ -44,9 +44,9 @@ end
 
 module Common
 
-    function depunctuate(t::String)
-        pattern = Regex("[^0-9A-Za-z]","ism")
-        return replace(t,pattern," ")
+    function depunctuate(t::String,s::String=" ")
+        pattern = Regex("[^0-9A-Za-z\\s]","ism")
+        return replace(t,pattern,s)
     end
     
     function tight_spaces(t::String)
@@ -57,6 +57,11 @@ module Common
     function word_by_word(t::String,p::String)
         pattern = Regex("\\w*$p\\w*","ism")
         return replace(t,pattern,"")
+    end
+
+    function split_to_lower(t::String)
+        t = split(lowercase(t)," ")
+        return t
     end
 
 end

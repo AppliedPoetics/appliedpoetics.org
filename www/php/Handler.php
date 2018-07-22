@@ -6,7 +6,7 @@
         error_reporting(E_ALL);
         echo "<!--DEBUG ON-->";
     }
-    if(AJAX_RQ && IS_SELF){
+    if(AJAX_RQ AND IS_SELF){
         include(PHP_DIR."/Processor.php");
     } else {
         header("Location: ../404.php");

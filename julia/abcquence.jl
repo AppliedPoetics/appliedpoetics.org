@@ -8,7 +8,7 @@ using Common
 function enum_word(s,letters::Dict{Char,Integer})
     result = OrderedDict{Char,Integer}()
     for c in s
-        c = Char(c)
+        c = Char(lowercase(c))
         try
             result[c] = letters[c]
         catch
@@ -24,7 +24,7 @@ function calc_match(w,letters::Dict{Char,Integer})
     match = false
     try
         for c in w
-            val = char_array[Char(c)]
+            val = char_array[Char(lowercase(c))]
             if val >= previous
                 if cycles == length(w)
                     match = true
@@ -43,7 +43,7 @@ end
 function main()
     args = Controller.arg_parse()
     t = Controller.read_file(args["t"])
-    s = Common.split_to_lower(t)
+    s = split(t)
     chars = collect('a':'z')
     results = []
     letters = Dict{Char,Integer}()

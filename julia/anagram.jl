@@ -5,11 +5,6 @@ using DataStructures
 using Controller
 using Common
 
-type Word
-    string::String
-    index
-end
-
 function counter(w)
     counter = Dict()
     for char in Set(w)

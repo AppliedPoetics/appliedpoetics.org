@@ -32,24 +32,21 @@ function size(t)
     return result
 end
 
-function compare(w,m)
-    is_match = false
-    if m == w
-        return false
-    end
-    _w, _m = counter(w), counter(m)
-    if keys(_w) == keys(_m)
-        is_match = _w == _m
-    end
-    return is_match
+function compare(w)
+    r = []
+    c = Dict()
+    for m in w
+        c[m] = counter(m)
+    end    
+    println([m for m in w if length(filter((k,v)->v == counter(m),c)) > 1])
 end
 
 function nagaram(t)
-    results = Dict()
     words = size(Set(t))
-    #ITERATE OVER WORDS GROUPED BY LENGTH
-    #IN SOME EFFICIENT WAY.
-    return results
+    for i = 0:length(words)-1
+        w = words["$i"]
+        m = compare(w)
+    end
 end
 
 function main()
@@ -57,7 +54,7 @@ function main()
     t = Controller.read_file(args["t"])
     t = Common.depunctuate(t)
     t = Common.split_to_lower(t)
-    println(nagaram(t))
+    nagaram(t)
 end
 
 main()

@@ -7,21 +7,24 @@ using Common
 function alternate(t,m)
     v = "aeiou"
     c = "bcdfghjklmnpqrstvwxyz"
-    regex_v = r"\\b(?:[$v][$c][$v]{,1})*\\b"
-    regex_c = r"(?<![a-z])(?:(?![$c]{2}|[$v]{2})[a-z])+(?![a-z])"
+    regex_v = "\\b(?:[$v][$c][$v]{,1})*\\b"
+    regex_c = "(?<![a-z])(?:(?![$c]{2}|[$v]{2})[a-z])+(?![a-z])"
     if m =="v"
         regex = Regex(regex_v,"ism")
-    else if m == "c"
+    elseif m == "c"
         regex = Regex(regex_c,"ism")
-    else if m == "b"
-        regex = Regex(regex_v + "|" + regex_c,"ism")
+    elseif m == "b"
+        regex = Regex(string(regex_c,"|",regex_v),"ism")
     end
-    
+    r = [w for w in matchall(regex,t) if w != ""]
+    return r
 end
 
 function main()
     args = Controller.arg_parse()
     t = Controller.read_file(args["t"])
     t = Common.depunctuate(t)
-    println(alternate(args.p))
+    println(alternate(t,args["p"]))
 end
+
+main()

@@ -1,3 +1,4 @@
 language: rust
 rust:
   - stable
+before_install: cd rust

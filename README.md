@@ -1,3 +1,5 @@
+[![Build Status](https://travis-ci.com/AppliedPoetics/appliedpoetics.org.svg?branch=Alexandrine)](https://travis-ci.com/AppliedPoetics/appliedpoetics.org)
+
 # appliedpoetics.org
 
 A digital constrained writing platform for the people.

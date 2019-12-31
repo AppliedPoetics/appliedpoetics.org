@@ -32,3 +32,6 @@ path = "src/bin/oulipean/beaupresente.rs"
 [[bin]]
 name = "univocalism"
 path = "src/bin/oulipean/univocalism.rs"
+[[bin]]
+name = "snowball"
+path = "src/bin/oulipean/snowball.rs"

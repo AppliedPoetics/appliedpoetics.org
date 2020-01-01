@@ -35,3 +35,6 @@ path = "src/bin/oulipean/univocalism.rs"
 [[bin]]
 name = "snowball"
 path = "src/bin/oulipean/snowball.rs"
+[[bin]]
+name = "punctuator"
+path = "src/bin/grammar-syntax/punctuator.rs"

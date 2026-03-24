@@ -1,0 +1,38 @@
+/* TinyMCE */
+
+::selection {
+    background: #EEC91A;
+}
+
+* {
+    border: none;
+    outline: none;
+    box-shadow: none;
+    border-color: initial;
+}
+
+html {
+    color: #fff;
+}
+
+#tinymce {
+  counter-reset: paragraph;
+}
+
+#tinymce p {
+    margin-block-start: .2rem;
+    margin-block-end: .2rem;
+    font-family: "narkiss-asaf-variable",sans-serif; 
+    font-variation-settings: 'wght' 400, 'MONO' 100;
+}
+
+#tinymce p::before, h1::before, h2::before, 
+         h3::before, h4::before, h5::before, 
+         h6::before, div::before, pre::before,
+         blockquote::before {
+    counter-increment: paragraph;
+    content: counter(paragraph, decimal);
+    color: #EEC91A;
+    font-size: 0.8em;
+    padding-right: 1rem; 
+}

@@ -1,16 +1,43 @@
-# Applied Poetics (AP)
-This is the live code for the Applied Poetics constrained writing platform. It's backed up somewhat intermittently, but at least on a weekly basis.
+# Astro Starter Kit: Minimal
 
-AP exists as both a development platform for new writing constraints made possible by computers and computational methods, in addition to serving as a new home for restored utilities and routines that may have become deprecated for many reasons (or may have never been online in the first place).
+```sh
+npm create astro@latest -- --template minimal
+```
 
-It is a labor of love done by a somewhat out-of-practice coder (Doug Luman), a poet, book designer, and digital human. This is how he composes nearly everything he writes. The origin of these utilities traces to a 2014 project by the Found Poetry Review entitled the "Oulipost"; many users were seeking time-saving ways to implement procedural constraints originated by the OuLiPo ("Ouvroir de littérature potentielle," or "Workshop of Potential Literature"). Not all of their various generation methods have been translated, but many more will be.
+> 🧑‍🚀 **Seasoned astronaut?** Delete this file. Have fun!
 
-More than anything, this project is posted here as an archive, but also as a way to share the how/when of ways into basic computational poetics. Think of it as a journal of learning on Doug's behalf.
+## 🚀 Project Structure
 
-# License
+Inside of your Astro project, you'll see the following folders and files:
 
-Permission is hereby granted, free of charge, to any person obtaining a copy of this software and associated documentation files (the "Software"), to deal in the Software without restriction, including without limitation the rights to use, copy, modify, merge, publish, distribute, sublicense, and/or sell copies of the Software, and to permit persons to whom the Software is furnished to do so, subject to the following conditions:
+```text
+/
+├── public/
+├── src/
+│   └── pages/
+│       └── index.astro
+└── package.json
+```
 
-The above copyright notice and this permission notice shall be included in all copies or substantial portions of the Software.
+Astro looks for `.astro` or `.md` files in the `src/pages/` directory. Each page is exposed as a route based on its file name.
 
-THE SOFTWARE IS PROVIDED "AS IS", WITHOUT WARRANTY OF ANY KIND, EXPRESS OR IMPLIED, INCLUDING BUT NOT LIMITED TO THE WARRANTIES OF MERCHANTABILITY, FITNESS FOR A PARTICULAR PURPOSE AND NONINFRINGEMENT. IN NO EVENT SHALL THE AUTHORS OR COPYRIGHT HOLDERS BE LIABLE FOR ANY CLAIM, DAMAGES OR OTHER LIABILITY, WHETHER IN AN ACTION OF CONTRACT, TORT OR OTHERWISE, ARISING FROM, OUT OF OR IN CONNECTION WITH THE SOFTWARE OR THE USE OR OTHER DEALINGS IN THE SOFTWARE.
+There's nothing special about `src/components/`, but that's where we like to put any Astro/React/Vue/Svelte/Preact components.
+
+Any static assets, like images, can be placed in the `public/` directory.
+
+## 🧞 Commands
+
+All commands are run from the root of the project, from a terminal:
+
+| Command                   | Action                                           |
+| :------------------------ | :----------------------------------------------- |
+| `npm install`             | Installs dependencies                            |
+| `npm run dev`             | Starts local dev server at `localhost:4321`      |
+| `npm run build`           | Build your production site to `./dist/`          |
+| `npm run preview`         | Preview your build locally, before deploying     |
+| `npm run astro ...`       | Run CLI commands like `astro add`, `astro check` |
+| `npm run astro -- --help` | Get help using the Astro CLI                     |
+
+## 👀 Want to learn more?
+
+Feel free to check [our documentation](https://docs.astro.build) or jump into our [Discord server](https://astro.build/chat).

@@ -1,0 +1,128 @@
+::selection {
+    color: #EEC91A !important;
+}
+
+html {
+    overflow-y: hidden;
+    color: #fff !important;
+}
+
+body {
+    background: #022222;
+    margin: 0;
+}
+
+button:hover {
+    color: #EEC91A !important;
+    fill: #EEC91A !important;
+}
+
+#editor:focus {
+    outline: none;
+    box-shadow: none;
+    border-color: initial;
+}
+
+.mce-content-body * {
+    color: #fff !important;
+}
+
+.tox {
+    height: 100vh !important;
+}
+
+.tox, .tox * {
+    border-color: rgba(0,0,0,0) !important;
+    background-color: rgba(0,0,0,0) !important;
+    border-top-left-radius: 0 !important;
+    border-top-right-radius: 0 !important;
+    border: 0 !important;
+}
+
+.tox > button {
+    color: #fff !important;
+}
+
+.tox-promotion {
+    display: none;
+}
+
+.tox-menubar {
+    background: #009F8F !important;
+}
+
+.tox-mbtn__select-label {
+    color: #fff !important;
+}
+
+.tox-mbtn {
+    border-radius: 0 !important;
+}
+
+.tox-mbtn:hover {
+    background: #222 !important;
+    color: #fff !important;
+}
+
+.tox-mbtn:has(.tox-menu:not([style*="display: none"])) {
+    background: #222 !important;
+}
+
+.tox-collection--list:not(.tox-swatches), .tox-dialog {
+    background: #222 !important;
+}
+
+.tox.tox-edit-focus .tox-edit-area::before {
+    border: none;
+}
+
+.tox-edit-area {
+    padding: 1rem 2rem !important;
+}
+
+.tox-dialog {
+    color: #fff !important;
+}
+
+.tox-collection__item {
+    color: #fff !important;
+}
+
+.tox-collection__item--active {
+    color: #EEC91A !important;
+}
+
+.tox-toolbar-overlord * {
+    color: #fff !important;
+}
+
+.tox-toolbar-overlord svg {
+    fill: #fff !important;
+}
+
+.tox-editor-header {
+    padding: 0 !important;
+}
+
+.tox-icon svg {
+    fill: #fff !important;
+}
+
+.tox-tbtn:hover svg {
+    fill: #EEC91A !important;
+}
+
+.tox-tooltip {
+    color: #EEC91A !important;
+    background: #222 !important;
+    padding: .2rem !important;
+    border-radius: 8px !important;
+}
+
+.tox-toolbar__overflow {
+    background: #022222 !important;
+}
+
+.tox-swatch{
+    background-color: initial !important;
+}

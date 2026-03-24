@@ -1,0 +1,8 @@
+---
+import BaseLayout from '../layouts/BaseLayout.astro';
+import TextArea from '../components/TextArea.jsx';
+const pageTitle = "Applied Poetics";
+---
+<BaseLayout pageTitle={pageTitle}> 
+    <TextArea client:only="react" />
+</BaseLayout>

@@ -131,8 +131,8 @@
   letter-spacing: 0.08em;
   color: var(--fg-1);
 }
-.ap h1 { font: var(--t-h1); text-transform: uppercase; letter-spacing: 0.03em; margin: 0 0 var(--sp-4); }
-.ap h2 { font: var(--t-h2); text-transform: uppercase; letter-spacing: 0.03em; margin: 0 0 var(--sp-3); }
+.ap h1 { font: var(--t-h1); letter-spacing: 0.03em; margin: 0 0 var(--sp-4); }
+.ap h2 { font: var(--t-h2); letter-spacing: 0.03em; margin: 0 0 var(--sp-3); }
 .ap h3 { font: var(--t-h3); margin: 0 0 var(--sp-2); }
 .ap h4 { font: var(--t-h4); margin: 0 0 var(--sp-2); }
 .ap p  { font: var(--t-body); margin: 0 0 var(--sp-4); max-width: 68ch; text-wrap: pretty; }

@@ -18,6 +18,7 @@ export default function WritingStudio() {
   const [palette, setPalette] = useState(false);
   const [paramFor, setParamFor] = useState(null);
   const [toast, setToast] = useState(null);
+  const [lineNumbers, setLineNumbers] = useState(true);
   const [tick, setTick] = useState(0);
   const proseRef = useRef(null);
 
@@ -132,8 +133,10 @@ export default function WritingStudio() {
           words={words}
           chars={chars}
           logOpen={logOpen}
+          lineNumbers={lineNumbers}
           onOpenPalette={() => setPalette(true)}
           onToggleLog={() => setLogOpen((o) => !o)}
+          onToggleLineNumbers={() => setLineNumbers((n) => !n)}
         />
 
         <div className="ws-canvas" onMouseUp={onMouseUp} style={{ position: "relative" }}>
@@ -147,7 +150,7 @@ export default function WritingStudio() {
               <span>edited {activeDoc.edited}</span>
             </div>
             <div
-              className="ws-prose"
+              className={`ws-prose${lineNumbers ? " line-numbers" : ""}`}
               ref={proseRef}
               contentEditable
               suppressContentEditableWarning

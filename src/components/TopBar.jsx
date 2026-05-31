@@ -2,7 +2,7 @@ import React from "react";
 import Icon from "./Icon.jsx";
 import Button from "./Button.jsx";
 
-export default function TopBar({ title, words, chars, onOpenPalette, onToggleLog, logOpen }) {
+export default function TopBar({ title, words, chars, onOpenPalette, onToggleLog, logOpen, lineNumbers, onToggleLineNumbers }) {
   return (
     <header className="ws-top">
       <div className="ws-top__crumb">
@@ -23,6 +23,13 @@ export default function TopBar({ title, words, chars, onOpenPalette, onToggleLog
         <Button variant="ghost" icon="terminal-square" onClick={onOpenPalette}>
           Constraints
           <kbd style={{ font: "var(--t-mono-sm)", color: "var(--fg-4)", marginLeft: 4 }}>⌘K</kbd>
+        </Button>
+        <Button
+          variant={lineNumbers ? "ink" : "ghost"}
+          icon="list-ordered"
+          onClick={onToggleLineNumbers}
+        >
+          Lines
         </Button>
         <Button
           variant={logOpen ? "ink" : "ghost"}

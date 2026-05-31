@@ -69,11 +69,29 @@ body {
 .ws-page { max-width: 720px; margin: 0 auto; padding: 64px 40px 240px; }
 .ws-page__h { font: 600 32px/1.12 var(--font-display); text-transform: uppercase; letter-spacing: 0.03em; color: var(--fg-1); margin: 0 0 6px; }
 .ws-page__byline { font: var(--t-mono-sm); color: var(--fg-3); margin-bottom: 34px; display: flex; gap: 12px; }
-.ws-prose { font: 400 19px/1.78 var(--font-serif); color: var(--fg-1); outline: none; }
-.ws-prose p { margin: 0 0 1.4em; }
+.ws-prose { font: 400 19px/1.15 var(--font-serif); color: var(--fg-1); outline: none; }
+.ws-prose p { margin: 0 0 0.4em; }
 .ws-prose ::selection { background: var(--ap-yellow); color: var(--ap-ink); }
 .ws-prose .mark-applied { background: var(--yellow-tint); box-shadow: 0 0 0 1px #f0d98a inset; border-radius: 2px; padding: 0 1px; }
 .ws-prose .mark-sel { background: var(--ap-yellow); color: var(--ap-ink); border-radius: 1px; }
+
+/* ---- LINE NUMBERS -------------------------------------------------------- */
+.ws-prose.line-numbers { counter-reset: paragraph; }
+.ws-prose.line-numbers p { position: relative; }
+.ws-prose.line-numbers p::before {
+  counter-increment: paragraph;
+  content: counter(paragraph);
+  position: absolute;
+  left: -28px;
+  top: 0;
+  width: 20px;
+  text-align: right;
+  font: var(--t-mono-sm);
+  color: var(--fg-4);
+  opacity: 0.6;
+  user-select: none;
+  pointer-events: none;
+}
 
 /* ---- CONTEXTUAL OPERATIONS MENU (signature) ------------------------------ */
 .ws-cmenu { position: absolute; z-index: 40; width: 268px; background: var(--surface); border: 1px solid var(--line); border-radius: var(--r-md); box-shadow: var(--shadow-menu); overflow: hidden; animation: ws-pop var(--dur) var(--ease-out); }

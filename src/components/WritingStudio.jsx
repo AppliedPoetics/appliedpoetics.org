@@ -5,9 +5,11 @@ import ContextMenu from "./ContextMenu.jsx";
 import CommandPalette from "./CommandPalette.jsx";
 import ParamDialog from "./ParamDialog.jsx";
 import ConstraintLog from "./ConstraintLog.jsx";
+import RevisionLog from "./RevisionLog.jsx";
+import RevisionViewer from "./RevisionViewer.jsx";
 import AuthModal from "./AuthModal.jsx";
 import Icon from "./Icon.jsx";
-import { SEED_DOCS, SEED_PROSE } from "../lib/constraints.js";
+import { SEED_PROSE } from "../lib/constraints.js";
 import { applyConstraint as callApiConstraint } from "../lib/api.js";
 import {
   getToken,
@@ -18,6 +20,10 @@ import {
   createDocument,
   updateDocument,
   deleteDocument,
+  createRevisionDoc,
+  deleteRevisions,
+  parseRevTitle,
+  parseRevisionDoc,
 } from "../lib/docsApi.js";
 
 function mapServerDoc(doc) {
@@ -32,7 +38,28 @@ function mapServerDoc(doc) {
     owner_id: doc.owner_id,
     created_at: doc.created_at,
     updated_at: doc.updated_at,
+    dirty: false,
   };
+}
+
+function splitDocuments(all) {
+  const real = [];
+  const revMap = {};
+  for (const d of all) {
+    const parsed = parseRevTitle(d.title);
+    if (parsed) {
+      const rev = parseRevisionDoc(d);
+      if (!revMap[parsed.parentId]) revMap[parsed.parentId] = [];
+      revMap[parsed.parentId].push(rev);
+    } else {
+      real.push(d);
+    }
+  }
+  for (const pid in revMap) {
+    revMap[pid].sort((a, b) => b.timestamp - a.timestamp);
+    revMap[pid] = revMap[pid].slice(0, 50);
+  }
+  return { real, revMap };
 }
 
 export default function WritingStudio() {
@@ -43,6 +70,12 @@ export default function WritingStudio() {
   const [authOpen, setAuthOpen] = useState(false);
   const [saving, setSaving] = useState(false);
 
+  /* ── revisions ─────────────────────────────────────────────────────── */
+  const [revisions, setRevisions] = useState({}); // { [docId]: [...] }
+  const [revOpen, setRevOpen] = useState(false);
+  const [viewingRev, setViewingRev] = useState(null);
+  const autoSaveRef = useRef(null);
+
   /* ── studio chrome ─────────────────────────────────────────────────── */
   const [logOpen, setLogOpen] = useState(true);
   const [log, setLog] = useState([]);
@@ -51,17 +84,16 @@ export default function WritingStudio() {
   const [paramFor, setParamFor] = useState(null);
   const [toast, setToast] = useState(null);
   const [lineNumbers, setLineNumbers] = useState(true);
-  const [tick, setTick] = useState(0);
   const proseRef = useRef(null);
 
   const activeDoc = docs.find((d) => d.id === activeId) || docs[0];
 
   function getProseText() {
-    return proseRef.current
-      ? proseRef.current.innerText.replace(/\s+/g, " ").trim()
-      : "";
+    return proseRef.current ? proseRef.current.innerText.trim() : "";
   }
 
+  /* Read count straight from the DOM on every render so the UI
+     is never stale regardless of state batching. */
   const text = getProseText();
   const words = text ? text.split(/\s+/).length : 0;
   const chars = text.length;
@@ -74,10 +106,11 @@ export default function WritingStudio() {
         try {
           const me = await getMe();
           setUser(me);
-          const serverDocs = await listDocuments();
-          const mapped = serverDocs.map(mapServerDoc);
-          setDocs(mapped);
-          setActiveId(mapped[0]?.id || null);
+          const allDocs = await listDocuments();
+          const { real, revMap } = splitDocuments(allDocs);
+          setDocs(real.map(mapServerDoc));
+          setRevisions(revMap);
+          setActiveId(real[0]?.id || null);
           return;
         } catch {
           clearToken();
@@ -90,26 +123,45 @@ export default function WritingStudio() {
           const local = JSON.parse(raw);
           setDocs(local);
           setActiveId(local[0]?.id || null);
-          return;
         } catch {}
       }
 
-      const seed = SEED_DOCS.map((d, i) => ({
-        ...d,
-        content: i === 0 ? SEED_PROSE : "",
-      }));
-      setDocs(seed);
-      setActiveId(seed[0]?.id || null);
+      const revRaw = localStorage.getItem("ap_revisions");
+      if (revRaw) {
+        try {
+          setRevisions(JSON.parse(revRaw));
+        } catch {}
+      }
+
+      if (!raw) {
+        const empty = {
+          id: `local_${Date.now()}`,
+          title: "Untitled",
+          content: "",
+          words: 0,
+          chars: 0,
+          edited: "just now",
+          dirty: false,
+        };
+        setDocs([empty]);
+        setActiveId(empty.id);
+      }
     }
     init();
   }, []);
 
-  /* ── persist docs to localStorage ────────────────────────────────────── */
+  /* ── persist docs & revisions to localStorage (guest fallback) ─────── */
   useEffect(() => {
     if (docs.length > 0) {
       localStorage.setItem("ap_docs", JSON.stringify(docs));
     }
   }, [docs]);
+
+  useEffect(() => {
+    if (!user) {
+      localStorage.setItem("ap_revisions", JSON.stringify(revisions));
+    }
+  }, [revisions, user]);
 
   /* ── keep prose content in sync with active doc ────────────────────── */
   useEffect(() => {
@@ -120,24 +172,8 @@ export default function WritingStudio() {
         ? doc.content.split("\n\n").map((p) => `<p>${p}</p>`).join("")
         : "";
     }
-    setTick((t) => t + 1);
     // eslint-disable-next-line react-hooks/exhaustive-deps
   }, [activeId]);
-
-  /* ── update metadata (words, edited, content) on every input ───────── */
-  useEffect(() => {
-    const t = getProseText();
-    const w = t ? t.split(/\s+/).length : 0;
-    const c = t.length;
-    setDocs((prev) =>
-      prev.map((d) =>
-        d.id === activeId
-          ? { ...d, words: w, chars: c, edited: "just now", content: t }
-          : d
-      )
-    );
-    // eslint-disable-next-line react-hooks/exhaustive-deps
-  }, [tick, activeId]);
 
   /* ── keyboard shortcuts ──────────────────────────────────────────────── */
   useEffect(() => {
@@ -151,6 +187,46 @@ export default function WritingStudio() {
     window.addEventListener("keydown", key);
     return () => window.removeEventListener("keydown", key);
   }, []);
+
+  /* ── native input listener on the contentEditable field (more reliable
+     than React's synthetic onInput for contentEditable in React 19) ───── */
+  useEffect(() => {
+    const el = proseRef.current;
+    if (!el) return;
+
+    function onNativeInput() {
+      const t = getProseText();
+      const w = t ? t.split(/\s+/).length : 0;
+      const c = t.length;
+      setDocs((prev) =>
+        prev.map((d) =>
+          d.id === activeId
+            ? { ...d, words: w, chars: c, edited: "just now", content: t, dirty: true }
+            : d
+        )
+      );
+    }
+
+    el.addEventListener("input", onNativeInput);
+    return () => el.removeEventListener("input", onNativeInput);
+  }, [activeId]);
+
+  /* ── auto-save revision every 60 seconds while typing ───────────────── */
+  useEffect(() => {
+    if (autoSaveRef.current) {
+      clearInterval(autoSaveRef.current);
+    }
+    if (!activeDoc?.dirty) return;
+
+    autoSaveRef.current = setInterval(() => {
+      createRevision();
+    }, 60000);
+
+    return () => {
+      if (autoSaveRef.current) clearInterval(autoSaveRef.current);
+    };
+    // eslint-disable-next-line react-hooks/exhaustive-deps
+  }, [activeDoc?.dirty, activeId]);
 
   /* ── selection → contextual menu ─────────────────────────────────────── */
   const onMouseUp = useCallback(() => {
@@ -185,32 +261,111 @@ export default function WritingStudio() {
       words: 0,
       chars: 0,
       edited: "just now",
+      dirty: false,
     };
     setDocs((prev) => [newDoc, ...prev]);
     setActiveId(id);
     setPalette(false);
   }
 
-  function handleDeleteDoc(id) {
+  async function handleDeleteDoc(id) {
     if (user && !String(id).startsWith("local_")) {
-      deleteDocument(id).catch((err) => {
+      try {
+        await deleteRevisions(id);
+        await deleteDocument(id);
+      } catch (err) {
         setToast(`Delete failed: ${err.message}`);
         setTimeout(() => setToast(null), 3000);
-      });
+      }
     }
     setDocs((prev) => {
       const next = prev.filter((d) => d.id !== id);
       if (activeId === id) {
-        setActiveId(next[0]?.id || null);
+        if (next.length > 0) {
+          setActiveId(next[0].id);
+        } else {
+          // Workspace is empty — create a blank default document
+          const empty = {
+            id: `local_${Date.now()}`,
+            title: "Untitled",
+            content: "",
+            words: 0,
+            chars: 0,
+            edited: "just now",
+            dirty: false,
+          };
+          setActiveId(empty.id);
+          return [empty];
+        }
       }
+      return next;
+    });
+    setRevisions((prev) => {
+      const next = { ...prev };
+      delete next[id];
       return next;
     });
   }
 
   function handleRenameDoc(id, title) {
     setDocs((prev) =>
-      prev.map((d) => (d.id === id ? { ...d, title } : d))
+      prev.map((d) => (d.id === id ? { ...d, title, dirty: true } : d))
     );
+  }
+
+  /* ── revision actions ─────────────────────────────────────────────── */
+  async function createRevision() {
+    const doc = docs.find((d) => d.id === activeId);
+    if (!doc) return;
+
+    const rev = {
+      id: `rev_${Date.now()}`,
+      timestamp: Date.now(),
+      title: doc.title,
+      content: doc.content,
+      words: doc.words,
+      chars: doc.chars,
+    };
+
+    if (user && !String(activeId).startsWith("local_")) {
+      try {
+        const created = await createRevisionDoc(activeId, doc.content, doc.title);
+        const serverRev = parseRevisionDoc(created);
+        setRevisions((prev) => {
+          const list = prev[activeId] || [];
+          return { ...prev, [activeId]: [serverRev, ...list].slice(0, 50) };
+        });
+        setToast("Revision saved");
+      } catch (err) {
+        setToast(`Revision failed: ${err.message}`);
+      }
+    } else {
+      setRevisions((prev) => {
+        const list = prev[activeId] || [];
+        return { ...prev, [activeId]: [rev, ...list].slice(0, 50) };
+      });
+      setToast("Revision saved");
+    }
+    setTimeout(() => setToast(null), 1500);
+  }
+
+  function handleRestoreRevision(rev) {
+    setDocs((prev) =>
+      prev.map((d) =>
+        d.id === activeId
+          ? {
+              ...d,
+              title: rev.title || d.title,
+              content: rev.content,
+              words: rev.words,
+              chars: rev.chars,
+              dirty: true,
+            }
+          : d
+      )
+    );
+    setToast("Version restored");
+    setTimeout(() => setToast(null), 2000);
   }
 
   /* ── auth actions ──────────────────────────────────────────────────── */
@@ -219,13 +374,14 @@ export default function WritingStudio() {
     try {
       const me = await getMe();
       setUser(me);
-      const serverDocs = await listDocuments();
-      const mapped = serverDocs.map(mapServerDoc);
+      const allDocs = await listDocuments();
+      const { real, revMap } = splitDocuments(allDocs);
       setDocs((prev) => {
         const existing = new Set(prev.map((d) => d.id));
-        const novel = mapped.filter((d) => !existing.has(d.id));
+        const novel = real.filter((d) => !existing.has(d.id)).map(mapServerDoc);
         return [...prev, ...novel];
       });
+      setRevisions(revMap);
       setToast(`Welcome, ${me.username}`);
       setTimeout(() => setToast(null), 2000);
     } catch (err) {
@@ -248,12 +404,24 @@ export default function WritingStudio() {
         setActiveId(null);
       }
     } else {
-      const seed = SEED_DOCS.map((d, i) => ({
-        ...d,
-        content: i === 0 ? SEED_PROSE : "",
-      }));
-      setDocs(seed);
-      setActiveId(seed[0]?.id || null);
+      const empty = {
+        id: `local_${Date.now()}`,
+        title: "Untitled",
+        content: "",
+        words: 0,
+        chars: 0,
+        edited: "just now",
+        dirty: false,
+      };
+      setDocs([empty]);
+      setActiveId(empty.id);
+    }
+    setRevisions({});
+    const revRaw = localStorage.getItem("ap_revisions");
+    if (revRaw) {
+      try {
+        setRevisions(JSON.parse(revRaw));
+      } catch {}
     }
   }
 
@@ -274,15 +442,52 @@ export default function WritingStudio() {
       if (String(doc.id).startsWith("local_")) {
         const created = await createDocument(doc.title, t);
         const mapped = mapServerDoc(created);
+
+        // Create an initial server revision for the newly-saved document
+        try {
+          const revCreated = await createRevisionDoc(mapped.id, t, mapped.title);
+          const serverRev = parseRevisionDoc(revCreated);
+          setRevisions((prev) => {
+            const localRevs = prev[doc.id] || [];
+            const next = { ...prev };
+            delete next[doc.id];
+            next[mapped.id] = [serverRev, ...localRevs.map((r) => ({ ...r, id: `rev_${Date.now()}_${Math.random()}` }))].slice(0, 50);
+            return next;
+          });
+        } catch {
+          // If initial revision creation fails, still migrate local revisions
+          setRevisions((prev) => {
+            const localRevs = prev[doc.id] || [];
+            const next = { ...prev };
+            delete next[doc.id];
+            if (localRevs.length > 0) {
+              next[mapped.id] = localRevs.map((r) => ({ ...r, id: `rev_${Date.now()}_${Math.random()}` }));
+            }
+            return next;
+          });
+        }
+
         setDocs((prev) => prev.map((d) => (d.id === doc.id ? mapped : d)));
         setActiveId(mapped.id);
         setToast("Saved to your account");
       } else {
+        // Snapshot current state as a revision before overwriting
+        try {
+          const revCreated = await createRevisionDoc(doc.id, doc.content, doc.title);
+          const serverRev = parseRevisionDoc(revCreated);
+          setRevisions((prev) => {
+            const list = prev[doc.id] || [];
+            return { ...prev, [doc.id]: [serverRev, ...list].slice(0, 50) };
+          });
+        } catch {
+          // If revision creation fails, still proceed with the save
+        }
+
         await updateDocument(doc.id, doc.title, t);
         setDocs((prev) =>
           prev.map((d) =>
             d.id === doc.id
-              ? { ...d, content: t, words: t.trim().split(/\s+/).length, edited: "just now" }
+              ? { ...d, content: t, words: t.trim().split(/\s+/).length, edited: "just now", dirty: false }
               : d
           )
         );
@@ -341,7 +546,7 @@ export default function WritingStudio() {
 
   /* ── render ────────────────────────────────────────────────────────── */
   return (
-    <div className={`ws-app${logOpen ? " rail-open" : ""}`}>
+    <div className={`ws-app${logOpen || revOpen ? " rail-open" : ""}`}>
       <Sidebar
         docs={docs}
         activeId={activeId}
@@ -362,8 +567,10 @@ export default function WritingStudio() {
           logOpen={logOpen}
           lineNumbers={lineNumbers}
           onOpenPalette={() => setPalette(true)}
-          onToggleLog={() => setLogOpen((o) => !o)}
+          onToggleLog={() => { setLogOpen((o) => !o); setRevOpen(false); }}
           onToggleLineNumbers={() => setLineNumbers((n) => !n)}
+          onToggleRevisions={() => { setRevOpen((o) => !o); setLogOpen(false); }}
+          revOpen={revOpen}
           onSave={handleSave}
           saving={saving}
         />
@@ -374,7 +581,30 @@ export default function WritingStudio() {
           style={{ position: "relative" }}
         >
           <div className="ws-page">
-            <h1 className="ws-page__h">{activeDoc?.title || "Untitled"}</h1>
+            <div className="ws-page__h-wrap">
+              <h1
+                className="ws-page__h"
+                contentEditable
+                suppressContentEditableWarning
+                spellCheck={false}
+                onKeyDown={(e) => {
+                  if (e.key === "Enter") {
+                    e.preventDefault();
+                    e.currentTarget.blur();
+                  }
+                }}
+                onBlur={(e) => {
+                  const next = e.currentTarget.innerText.trim() || "Untitled";
+                  if (activeDoc && next !== activeDoc.title) {
+                    handleRenameDoc(activeDoc.id, next);
+                  }
+                  e.currentTarget.innerText = next;
+                }}
+              >
+                {activeDoc?.title || "Untitled"}
+              </h1>
+              <Icon name="pencil" size={16} />
+            </div>
             <div className="ws-page__byline">
               <span>DRAFT</span>
               <span>·</span>
@@ -388,7 +618,6 @@ export default function WritingStudio() {
               contentEditable
               suppressContentEditableWarning
               spellCheck={false}
-              onInput={() => setTick((t) => t + 1)}
             />
           </div>
 
@@ -407,6 +636,26 @@ export default function WritingStudio() {
       </div>
 
       {logOpen && <ConstraintLog items={log} onClose={() => setLogOpen(false)} />}
+
+      {revOpen && (
+        <RevisionLog
+          revisions={revisions[activeId] || []}
+          activeDocTitle={activeDoc?.title || "Untitled"}
+          onClose={() => setRevOpen(false)}
+          onSelect={(rev) => setViewingRev(rev)}
+          onCreate={createRevision}
+        />
+      )}
+
+      {viewingRev && (
+        <RevisionViewer
+          revision={viewingRev}
+          currentTitle={activeDoc?.title || "Untitled"}
+          currentContent={activeDoc?.content || ""}
+          onRestore={handleRestoreRevision}
+          onClose={() => setViewingRev(null)}
+        />
+      )}
 
       {palette && (
         <CommandPalette onRun={chooseConstraint} onClose={() => setPalette(false)} />

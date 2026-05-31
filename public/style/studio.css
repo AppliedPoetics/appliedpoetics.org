@@ -39,7 +39,8 @@ body {
 .ws-doc { display: flex; flex-direction: column; gap: 2px; padding: 9px 18px; cursor: pointer; border-left: 2px solid transparent; transition: background var(--dur-fast) var(--ease); }
 .ws-doc:hover { background: rgba(255,255,255,0.04); }
 .ws-doc.active { background: rgba(0,159,143,0.16); border-left-color: var(--ap-teal); }
-.ws-doc__t { font: 500 14px var(--font-sans); color: #E8F0EE; white-space: nowrap; overflow: hidden; text-overflow: ellipsis; }
+.ws-doc__t { font: 500 14px var(--font-sans); color: #E8F0EE; white-space: nowrap; overflow: hidden; text-overflow: ellipsis; display: flex; align-items: center; gap: 6px; }
+.ws-doc__dot { width: 6px; height: 6px; border-radius: var(--r-pill); background: var(--ap-yellow); flex-shrink: 0; }
 .ws-doc__m { font: var(--t-mono-sm); color: #8BA39E; display: flex; gap: 8px; }
 .ws-side__foot { padding: 13px 18px; border-top: 1px solid var(--lab-rule); display: flex; align-items: center; gap: 10px; }
 .ws-side__foot .av { width: 28px; height: 28px; border-radius: var(--r-pill); background: var(--ap-teal); color: #022222; display: flex; align-items: center; justify-content: center; font: 700 12px var(--font-display); }
@@ -67,10 +68,16 @@ body {
 /* ---- WRITING CANVAS ------------------------------------------------------ */
 .ws-canvas { flex: 1; overflow-y: auto; background: var(--paper); position: relative; }
 .ws-page { max-width: 720px; margin: 0 auto; padding: 64px 40px 240px; }
-.ws-page__h { font: 600 32px/1.12 var(--font-display); text-transform: uppercase; letter-spacing: 0.03em; color: var(--fg-1); margin: 0 0 6px; }
+.ws-page__h-wrap { display: flex; align-items: center; gap: 10px; margin: 0 0 6px; }
+.ws-page__h-wrap .ws-ico { color: var(--fg-4); opacity: 0.5; transition: opacity var(--dur-fast) var(--ease); }
+.ws-page__h-wrap:hover .ws-ico { opacity: 1; color: var(--ap-teal-deep); }
+.ws-page__h { font: 600 32px/1.12 var(--font-display); letter-spacing: 0.03em; color: var(--fg-1); margin: 0; cursor: text; outline: none; border-radius: var(--r-sm); transition: background var(--dur-fast) var(--ease); }
+.ws-page__h:hover { background: var(--surface-2); }
+.ws-page__h:focus { background: var(--teal-tint); box-shadow: 0 0 0 2px var(--ap-teal); }
 .ws-page__byline { font: var(--t-mono-sm); color: var(--fg-3); margin-bottom: 34px; display: flex; gap: 12px; }
-.ws-prose { font: 400 19px/1.15 var(--font-serif); color: var(--fg-1); outline: none; }
+.ws-prose { font: 400 19px/1.15 var(--font-serif); color: var(--fg-1); outline: none; cursor: text; }
 .ws-prose p { margin: 0 0 0.4em; }
+.ws-prose:empty::before { content: "Start writing…"; color: var(--fg-4); opacity: 0.55; font-style: italic; }
 .ws-prose ::selection { background: var(--ap-yellow); color: var(--ap-ink); }
 .ws-prose .mark-applied { background: var(--yellow-tint); box-shadow: 0 0 0 1px #f0d98a inset; border-radius: 2px; padding: 0 1px; }
 .ws-prose .mark-sel { background: var(--ap-yellow); color: var(--ap-ink); border-radius: 1px; }
@@ -173,3 +180,10 @@ body {
 .ws-side__foot .ws-btn--primary:hover { background: var(--ap-teal-deep); }
 .ws-side__foot .ws-btn--ghost { color: #8BA39E; }
 .ws-side__foot .ws-btn--ghost:hover { color: #F4FBFA; background: rgba(255,255,255,0.06); }
+
+/* ---- REVISIONS ---------------------------------------------------------- */
+.ws-rev { cursor: pointer; }
+.ws-rev:hover { background: var(--surface-2); }
+.ws-rev__meta { font: var(--t-mono-sm); color: var(--fg-4); display: flex; gap: 8px; margin-top: 4px; }
+.ws-rev-diff { border: 1px solid var(--line-soft); border-radius: var(--r-sm); padding: 12px; background: var(--surface); }
+.ws-rev-diff span { border-radius: 2px; }

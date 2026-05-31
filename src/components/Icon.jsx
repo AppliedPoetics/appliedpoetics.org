@@ -40,6 +40,8 @@ import {
   User,
   LogIn,
   LogOut,
+  Pencil,
+  History,
 } from "lucide-react";
 
 const ICON_MAP = {
@@ -83,6 +85,8 @@ const ICON_MAP = {
   user: User,
   "log-in": LogIn,
   "log-out": LogOut,
+  pencil: Pencil,
+  history: History,
 };
 
 export default function Icon({ name, size = 18, style }) {

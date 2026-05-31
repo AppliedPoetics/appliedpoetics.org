@@ -1,4 +1,4 @@
-import React from "react";
+import React, { useEffect, useRef } from "react";
 import Icon from "./Icon.jsx";
 
 export default function Sidebar({
@@ -12,6 +12,14 @@ export default function Sidebar({
   onLogin,
   onLogout,
 }) {
+  const activeRef = useRef(null);
+
+  useEffect(() => {
+    if (activeRef.current) {
+      activeRef.current.scrollIntoView({ block: "nearest", behavior: "smooth" });
+    }
+  }, [activeId]);
+
   return (
     <aside className="ws-side">
       <div className="ws-side__brand">
@@ -31,6 +39,7 @@ export default function Sidebar({
         {docs.map((d) => (
           <div
             key={d.id}
+            ref={d.id === activeId ? activeRef : null}
             className={`ws-doc${d.id === activeId ? " active" : ""}`}
             onClick={() => onSelect(d.id)}
           >
@@ -40,6 +49,7 @@ export default function Sidebar({
               if (next) onRename(d.id, next);
             }}>
               {d.title}
+              {d.dirty && <span className="ws-doc__dot" title="Unsaved changes" />}
             </div>
             <div className="ws-doc__m">
               <span>{d.words} words</span>
@@ -52,7 +62,7 @@ export default function Sidebar({
                   style={{ marginLeft: "auto" }}
                   onClick={(e) => {
                     e.stopPropagation();
-                    if (window.confirm(`Delete “${d.title}”?`)) onDelete(d.id);
+                    if (window.confirm(`Delete "${d.title}"?`)) onDelete(d.id);
                   }}
                 >
                   <Icon name="trash" size={12} />

@@ -11,6 +11,8 @@ export default function TopBar({
   logOpen,
   lineNumbers,
   onToggleLineNumbers,
+  onToggleRevisions,
+  revOpen,
   onSave,
   saving,
 }) {
@@ -48,6 +50,13 @@ export default function TopBar({
           onClick={onToggleLog}
         >
           Changes
+        </Button>
+        <Button
+          variant={revOpen ? "ink" : "ghost"}
+          icon="rotate-3d"
+          onClick={onToggleRevisions}
+        >
+          Revisions
         </Button>
         <Button variant="primary" icon="save" onClick={onSave}>
           {saving ? "Saving…" : "Save"}

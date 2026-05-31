@@ -2,7 +2,18 @@ import React from "react";
 import Icon from "./Icon.jsx";
 import Button from "./Button.jsx";
 
-export default function TopBar({ title, words, chars, onOpenPalette, onToggleLog, logOpen, lineNumbers, onToggleLineNumbers }) {
+export default function TopBar({
+  title,
+  words,
+  chars,
+  onOpenPalette,
+  onToggleLog,
+  logOpen,
+  lineNumbers,
+  onToggleLineNumbers,
+  onSave,
+  saving,
+}) {
   return (
     <header className="ws-top">
       <div className="ws-top__crumb">
@@ -38,7 +49,9 @@ export default function TopBar({ title, words, chars, onOpenPalette, onToggleLog
         >
           Changes
         </Button>
-        <Button variant="primary" icon="share-2">Share</Button>
+        <Button variant="primary" icon="save" onClick={onSave}>
+          {saving ? "Saving…" : "Save"}
+        </Button>
       </div>
     </header>
   );

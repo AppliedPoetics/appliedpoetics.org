@@ -35,6 +35,11 @@ import {
   Search,
   X,
   ArrowRight,
+  Save,
+  Trash2,
+  User,
+  LogIn,
+  LogOut,
 } from "lucide-react";
 
 const ICON_MAP = {
@@ -73,6 +78,11 @@ const ICON_MAP = {
   search: Search,
   x: X,
   "arrow-right": ArrowRight,
+  save: Save,
+  trash: Trash2,
+  user: User,
+  "log-in": LogIn,
+  "log-out": LogOut,
 };
 
 export default function Icon({ name, size = 18, style }) {

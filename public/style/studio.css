@@ -156,10 +156,20 @@ body {
 /* ---- modal field / dialog for a parametered constraint ------------------- */
 .ws-dialog { width: 380px; background: var(--surface); border-radius: var(--r-lg); box-shadow: var(--shadow-lg); overflow: hidden; animation: ws-pop var(--dur-slow) var(--ease-out); }
 .ws-dialog__h { padding: 16px 18px 4px; }
-.ws-dialog__h .t { font: 600 18px var(--font-display); text-transform: uppercase; letter-spacing: 0.02em; color: var(--fg-1); }
+.ws-dialog__h .t { font: 600 18px/1.12 var(--font-display); text-transform: uppercase; letter-spacing: 0.02em; color: var(--fg-1); }
 .ws-dialog__h .d { font: var(--t-body-sm); color: var(--fg-3); margin-top: 4px; }
 .ws-dialog__b { padding: 14px 18px; }
 .ws-dialog__b label { font: var(--t-label); text-transform: uppercase; letter-spacing: 0.12em; color: var(--fg-3); display: block; margin-bottom: 6px; }
 .ws-field { width: 100%; font: 400 15px var(--font-sans); padding: 10px 12px; border: 1px solid var(--line); border-radius: var(--r-sm); box-shadow: var(--shadow-inset); color: var(--fg-1); outline: none; }
 .ws-field:focus { border-color: var(--ap-teal); outline: 2px solid var(--ap-yellow); outline-offset: 1px; }
 .ws-dialog__f { display: flex; justify-content: flex-end; gap: 8px; padding: 12px 18px 16px; }
+
+/* ---- doc list delete button (appears on hover) -------------------------- */
+.ws-doc__del { opacity: 0; transition: opacity var(--dur-fast) var(--ease); }
+.ws-doc:hover .ws-doc__del { opacity: 1; }
+
+/* ---- sidebar footer login button ---------------------------------------- */
+.ws-side__foot .ws-btn--primary { background: var(--ap-teal); color: #F4FBFA; font: 600 12px var(--font-sans); }
+.ws-side__foot .ws-btn--primary:hover { background: var(--ap-teal-deep); }
+.ws-side__foot .ws-btn--ghost { color: #8BA39E; }
+.ws-side__foot .ws-btn--ghost:hover { color: #F4FBFA; background: rgba(255,255,255,0.06); }

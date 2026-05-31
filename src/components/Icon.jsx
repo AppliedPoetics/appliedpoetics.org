@@ -1,0 +1,96 @@
+import React from "react";
+import {
+  Eraser,
+  CircleDot,
+  Type,
+  Triangle,
+  MinusCircle,
+  GitCompare,
+  Lock,
+  Tags,
+  Shuffle,
+  Repeat,
+  ListOrdered,
+  Ear,
+  ArrowDownAZ,
+  Waves,
+  Sparkles,
+  SpellCheck,
+  Palette,
+  Cpu,
+  Rotate3d,
+  Hash,
+  Infinity,
+  Ruler,
+  Phone,
+  Circle,
+  Radio,
+  CloudSun,
+  Folder,
+  ChevronRight,
+  TerminalSquare,
+  Dices,
+  Share2,
+  Plus,
+  Search,
+  X,
+  ArrowRight,
+} from "lucide-react";
+
+const ICON_MAP = {
+  eraser: Eraser,
+  "circle-dot": CircleDot,
+  type: Type,
+  triangle: Triangle,
+  "minus-circle": MinusCircle,
+  "git-compare": GitCompare,
+  lock: Lock,
+  tags: Tags,
+  shuffle: Shuffle,
+  repeat: Repeat,
+  "list-ordered": ListOrdered,
+  ear: Ear,
+  "arrow-down-a-z": ArrowDownAZ,
+  waves: Waves,
+  sparkles: Sparkles,
+  "spell-check": SpellCheck,
+  palette: Palette,
+  cpu: Cpu,
+  "rotate-3d": Rotate3d,
+  hash: Hash,
+  infinity: Infinity,
+  ruler: Ruler,
+  phone: Phone,
+  circle: Circle,
+  radio: Radio,
+  "cloud-sun": CloudSun,
+  folder: Folder,
+  "chevron-right": ChevronRight,
+  "terminal-square": TerminalSquare,
+  dices: Dices,
+  "share-2": Share2,
+  plus: Plus,
+  search: Search,
+  x: X,
+  "arrow-right": ArrowRight,
+};
+
+export default function Icon({ name, size = 18, style }) {
+  const LucideIcon = ICON_MAP[name];
+  if (!LucideIcon) return null;
+  return (
+    <span
+      className="ws-ico"
+      style={{
+        fontSize: size,
+        lineHeight: 0,
+        display: "inline-flex",
+        alignItems: "center",
+        justifyContent: "center",
+        ...style,
+      }}
+    >
+      <LucideIcon size={size} strokeWidth={1.75} />
+    </span>
+  );
+}

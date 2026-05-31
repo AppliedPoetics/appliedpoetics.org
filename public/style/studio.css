@@ -1,0 +1,147 @@
+/* ============================================================================
+   APPLIED POETICS · WRITING STUDIO — UI kit styles
+   The evolved "Docs"-like writing environment. Privileges the writing space;
+   constraints live in a contextual operations menu summoned on a selection.
+   Loads on top of ../../colors_and_type.css (tokens).
+   ========================================================================== */
+
+* { box-sizing: border-box; }
+html, body { margin: 0; padding: 0; height: 100%; }
+body {
+  font-family: var(--font-sans);
+  color: var(--fg-1);
+  background: var(--paper);
+  -webkit-font-smoothing: antialiased;
+}
+#root { height: 100vh; }
+
+/* lucide icons inherit text color + sit on the baseline */
+.ws-ico { display: inline-flex; align-items: center; justify-content: center; }
+.ws-ico svg { width: 1em; height: 1em; stroke-width: 1.75; }
+
+/* ---- APP SHELL ----------------------------------------------------------- */
+.ws-app { display: grid; grid-template-columns: 260px 1fr; height: 100vh; overflow: hidden; }
+.ws-app.rail-open { grid-template-columns: 260px 1fr 304px; }
+.ws-main { display: flex; flex-direction: column; min-width: 0; height: 100vh; }
+
+/* ---- SIDEBAR ------------------------------------------------------------- */
+.ws-side { background: var(--ink, #022222); color: var(--fg-on-ink); display: flex; flex-direction: column; height: 100vh; }
+.ws-side { background: #022222; }
+.ws-side__brand { display: flex; align-items: center; gap: 11px; padding: 18px 18px 16px; }
+.ws-side__brand img { height: 30px; width: auto; }
+.ws-side__brand .wm { font: 500 16px/1.0 var(--font-display); text-transform: uppercase; letter-spacing: 0.08em; color: #F4FBFA; }
+.ws-side__new { margin: 4px 14px 14px; display: flex; align-items: center; justify-content: center; gap: 8px;
+  font: 600 13px var(--font-sans); color: #022222; background: var(--ap-yellow); border: none; border-radius: var(--r-sm);
+  padding: 10px; cursor: pointer; transition: background var(--dur) var(--ease); }
+.ws-side__new:hover { background: var(--ap-yellow-deep); }
+.ws-side__sec { padding: 6px 18px; font: var(--t-label); text-transform: uppercase; letter-spacing: 0.12em; color: #8BA39E; }
+.ws-side__scroll { overflow-y: auto; flex: 1; }
+.ws-doc { display: flex; flex-direction: column; gap: 2px; padding: 9px 18px; cursor: pointer; border-left: 2px solid transparent; transition: background var(--dur-fast) var(--ease); }
+.ws-doc:hover { background: rgba(255,255,255,0.04); }
+.ws-doc.active { background: rgba(0,159,143,0.16); border-left-color: var(--ap-teal); }
+.ws-doc__t { font: 500 14px var(--font-sans); color: #E8F0EE; white-space: nowrap; overflow: hidden; text-overflow: ellipsis; }
+.ws-doc__m { font: var(--t-mono-sm); color: #8BA39E; display: flex; gap: 8px; }
+.ws-side__foot { padding: 13px 18px; border-top: 1px solid var(--lab-rule); display: flex; align-items: center; gap: 10px; }
+.ws-side__foot .av { width: 28px; height: 28px; border-radius: var(--r-pill); background: var(--ap-teal); color: #022222; display: flex; align-items: center; justify-content: center; font: 700 12px var(--font-display); }
+.ws-side__foot .nm { font: 500 13px var(--font-sans); color: #C9D8D4; }
+
+/* ---- TOPBAR -------------------------------------------------------------- */
+.ws-top { display: flex; align-items: center; gap: 14px; padding: 0 22px; height: 56px; border-bottom: 1px solid var(--line); background: var(--surface); flex-shrink: 0; }
+.ws-top__crumb { display: flex; align-items: center; gap: 8px; font: var(--t-mono-sm); color: var(--fg-3); }
+.ws-top__title { font: 600 15px var(--font-sans); color: var(--fg-1); white-space: nowrap; overflow: hidden; text-overflow: ellipsis; max-width: 320px; flex-shrink: 0; }
+.ws-top__crumb { flex-shrink: 0; }
+.ws-top__spacer { flex: 1; }
+.ws-top__count { font: var(--t-mono-sm); color: var(--fg-3); display: flex; gap: 14px; white-space: nowrap; }
+@media (max-width: 1180px) { .ws-top__count { display: none; } }
+.ws-top__btns { display: flex; align-items: center; gap: 8px; }
+
+/* ---- BUTTONS ------------------------------------------------------------- */
+.ws-btn { display: inline-flex; align-items: center; gap: 7px; font: 600 13px var(--font-sans); padding: 8px 14px; border: 1px solid transparent; border-radius: var(--r-sm); cursor: pointer; transition: all var(--dur) var(--ease); white-space: nowrap; }
+.ws-btn--primary { background: var(--ap-teal); color: #F4FBFA; }
+.ws-btn--primary:hover { background: var(--ap-teal-deep); }
+.ws-btn--ghost { background: transparent; color: var(--fg-2); border-color: var(--line); }
+.ws-btn--ghost:hover { background: var(--surface-2); color: var(--fg-1); }
+.ws-btn--ink { background: var(--ap-ink); color: var(--ap-yellow); }
+.ws-btn--icon { padding: 8px; }
+
+/* ---- WRITING CANVAS ------------------------------------------------------ */
+.ws-canvas { flex: 1; overflow-y: auto; background: var(--paper); position: relative; }
+.ws-page { max-width: 720px; margin: 0 auto; padding: 64px 40px 240px; }
+.ws-page__h { font: 600 32px/1.12 var(--font-display); text-transform: uppercase; letter-spacing: 0.03em; color: var(--fg-1); margin: 0 0 6px; }
+.ws-page__byline { font: var(--t-mono-sm); color: var(--fg-3); margin-bottom: 34px; display: flex; gap: 12px; }
+.ws-prose { font: 400 19px/1.78 var(--font-serif); color: var(--fg-1); outline: none; }
+.ws-prose p { margin: 0 0 1.4em; }
+.ws-prose ::selection { background: var(--ap-yellow); color: var(--ap-ink); }
+.ws-prose .mark-applied { background: var(--yellow-tint); box-shadow: 0 0 0 1px #f0d98a inset; border-radius: 2px; padding: 0 1px; }
+.ws-prose .mark-sel { background: var(--ap-yellow); color: var(--ap-ink); border-radius: 1px; }
+
+/* ---- CONTEXTUAL OPERATIONS MENU (signature) ------------------------------ */
+.ws-cmenu { position: absolute; z-index: 40; width: 268px; background: var(--surface); border: 1px solid var(--line); border-radius: var(--r-md); box-shadow: var(--shadow-menu); overflow: hidden; animation: ws-pop var(--dur) var(--ease-out); }
+@keyframes ws-pop { from { opacity: 0; transform: translateY(6px) scale(0.985); } to { opacity: 1; transform: none; } }
+.ws-cmenu__head { display: flex; align-items: center; justify-content: space-between; padding: 9px 13px; border-bottom: 1px solid var(--line-soft); }
+.ws-cmenu__head .lab { font: var(--t-label); text-transform: uppercase; letter-spacing: 0.12em; color: var(--fg-3); }
+.ws-cmenu__head .ct { font: var(--t-mono-sm); color: var(--fg-4); }
+.ws-cmenu__list { max-height: 280px; overflow-y: auto; padding: 4px; }
+.ws-cop { display: flex; align-items: center; gap: 11px; padding: 8px 9px; border-radius: var(--r-sm); cursor: pointer; }
+.ws-cop:hover, .ws-cop.hl { background: var(--teal-tint); }
+.ws-cop__ic { width: 26px; height: 26px; flex-shrink: 0; border-radius: var(--r-xs); background: var(--surface-2); color: var(--ap-teal-deep); display: flex; align-items: center; justify-content: center; font-size: 15px; }
+.ws-cop.hl .ws-cop__ic { background: var(--ap-teal); color: #fff; }
+.ws-cop__tx { min-width: 0; }
+.ws-cop__nm { font: 500 14px var(--font-sans); color: var(--fg-1); }
+.ws-cop__ds { font: var(--t-mono-sm); color: var(--fg-3); white-space: nowrap; overflow: hidden; text-overflow: ellipsis; }
+.ws-cmenu__foot { display: flex; align-items: center; justify-content: space-between; padding: 9px 13px; border-top: 1px solid var(--line-soft); cursor: pointer; }
+.ws-cmenu__foot:hover { background: var(--surface-2); }
+.ws-cmenu__foot .t { font: 600 13px var(--font-sans); color: var(--ap-teal-deep); }
+
+/* ---- CONSTRAINT LOG (right rail) ----------------------------------------- */
+.ws-log { background: var(--surface); border-left: 1px solid var(--line); display: flex; flex-direction: column; height: 100vh; }
+.ws-log__head { display: flex; align-items: center; justify-content: space-between; padding: 16px 18px; border-bottom: 1px solid var(--line); }
+.ws-log__head .t { font: 700 13px var(--font-sans); text-transform: uppercase; letter-spacing: 0.08em; color: var(--fg-2); white-space: nowrap; }
+.ws-log__scroll { flex: 1; overflow-y: auto; padding: 12px 14px; display: flex; flex-direction: column; gap: 10px; }
+.ws-logitem { border: 1px solid var(--line-soft); border-radius: var(--r-md); padding: 11px 12px; background: var(--surface); }
+.ws-logitem__h { display: flex; align-items: center; justify-content: space-between; margin-bottom: 5px; }
+.ws-logitem__nm { font: 600 13px var(--font-sans); color: var(--fg-1); }
+.ws-logitem__tag { font: var(--t-mono-sm); text-transform: uppercase; letter-spacing: 0.06em; padding: 2px 8px; border-radius: var(--r-pill); background: var(--ap-ink); color: var(--ap-yellow); }
+.ws-logitem__prev { font: 400 13px/1.5 var(--font-serif); color: var(--fg-2); }
+.ws-log__empty { flex: 1; display: flex; flex-direction: column; align-items: center; justify-content: center; text-align: center; padding: 40px 28px; gap: 14px; }
+.ws-log__empty img { width: 96px; opacity: 0.85; }
+.ws-log__empty .t { font: 600 14px var(--font-sans); color: var(--fg-2); }
+.ws-log__empty .d { font: var(--t-body-sm); color: var(--fg-3); }
+
+/* ---- TAGS / CHIPS -------------------------------------------------------- */
+.ws-tag { font: var(--t-mono-sm); text-transform: uppercase; letter-spacing: 0.07em; padding: 4px 10px; border-radius: var(--r-pill); background: var(--teal-tint); color: var(--ap-teal-deep); border: 1px solid var(--teal-tint-2); }
+
+/* ---- COMMAND PALETTE (full constraint browser) --------------------------- */
+.ws-scrim { position: fixed; inset: 0; background: rgba(2,34,34,0.42); z-index: 100; display: flex; align-items: flex-start; justify-content: center; padding-top: 12vh; animation: ws-fade var(--dur) var(--ease); }
+@keyframes ws-fade { from { opacity: 0; } to { opacity: 1; } }
+.ws-pal { width: 560px; max-width: 92vw; background: var(--surface); border-radius: var(--r-lg); box-shadow: var(--shadow-lg); overflow: hidden; animation: ws-pop var(--dur-slow) var(--ease-out); }
+.ws-pal__in { display: flex; align-items: center; gap: 11px; padding: 16px 18px; border-bottom: 1px solid var(--line); }
+.ws-pal__in input { flex: 1; border: none; outline: none; font: 400 17px var(--font-sans); color: var(--fg-1); background: transparent; }
+.ws-pal__in input::placeholder { color: var(--fg-4); }
+.ws-pal__cats { display: flex; gap: 6px; padding: 12px 16px 4px; flex-wrap: wrap; }
+.ws-pal__cat { font: var(--t-mono-sm); text-transform: uppercase; letter-spacing: 0.06em; padding: 4px 11px; border-radius: var(--r-pill); border: 1px solid var(--line); color: var(--fg-3); cursor: pointer; background: transparent; }
+.ws-pal__cat.on { background: var(--ap-ink); color: var(--ap-yellow); border-color: var(--ap-ink); }
+.ws-pal__list { max-height: 46vh; overflow-y: auto; padding: 8px; }
+.ws-pal__row { display: flex; align-items: center; gap: 13px; padding: 11px 12px; border-radius: var(--r-sm); cursor: pointer; }
+.ws-pal__row:hover, .ws-pal__row.hl { background: var(--teal-tint); }
+.ws-pal__row .ic { width: 30px; height: 30px; border-radius: var(--r-sm); background: var(--surface-2); color: var(--ap-teal-deep); display: flex; align-items: center; justify-content: center; font-size: 16px; flex-shrink: 0; }
+.ws-pal__row.hl .ic { background: var(--ap-teal); color: #fff; }
+.ws-pal__row .nm { font: 600 14px var(--font-sans); color: var(--fg-1); }
+.ws-pal__row .ds { font: var(--t-body-sm); color: var(--fg-3); }
+.ws-pal__row .cat { margin-left: auto; font: var(--t-mono-sm); color: var(--fg-4); text-transform: uppercase; }
+
+/* ---- scrollbars ---------------------------------------------------------- */
+.ws-side__scroll::-webkit-scrollbar, .ws-canvas::-webkit-scrollbar, .ws-log__scroll::-webkit-scrollbar, .ws-pal__list::-webkit-scrollbar, .ws-cmenu__list::-webkit-scrollbar { width: 9px; }
+.ws-canvas::-webkit-scrollbar-thumb, .ws-log__scroll::-webkit-scrollbar-thumb, .ws-pal__list::-webkit-scrollbar-thumb { background: var(--line); border-radius: 6px; border: 2px solid var(--paper); }
+.ws-side__scroll::-webkit-scrollbar-thumb { background: #1A3D38; border-radius: 6px; }
+
+/* ---- modal field / dialog for a parametered constraint ------------------- */
+.ws-dialog { width: 380px; background: var(--surface); border-radius: var(--r-lg); box-shadow: var(--shadow-lg); overflow: hidden; animation: ws-pop var(--dur-slow) var(--ease-out); }
+.ws-dialog__h { padding: 16px 18px 4px; }
+.ws-dialog__h .t { font: 600 18px var(--font-display); text-transform: uppercase; letter-spacing: 0.02em; color: var(--fg-1); }
+.ws-dialog__h .d { font: var(--t-body-sm); color: var(--fg-3); margin-top: 4px; }
+.ws-dialog__b { padding: 14px 18px; }
+.ws-dialog__b label { font: var(--t-label); text-transform: uppercase; letter-spacing: 0.12em; color: var(--fg-3); display: block; margin-bottom: 6px; }
+.ws-field { width: 100%; font: 400 15px var(--font-sans); padding: 10px 12px; border: 1px solid var(--line); border-radius: var(--r-sm); box-shadow: var(--shadow-inset); color: var(--fg-1); outline: none; }
+.ws-field:focus { border-color: var(--ap-teal); outline: 2px solid var(--ap-yellow); outline-offset: 1px; }
+.ws-dialog__f { display: flex; justify-content: flex-end; gap: 8px; padding: 12px 18px 16px; }

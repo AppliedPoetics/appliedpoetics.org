@@ -1,21 +1,17 @@
 ---
-import Header from '../components/Header.astro';
-import Footer from '../components/Footer.astro';
-const {pageTitle} = Astro.props;
+const { pageTitle } = Astro.props;
 ---
 <!DOCTYPE html>
-<html lang = "en">
-    <head>
-        <link rel = "stylesheet" href = "/style/style.css" />
-        <link rel="stylesheet" href="https://use.typekit.net/kdq2vhp.css">
-        <meta charset="utf-8" />
-        <meta name="viewport" content="width=device-width" />
-        <meta name="generator" content={Astro.generator} / >
-        <title>{pageTitle}</title>
-    </head>
-    <body>
-        <Header />
-            <slot />
-        <Footer />
-    </body>
+<html lang="en">
+  <head>
+    <link rel="stylesheet" href="/style/design-system.css" />
+    <link rel="stylesheet" href="/style/studio.css" />
+    <meta charset="utf-8" />
+    <meta name="viewport" content="width=device-width" />
+    <meta name="generator" content={Astro.generator} />
+    <title>{pageTitle}</title>
+  </head>
+  <body class="ap">
+    <slot />
+  </body>
 </html>

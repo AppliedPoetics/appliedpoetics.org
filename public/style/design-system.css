@@ -1,0 +1,156 @@
+/* ============================================================================
+   APPLIED POETICS — COLOR & TYPE FOUNDATIONS
+   ----------------------------------------------------------------------------
+   The constrained-writing platform. A working laboratory for poetry made
+   with computational methods. Palette lifted from appliedpoetics.org:
+   "mantis" teal, deep-teal ink, and a single electric yellow highlight.
+
+   FONTS: the live site is set in Adobe Fonts (Proxima Nova, Industry, Filson
+   Pro, saxMono) which are not freely embeddable. The nearest open substitutes
+   are loaded below and mapped 1:1. See README "VISUAL FOUNDATIONS / Type".
+   ========================================================================== */
+
+@import url('https://fonts.googleapis.com/css2?family=Space+Grotesk:wght@400;500;600;700&family=Hanken+Grotesk:wght@400;500;600;700;800&family=Spectral:ital,wght@0,400;0,500;0,600;1,400;1,500&family=Space+Mono:ital,wght@0,400;0,700;1,400&display=swap');
+
+:root {
+  /* ---- CORE BRAND ---------------------------------------------------------
+     The whole system runs on two hues: mantis teal and deep-teal ink, with a
+     single high-voltage yellow as the only "loud" color. Use yellow sparingly
+     — it is the brand's exclamation point (selection, the live constraint,
+     the one thing the eye should land on). */
+  --ap-teal:        #009F8F;   /* primary — "mantis" green-teal               */
+  --ap-teal-deep:   #006B5D;   /* hover / pressed teal                        */
+  --ap-teal-darker: #003934;   /* gradient floor on dark surfaces             */
+  --ap-ink:         #022222;   /* deepest teal-black — text & dark canvas     */
+  --ap-yellow:      #FFCC11;   /* the accent. selection, active constraint    */
+  --ap-yellow-deep: #E8B400;   /* yellow hover / borders                      */
+  --ap-line-yellow: #FFFF00;   /* the editor's line-number yellow (heritage)  */
+
+  /* ---- NEUTRALS (cool, faintly teal-tinted) -------------------------------
+     The writing surface is "paper" — a near-white with a whisper of teal so
+     it never reads as a clinical pure white. Chrome sits a half-step down. */
+  --paper:     #F6F8F7;        /* app background                              */
+  --surface:   #FFFFFF;        /* the document / cards                        */
+  --surface-2: #EDF2F0;        /* sunken panels, hovers                       */
+  --surface-3: #E1E9E6;        /* deeper wells                                */
+  --line:      #D8E2DF;        /* hairline borders                            */
+  --line-soft: #E6ECEA;        /* faintest dividers                           */
+
+  /* ---- TEXT RAMP ----------------------------------------------------------*/
+  --fg-1: #022222;             /* primary ink                                 */
+  --fg-2: #3A4B48;             /* secondary — labels, metadata                */
+  --fg-3: #506A65;             /* tertiary — muted, placeholder               */
+  --fg-4: #607873;             /* faintest — line numbers, counters           */
+  --fg-on-teal:   #F4FBFA;     /* text on teal fields                         */
+  --fg-on-ink:    #E8F0EE;     /* text on the dark "lab" canvas               */
+
+  /* ---- TEAL WASHES (tints for badges, selections, callouts) ---------------*/
+  --teal-tint:   #E3F1EE;      /* light teal wash background                  */
+  --teal-tint-2: #CDE7E2;      /* slightly deeper wash / border               */
+  --yellow-tint: #FFF3CC;      /* light yellow wash (constraint applied)      */
+
+  /* ---- HERITAGE DARK (the original full-screen text console) ---------------
+     Kept intact so "Lab Mode" surfaces can reproduce the live site exactly. */
+  --lab-bg:        #022222;
+  --lab-bg-2:      #0A2E2A;
+  --lab-gradient:  linear-gradient(180deg, #022222 0%, #444444 38%, #444444 59%, #022222 100%);
+  --lab-text:      #FFFFFF;
+  --lab-rule:      #2A4540;
+  --charcoal:      #222222;    /* menus, control chips on dark                */
+  --graphite:      #444444;    /* heritage body grey                          */
+
+  /* ---- TYPEFACES ----------------------------------------------------------*/
+  --font-display: 'Space Grotesk', 'Hanken Grotesk', sans-serif; /* wordmark+heads */
+  --font-sans:    'Hanken Grotesk', system-ui, sans-serif;    /* UI sans      */
+  --font-serif:   'Spectral', Georgia, serif;                 /* writing     */
+  --font-mono:    'Space Mono', ui-monospace, monospace;      /* metadata    */
+
+  /* ---- TYPE SCALE (1.25 major-third-ish, tuned) ---------------------------
+     Display is Space Grotesk — set with open tracking, NOT heavy condensed caps,
+     so the wordmark reads systematic/literary rather than industrial. */
+  --t-wordmark: 500 2.5rem/1.0 var(--font-display);
+  --t-h1:       600 2.125rem/1.1 var(--font-display);
+  --t-h2:       600 1.5rem/1.18 var(--font-display);
+  --t-h3:       600 1.25rem/1.2  var(--font-sans);
+  --t-h4:       700 0.95rem/1.3  var(--font-sans);
+  --t-body:     400 1.0625rem/1.6 var(--font-sans);
+  --t-body-sm:  400 0.875rem/1.55 var(--font-sans);
+  --t-prose:    400 1.1875rem/1.75 var(--font-serif);  /* the writing canvas  */
+  --t-label:    700 0.6875rem/1 var(--font-sans);      /* UPPERCASE micro     */
+  --t-mono:     400 0.8125rem/1.5 var(--font-mono);
+  --t-mono-sm:  400 0.6875rem/1.4 var(--font-mono);
+
+  /* ---- RADII --------------------------------------------------------------
+     The heritage UI is mostly hard-edged (border-radius: 0 on buttons). The
+     evolved Docs interface softens just slightly — never pill-shaped. */
+  --r-xs: 2px;
+  --r-sm: 4px;
+  --r-md: 7px;
+  --r-lg: 11px;
+  --r-pill: 999px;   /* reserved for tags / counters only                     */
+
+  /* ---- SPACING (4px base) -------------------------------------------------*/
+  --sp-1: 4px;  --sp-2: 8px;  --sp-3: 12px; --sp-4: 16px;
+  --sp-5: 24px; --sp-6: 32px; --sp-7: 48px; --sp-8: 64px; --sp-9: 96px;
+
+  /* ---- ELEVATION ----------------------------------------------------------
+     Soft, low, teal-tinted shadows — the system avoids heavy drop shadows.
+     The contextual menu is the one element allowed a real lift. */
+  --shadow-sm:   0 1px 2px rgba(2,34,34,0.06);
+  --shadow-md:   0 4px 14px rgba(2,34,34,0.08);
+  --shadow-lg:   0 12px 34px rgba(2,34,34,0.14);
+  --shadow-menu: 0 10px 40px rgba(2,34,34,0.22);
+  --shadow-inset:inset 0 0 8px rgba(0,0,0,0.06);   /* heritage input glow      */
+
+  /* ---- MOTION -------------------------------------------------------------*/
+  --ease: cubic-bezier(0.22, 0.61, 0.36, 1);   /* gentle settle               */
+  --ease-out: cubic-bezier(0.16, 1, 0.3, 1);
+  --dur-fast: 110ms;
+  --dur:      180ms;
+  --dur-slow: 320ms;
+}
+
+/* ============================================================================
+   SEMANTIC ELEMENT STYLES — apply the scale above to real tags.
+   Scope helper: add class .ap to a container to opt into these defaults.
+   ========================================================================== */
+
+.ap, .ap * { box-sizing: border-box; }
+
+.ap {
+  font: var(--t-body);
+  color: var(--fg-1);
+  background: var(--paper);
+  -webkit-font-smoothing: antialiased;
+  text-rendering: optimizeLegibility;
+}
+
+.ap .wordmark {
+  font: var(--t-wordmark);
+  text-transform: uppercase;
+  letter-spacing: 0.08em;
+  color: var(--fg-1);
+}
+.ap h1 { font: var(--t-h1); text-transform: uppercase; letter-spacing: 0.03em; margin: 0 0 var(--sp-4); }
+.ap h2 { font: var(--t-h2); text-transform: uppercase; letter-spacing: 0.03em; margin: 0 0 var(--sp-3); }
+.ap h3 { font: var(--t-h3); margin: 0 0 var(--sp-2); }
+.ap h4 { font: var(--t-h4); margin: 0 0 var(--sp-2); }
+.ap p  { font: var(--t-body); margin: 0 0 var(--sp-4); max-width: 68ch; text-wrap: pretty; }
+
+.ap .prose { font: var(--t-prose); color: var(--fg-1); }
+.ap .prose p { font: var(--t-prose); }
+
+.ap .label {
+  font: var(--t-label);
+  text-transform: uppercase;
+  letter-spacing: 0.12em;
+  color: var(--fg-3);
+}
+
+.ap code, .ap .mono { font: var(--t-mono); color: var(--fg-2); }
+
+.ap a { color: var(--ap-teal-deep); text-decoration: underline; text-decoration-style: dashed; text-underline-offset: 3px; }
+.ap a:hover { color: var(--ap-teal-darker); }
+
+.ap ::selection      { background: var(--ap-yellow); color: var(--ap-ink); }
+.ap ::-moz-selection { background: var(--ap-yellow); color: var(--ap-ink); }

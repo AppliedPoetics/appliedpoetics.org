@@ -1,0 +1,8 @@
+---
+import BaseLayout from '../layouts/BaseLayout.astro';
+import WritingStudio from '../components/WritingStudio.jsx';
+const pageTitle = "Applied Poetics · Writing Studio";
+---
+<BaseLayout pageTitle={pageTitle}>
+  <WritingStudio client:only="react" />
+</BaseLayout>

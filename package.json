@@ -14,6 +14,7 @@
     "@types/react": "^19.2.14",
     "@types/react-dom": "^19.2.3",
     "astro": "^5.17.1",
+    "lucide-react": "^1.17.0",
     "react": "^19.2.4",
     "react-dom": "^19.2.4",
     "tinymce": "^8.3.2"

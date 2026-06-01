@@ -76,7 +76,7 @@ body {
 .ws-page__h:focus { background: var(--teal-tint); box-shadow: 0 0 0 2px var(--ap-teal); }
 .ws-page__byline { font: var(--t-mono-sm); color: var(--fg-3); margin-bottom: 34px; display: flex; gap: 12px; }
 .ws-prose { font: 400 19px/1.15 var(--font-serif); color: var(--fg-1); outline: none; cursor: text; }
-.ws-prose p { margin: 0 0 0.4em; }
+.ws-prose p, .ws-prose div { margin: 0 0 0.4em; }
 .ws-prose:empty::before { content: "Start writing…"; color: var(--fg-4); opacity: 0.55; font-style: italic; }
 .ws-prose ::selection { background: var(--ap-yellow); color: var(--ap-ink); }
 .ws-prose .mark-applied { background: var(--yellow-tint); box-shadow: 0 0 0 1px #f0d98a inset; border-radius: 2px; padding: 0 1px; }
@@ -84,8 +84,8 @@ body {
 
 /* ---- LINE NUMBERS -------------------------------------------------------- */
 .ws-prose.line-numbers { counter-reset: paragraph; }
-.ws-prose.line-numbers p { position: relative; }
-.ws-prose.line-numbers p::before {
+.ws-prose.line-numbers p, .ws-prose.line-numbers div { position: relative; }
+.ws-prose.line-numbers p::before, .ws-prose.line-numbers div::before {
   counter-increment: paragraph;
   content: counter(paragraph);
   position: absolute;

@@ -3,6 +3,12 @@ import BaseLayout from '../layouts/BaseLayout.astro';
 const pageTitle = "Applied Poetics — a studio for constrained writing";
 ---
 <BaseLayout pageTitle={pageTitle}>
+  <script is:inline>
+    (function() {
+      const hasToken = document.cookie.match(/(^|;)\s*ap_token=([^;]*)/);
+      if (hasToken) location.replace('/studio');
+    })();
+  </script>
   <!-- ===== HEADER ===== -->
   <header class="hdr">
     <div class="wrap hdr__in">
@@ -16,7 +22,6 @@ const pageTitle = "Applied Poetics — a studio for constrained writing";
         <a href="#about">About</a>
       </nav>
       <div class="hdr__cta">
-        <a class="btn btn--ghost-dark" href="/studio">Sign in</a>
         <a class="btn btn--yellow" href="/studio">Start writing</a>
       </div>
     </div>
@@ -28,12 +33,12 @@ const pageTitle = "Applied Poetics — a studio for constrained writing";
     <div class="wrap hero__in">
       <div>
         <div class="eyebrow">A studio for constrained writing</div>
-        <h1>Put a text to chance,<br />and read what <em>changes</em>.</h1>
+        <h1>Take a chance <br />and read what <em>changes</em>.</h1>
         <p class="hero__sub">
           Applied Poetics is a writing space built on the Oulipo tradition and a
           century of computational text. Bring a poem; remove a letter, sort the
-          words by length, let the digits of&nbsp;π decide what survives. Where the
-          aleatory meets the constrained, meaning keeps turning.
+          words by length, let the digits of&nbsp;π decide what survives. Inhabit
+          a space where the aleatory meets the constrained.
         </p>
         <div class="hero__cta">
           <a class="btn btn--yellow" href="/studio">
@@ -78,10 +83,9 @@ const pageTitle = "Applied Poetics — a studio for constrained writing";
     <div class="wrap">
       <div class="att_grid">
         <p>
-          The wager of constrained writing is that a rule does not cage the poem
-          but <em>casts</em> it — the way three coins cast a hexagram. The machine
-          here is not the author. It is a collaborator with strange, specific
-          tastes, and the residue of its work is yours to keep.
+          The wager of constrained writing is that a constraint does not limit a poem
+          but <em>casts</em> into a realm of possibilities. The machine
+          here is not the author. It is a peculiar collaborator, a creative partner.
         </p>
         <div class="facts">
           <div class="fact"><div class="n">2014</div><div class="l">Began as the Found Poetry Review's "Oulipost."</div></div>
@@ -97,7 +101,7 @@ const pageTitle = "Applied Poetics — a studio for constrained writing";
     <div class="wrap">
       <div class="sec-head">
         <div class="eyebrow">The constraint library</div>
-        <h2>Forty ways to change a text</h2>
+        <h2>Forty ways to engage a text</h2>
         <p>
           Constraints are grouped by lineage — from the OuLiPo workshop to
           algorithms and received forms. Each names a mechanic, then leaves the
@@ -124,14 +128,14 @@ const pageTitle = "Applied Poetics — a studio for constrained writing";
     <div class="wrap">
       <div class="sec-head">
         <div class="eyebrow">How it works</div>
-        <h2>Write, cast, keep what changes</h2>
+        <h2>Write, restrict, and take a new direction.</h2>
       </div>
       <div class="steps">
         <div class="step">
           <div class="step__n">01</div>
           <div class="step__ic"><span class="ico" data-lucide="file-pen"></span></div>
           <h3>Write or paste</h3>
-          <p>Start from a blank page or bring a text you already have. The writing space stays the center of gravity — generous, quiet, yours.</p>
+          <p>Start from a blank page or bring a text you already have. The writing space stays the center of the experience.</p>
         </div>
         <div class="step">
           <div class="step__n">02</div>
@@ -143,7 +147,7 @@ const pageTitle = "Applied Poetics — a studio for constrained writing";
           <div class="step__n">03</div>
           <div class="step__ic"><span class="ico" data-lucide="history"></span></div>
           <h3>Keep what changes</h3>
-          <p>Every operation lands in your Changes log. Keep it, revise it by hand, or cast again. The text remembers each turn of chance.</p>
+          <p>Every operation lands in your Changes log. Keep it, revise it by hand, or apply a new constraint. The text remembers each turn of chance.</p>
         </div>
       </div>
     </div>
@@ -154,7 +158,7 @@ const pageTitle = "Applied Poetics — a studio for constrained writing";
     <div class="wrap">
       <img class="closing__mark" src="/assets/logo.png" alt="" />
       <h2>Bring a text. <em>Change</em> it.</h2>
-      <p>It's free, it's a labor of love, and something interesting is always one constraint away.</p>
+      <p>It's free; something interesting is always one constraint away.</p>
       <a class="btn btn--yellow" href="/studio">
         <span class="ico" data-lucide="pen-line"></span> Start writing
       </a>
@@ -187,8 +191,8 @@ const pageTitle = "Applied Poetics — a studio for constrained writing";
         </div>
       </div>
       <div class="foot__bottom">
-        <span>© 2014–2026 Applied Poetics · a journal of learning</span>
-        <span>Put a text to chance, and read what changes.</span>
+        <span>© 2014–2026 Applied Poetics</span>
+        <span>Leave a text to chance, and read what changes.</span>
       </div>
     </div>
   </footer>
@@ -221,19 +225,21 @@ const pageTitle = "Applied Poetics — a studio for constrained writing";
         </div>`).join("");
     }
 
+    const API_BASE = "https://api.appliedpoetics.org";
     const ORIGINAL = "A word turns on the line like a tossed coin, and the sentence settles into a shape the writer did not intend.";
 
-    function lipogram(text, letter) {
+    /* Local fallbacks used when the API is unreachable */
+    function localLipogram(text, letter) {
       return text.split(/\s+/)
         .filter((w) => !w.toLowerCase().replace(/[^a-z]/g, "").includes(letter))
         .join(" ")
         .replace(/\s+([,.])/g, "$1");
     }
-    function snowball(text) {
+    function localSnowball(text) {
       return text.replace(/[.,]/g, "").split(/\s+/)
         .sort((a, b) => a.length - b.length).join(" ") + ".";
     }
-    function anagram(text) {
+    function localAnagram(text) {
       return text.replace(/[a-z]+/gi, (w) => {
         if (w.length < 4) return w;
         const s = w.split("");
@@ -242,26 +248,84 @@ const pageTitle = "Applied Poetics — a studio for constrained writing";
       });
     }
 
-    const DEMO = {
-      reset:    { label: "original",       fn: () => ORIGINAL },
-      lipogram: { label: "lipogram · −e",  fn: () => lipogram(ORIGINAL, "e") },
-      snowball: { label: "snowball",       fn: () => snowball(ORIGINAL) },
-      anagram:  { label: "anagram",        fn: () => anagram(ORIGINAL) },
+    const DEMO_LOCAL = {
+      reset:    () => ORIGINAL,
+      lipogram: () => localLipogram(ORIGINAL, "e"),
+      snowball: () => localSnowball(ORIGINAL),
+      anagram:  () => localAnagram(ORIGINAL),
     };
 
-    function setDemo(op) {
+    const DEMO_API = {
+      lipogram: { label: "lipogram · −e", endpoint: "oulipean/lipogram", params: { letters: "e" } },
+      snowball: { label: "snowball",      endpoint: "oulipean/snowball", params: { order: "asc" } },
+      anagram:  { label: "anagram",       endpoint: "grammar/anagram",   params: {} },
+    };
+
+    async function callApi(endpoint, text, params) {
+      const res = await fetch(`${API_BASE}/v1/${endpoint}`, {
+        method: "POST",
+        headers: { "Content-Type": "application/json" },
+        body: JSON.stringify({ text, ...params }),
+      });
+      if (!res.ok) throw new Error(`API error ${res.status}`);
+      const data = await res.json();
+      return data.result ?? "";
+    }
+
+    let demoLoading = false;
+
+    async function setDemo(op) {
+      if (demoLoading) return;
       const textEl = document.getElementById("demoText");
       const badge = document.getElementById("demoBadge");
-      const def = DEMO[op] || DEMO.reset;
-      textEl.style.opacity = "0";
-      setTimeout(() => {
-        textEl.textContent = def.fn();
-        badge.textContent = def.label;
-        textEl.style.opacity = "1";
-      }, 180);
-      document.querySelectorAll(".chip-btn").forEach((b) => {
-        b.classList.toggle("active", b.dataset.op === op && op !== "reset");
-      });
+      if (!textEl || !badge) return;
+
+      if (op === "reset") {
+        textEl.style.opacity = "0";
+        setTimeout(() => {
+          textEl.textContent = ORIGINAL;
+          badge.textContent = "original";
+          textEl.style.opacity = "1";
+        }, 180);
+        document.querySelectorAll(".chip-btn").forEach((b) => b.classList.remove("active"));
+        return;
+      }
+
+      const apiDef = DEMO_API[op];
+      if (!apiDef) return;
+
+      demoLoading = true;
+      document.querySelectorAll(".chip-btn").forEach((b) => b.disabled = true);
+      textEl.style.opacity = "0.4";
+      badge.textContent = "casting…";
+
+      try {
+        const result = await callApi(apiDef.endpoint, ORIGINAL, apiDef.params);
+        textEl.style.opacity = "0";
+        setTimeout(() => {
+          textEl.textContent = result;
+          badge.textContent = apiDef.label;
+          textEl.style.opacity = "1";
+        }, 180);
+        document.querySelectorAll(".chip-btn").forEach((b) => {
+          b.classList.toggle("active", b.dataset.op === op);
+        });
+      } catch (err) {
+        /* Fallback to local implementation on API failure */
+        const fallback = DEMO_LOCAL[op]();
+        textEl.style.opacity = "0";
+        setTimeout(() => {
+          textEl.textContent = fallback;
+          badge.textContent = apiDef.label + " (offline)";
+          textEl.style.opacity = "1";
+        }, 180);
+        document.querySelectorAll(".chip-btn").forEach((b) => {
+          b.classList.toggle("active", b.dataset.op === op);
+        });
+      } finally {
+        demoLoading = false;
+        document.querySelectorAll(".chip-btn").forEach((b) => b.disabled = false);
+      }
     }
 
     function initDemo() {
@@ -284,6 +348,7 @@ const pageTitle = "Applied Poetics — a studio for constrained writing";
     /* ---- landing page styles ---- */
     html { scroll-behavior: smooth; }
     .wrap { max-width: 1160px; margin: 0 auto; padding: 0 32px; }
+    .hdr a, .hero a, .manifesto a, #library a, #how a, .closing a, footer a { text-decoration: none; }
     .eyebrow { font: var(--t-mono-sm); text-transform: uppercase; letter-spacing: 0.18em; color: var(--ap-teal-deep); }
     .hero .eyebrow { color: var(--ap-teal); }
 
@@ -331,6 +396,7 @@ const pageTitle = "Applied Poetics — a studio for constrained writing";
     .chip-btn { font: 500 13px var(--font-sans); padding: 8px 13px; border-radius: var(--r-sm); border: 1px solid var(--line); background: var(--surface); color: var(--fg-2); cursor: pointer; transition: all var(--dur) var(--ease); display: inline-flex; align-items: center; gap: 7px; }
     .chip-btn:hover { border-color: var(--ap-teal); color: var(--ap-teal-deep); background: var(--teal-tint); }
     .chip-btn.active { background: var(--ap-ink); color: var(--ap-yellow); border-color: var(--ap-ink); }
+    .chip-btn:disabled { opacity: 0.5; cursor: not-allowed; }
     .chip-btn--reset { margin-left: auto; color: var(--fg-3); }
 
     /* generic section */

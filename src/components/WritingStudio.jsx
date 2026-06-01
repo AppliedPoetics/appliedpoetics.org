@@ -82,6 +82,7 @@ export default function WritingStudio() {
   const [menu, setMenu] = useState(null);
   const [palette, setPalette] = useState(false);
   const [paramFor, setParamFor] = useState(null);
+  const [restorePrompt, setRestorePrompt] = useState(null);
   const [toast, setToast] = useState(null);
   const [lineNumbers, setLineNumbers] = useState(true);
   const proseRef = useRef(null);
@@ -90,6 +91,19 @@ export default function WritingStudio() {
 
   function getProseText() {
     return proseRef.current ? proseRef.current.innerText.trim() : "";
+  }
+
+  function setProseHtml(content) {
+    if (!proseRef.current) return;
+    if (!content) {
+      proseRef.current.innerHTML = "";
+      return;
+    }
+    const blocks = content.split("\n").map((block) => {
+      if (!block) return "<div><br></div>";
+      return `<div>${block}</div>`;
+    });
+    proseRef.current.innerHTML = blocks.join("");
   }
 
   /* Read count straight from the DOM on every render so the UI
@@ -167,11 +181,7 @@ export default function WritingStudio() {
   useEffect(() => {
     if (!activeId) return;
     const doc = docs.find((d) => d.id === activeId);
-    if (proseRef.current && doc) {
-      proseRef.current.innerHTML = doc.content
-        ? doc.content.split("\n\n").map((p) => `<p>${p}</p>`).join("")
-        : "";
-    }
+    if (doc) setProseHtml(doc.content);
     // eslint-disable-next-line react-hooks/exhaustive-deps
   }, [activeId]);
 
@@ -349,13 +359,13 @@ export default function WritingStudio() {
     setTimeout(() => setToast(null), 1500);
   }
 
-  function handleRestoreRevision(rev) {
+  function doRestore(rev, changeTitle) {
     setDocs((prev) =>
       prev.map((d) =>
         d.id === activeId
           ? {
               ...d,
-              title: rev.title || d.title,
+              title: changeTitle ? rev.title : d.title,
               content: rev.content,
               words: rev.words,
               chars: rev.chars,
@@ -364,8 +374,18 @@ export default function WritingStudio() {
           : d
       )
     );
+    setProseHtml(rev.content);
     setToast("Version restored");
     setTimeout(() => setToast(null), 2000);
+  }
+
+  function handleRestoreRevision(rev) {
+    const currentTitle = activeDoc?.title || "Untitled";
+    if (rev.title && rev.title !== currentTitle) {
+      setRestorePrompt(rev);
+      return;
+    }
+    doRestore(rev, false);
   }
 
   /* ── auth actions ──────────────────────────────────────────────────── */
@@ -669,6 +689,54 @@ export default function WritingStudio() {
       )}
 
       {authOpen && <AuthModal onClose={() => setAuthOpen(false)} onLogin={handleLogin} />}
+
+      {restorePrompt && (
+        <div
+          className="ws-scrim"
+          onClick={(e) => {
+            if (e.target === e.currentTarget) setRestorePrompt(null);
+          }}
+        >
+          <div className="ws-dialog" style={{ width: 420, maxWidth: "92vw" }}>
+            <div className="ws-dialog__h">
+              <div className="t">Keep or change title?</div>
+              <div className="d">The revision has a different title from the current document.</div>
+            </div>
+            <div className="ws-dialog__b">
+              <div style={{ display: "flex", flexDirection: "column", gap: 10, marginBottom: 4 }}>
+                <div>
+                  <span style={{ font: "var(--t-label)", color: "var(--fg-3)", textTransform: "uppercase", letterSpacing: "0.12em" }}>Current title</span>
+                  <div style={{ font: "500 14px var(--font-sans)", color: "var(--fg-1)", marginTop: 4 }}>{activeDoc?.title || "Untitled"}</div>
+                </div>
+                <div>
+                  <span style={{ font: "var(--t-label)", color: "var(--fg-3)", textTransform: "uppercase", letterSpacing: "0.12em" }}>Revision title</span>
+                  <div style={{ font: "500 14px var(--font-sans)", color: "var(--fg-1)", marginTop: 4 }}>{restorePrompt.title}</div>
+                </div>
+              </div>
+            </div>
+            <div className="ws-dialog__f">
+              <button
+                className="ws-btn ws-btn--ghost"
+                onClick={() => {
+                  doRestore(restorePrompt, false);
+                  setRestorePrompt(null);
+                }}
+              >
+                Keep current title
+              </button>
+              <button
+                className="ws-btn ws-btn--primary"
+                onClick={() => {
+                  doRestore(restorePrompt, true);
+                  setRestorePrompt(null);
+                }}
+              >
+                Change to revision title
+              </button>
+            </div>
+          </div>
+        </div>
+      )}
 
       {toast && (
         <div

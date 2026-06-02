@@ -232,6 +232,19 @@ export const CONSTRAINTS = [
       { key: "distance", label: "Max distance", placeholder: "2", default: "2", type: "number" },
     ],
   },
+  {
+    id: "color-field",
+    name: "Color Field",
+    cat: "Algorithmic",
+    icon: "palette",
+    desc: "Analyze image colors and filter text accordingly.",
+    api: { category: "algorithmic", method: "color_field" },
+    params: [
+      { key: "image", label: "Image data or file path", placeholder: "path/to/image.jpg", default: "" },
+      { key: "mode", label: "Processing mode", placeholder: "sentences, letters, anagrams, list", default: "list" },
+    ],
+  },
+
   // Formic
   {
     id: "sestina",

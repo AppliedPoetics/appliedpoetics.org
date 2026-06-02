@@ -493,7 +493,7 @@ export default function WritingStudio() {
   async function runConstraint(c, paramValues = {}) {
     setToast(null);
     const source =
-      (menu && menu.text) || text.slice(0, 120) || SEED_PROSE.slice(0, 120);
+      (menu && menu.text) || text || SEED_PROSE.slice(0, 120);
     const beforeText = getProseText();
     try {
       const out = await callApiConstraint(

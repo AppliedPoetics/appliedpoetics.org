@@ -10,6 +10,7 @@ export const CATEGORIES = [
   "Formic",
   "Numerology",
   "Pop Culture",
+  "Operations",
 ];
 
 export const CONSTRAINTS = [
@@ -177,6 +178,30 @@ export const CONSTRAINTS = [
     desc: "Draw words by the night's lottery numbers.",
     api: { category: "pop", method: "powerball" },
     params: [],
+  },
+
+  // Operations
+  {
+    id: "gutenberg",
+    name: "Gutenberg",
+    cat: "Operations",
+    icon: "book-open",
+    desc: "Fetch text from a Project Gutenberg URL.",
+    api: { category: "operation", method: "gutenberg" },
+    params: [
+      { key: "url", label: "Gutenberg URL", placeholder: "https://www.gutenberg.org/files/1342/1342-0.txt", default: "" },
+    ],
+  },
+  {
+    id: "wikipedia",
+    name: "Wikipedia",
+    cat: "Operations",
+    icon: "globe",
+    desc: "Fetch text from a Wikipedia article.",
+    api: { category: "operation", method: "wikipedia" },
+    params: [
+      { key: "title", label: "Article title", placeholder: "Oulipo", default: "" },
+    ],
   },
 ];
 

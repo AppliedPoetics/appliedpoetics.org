@@ -113,10 +113,12 @@ export async function listDocuments() {
   return request("/documents");
 }
 
-export async function createDocument(title, content) {
+export async function createDocument(title, content, document_id = null) {
+  const body = { title, content };
+  if (document_id) body.document_id = document_id;
   return request("/documents", {
     method: "POST",
-    body: JSON.stringify({ title, content }),
+    body: JSON.stringify(body),
   });
 }
 
@@ -170,7 +172,7 @@ export function parseRevTitle(title) {
 }
 
 export async function createRevisionDoc(parentId, content, title) {
-  return createDocument(makeRevTitle(parentId, Date.now(), title), content);
+  return createDocument(makeRevTitle(parentId, Date.now(), title), content, parentId);
 }
 
 export function parseRevisionDoc(doc) {

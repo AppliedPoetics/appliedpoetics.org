@@ -77,7 +77,7 @@ export default function WritingStudio() {
   const autoSaveRef = useRef(null);
 
   /* ── studio chrome ─────────────────────────────────────────────────── */
-  const [logOpen, setLogOpen] = useState(true);
+  const [logOpen, setLogOpen] = useState(false);
   const [log, setLog] = useState([]);
   const [menu, setMenu] = useState(null);
   const [palette, setPalette] = useState(false);
@@ -85,12 +85,26 @@ export default function WritingStudio() {
   const [restorePrompt, setRestorePrompt] = useState(null);
   const [toast, setToast] = useState(null);
   const [lineNumbers, setLineNumbers] = useState(true);
+  const [kofiOpen, setKofiOpen] = useState(false);
   const proseRef = useRef(null);
 
   const activeDoc = docs.find((d) => d.id === activeId) || docs[0];
 
   function getProseText() {
     return proseRef.current ? proseRef.current.innerText.trim() : "";
+  }
+
+  function getSelectionOffsets() {
+    const sel = window.getSelection();
+    if (!sel || sel.rangeCount === 0 || sel.isCollapsed) return null;
+    const range = sel.getRangeAt(0);
+    if (!proseRef.current.contains(range.commonAncestorContainer)) return null;
+    const preRange = range.cloneRange();
+    preRange.selectNodeContents(proseRef.current);
+    preRange.setEnd(range.startContainer, range.startOffset);
+    const start = preRange.toString().length;
+    const end = start + range.toString().length;
+    return { start, end };
   }
 
   function setProseHtml(content) {
@@ -131,51 +145,23 @@ export default function WritingStudio() {
         }
       }
 
-      const raw = localStorage.getItem("ap_docs");
-      if (raw) {
-        try {
-          const local = JSON.parse(raw);
-          setDocs(local);
-          setActiveId(local[0]?.id || null);
-        } catch {}
-      }
-
-      const revRaw = localStorage.getItem("ap_revisions");
-      if (revRaw) {
-        try {
-          setRevisions(JSON.parse(revRaw));
-        } catch {}
-      }
-
-      if (!raw) {
-        const empty = {
-          id: `local_${Date.now()}`,
-          title: "Untitled",
-          content: "",
-          words: 0,
-          chars: 0,
-          edited: "just now",
-          dirty: false,
-        };
-        setDocs([empty]);
-        setActiveId(empty.id);
-      }
+      // Guest: one transient in-memory document, nothing persisted
+      const empty = {
+        id: `local_${Date.now()}`,
+        title: "Untitled",
+        content: "",
+        words: 0,
+        chars: 0,
+        edited: "just now",
+        dirty: false,
+      };
+      setDocs([empty]);
+      setActiveId(empty.id);
     }
     init();
   }, []);
 
-  /* ── persist docs & revisions to localStorage (guest fallback) ─────── */
-  useEffect(() => {
-    if (docs.length > 0) {
-      localStorage.setItem("ap_docs", JSON.stringify(docs));
-    }
-  }, [docs]);
-
-  useEffect(() => {
-    if (!user) {
-      localStorage.setItem("ap_revisions", JSON.stringify(revisions));
-    }
-  }, [revisions, user]);
+  /* ── no localStorage fallback: guests work in memory only ───────────── */
 
   /* ── keep prose content in sync with active doc ────────────────────── */
   useEffect(() => {
@@ -226,6 +212,7 @@ export default function WritingStudio() {
     if (autoSaveRef.current) {
       clearInterval(autoSaveRef.current);
     }
+    if (!user) return; // no auto-save for guests
     if (!activeDoc?.dirty) return;
 
     autoSaveRef.current = setInterval(() => {
@@ -236,7 +223,7 @@ export default function WritingStudio() {
       if (autoSaveRef.current) clearInterval(autoSaveRef.current);
     };
     // eslint-disable-next-line react-hooks/exhaustive-deps
-  }, [activeDoc?.dirty, activeId]);
+  }, [activeDoc?.dirty, activeId, user]);
 
   /* ── selection → contextual menu ─────────────────────────────────────── */
   const onMouseUp = useCallback(() => {
@@ -327,34 +314,19 @@ export default function WritingStudio() {
   async function createRevision() {
     const doc = docs.find((d) => d.id === activeId);
     if (!doc) return;
+    if (!user) return; // guests do not get revisions
+    if (String(activeId).startsWith("local_")) return; // unsaved local docs don't get revisions
 
-    const rev = {
-      id: `rev_${Date.now()}`,
-      timestamp: Date.now(),
-      title: doc.title,
-      content: doc.content,
-      words: doc.words,
-      chars: doc.chars,
-    };
-
-    if (user && !String(activeId).startsWith("local_")) {
-      try {
-        const created = await createRevisionDoc(activeId, doc.content, doc.title);
-        const serverRev = parseRevisionDoc(created);
-        setRevisions((prev) => {
-          const list = prev[activeId] || [];
-          return { ...prev, [activeId]: [serverRev, ...list].slice(0, 50) };
-        });
-        setToast("Revision saved");
-      } catch (err) {
-        setToast(`Revision failed: ${err.message}`);
-      }
-    } else {
+    try {
+      const created = await createRevisionDoc(activeId, doc.content, doc.title);
+      const serverRev = parseRevisionDoc(created);
       setRevisions((prev) => {
         const list = prev[activeId] || [];
-        return { ...prev, [activeId]: [rev, ...list].slice(0, 50) };
+        return { ...prev, [activeId]: [serverRev, ...list].slice(0, 50) };
       });
       setToast("Revision saved");
+    } catch (err) {
+      setToast(`Revision failed: ${err.message}`);
     }
     setTimeout(() => setToast(null), 1500);
   }
@@ -413,36 +385,18 @@ export default function WritingStudio() {
   function handleLogout() {
     doLogout();
     setUser(null);
-    const raw = localStorage.getItem("ap_docs");
-    if (raw) {
-      try {
-        const local = JSON.parse(raw);
-        setDocs(local);
-        setActiveId(local[0]?.id || null);
-      } catch {
-        setDocs([]);
-        setActiveId(null);
-      }
-    } else {
-      const empty = {
-        id: `local_${Date.now()}`,
-        title: "Untitled",
-        content: "",
-        words: 0,
-        chars: 0,
-        edited: "just now",
-        dirty: false,
-      };
-      setDocs([empty]);
-      setActiveId(empty.id);
-    }
     setRevisions({});
-    const revRaw = localStorage.getItem("ap_revisions");
-    if (revRaw) {
-      try {
-        setRevisions(JSON.parse(revRaw));
-      } catch {}
-    }
+    const empty = {
+      id: `local_${Date.now()}`,
+      title: "Untitled",
+      content: "",
+      words: 0,
+      chars: 0,
+      edited: "just now",
+      dirty: false,
+    };
+    setDocs([empty]);
+    setActiveId(empty.id);
   }
 
   /* ── save ──────────────────────────────────────────────────────────── */
@@ -526,6 +480,7 @@ export default function WritingStudio() {
     setToast(null);
     const source =
       (menu && menu.text) || text.slice(0, 120) || SEED_PROSE.slice(0, 120);
+    const beforeText = getProseText();
     try {
       const out = await callApiConstraint(
         c.api.category,
@@ -533,14 +488,46 @@ export default function WritingStudio() {
         source,
         paramValues
       );
-      setLog((l) => [
-        {
+
+      let newContent = out;
+      if (menu) {
+        const offsets = getSelectionOffsets();
+        if (offsets) {
+          const fullText = beforeText;
+          newContent = fullText.slice(0, offsets.start) + out + fullText.slice(offsets.end);
+        }
+      }
+      setProseHtml(newContent);
+      const w = newContent ? newContent.split(/\s+/).length : 0;
+      const cCount = newContent.length;
+      setDocs((prev) =>
+        prev.map((d) =>
+          d.id === activeId
+            ? { ...d, content: newContent, words: w, chars: cCount, edited: "just now", dirty: true }
+            : d
+        )
+      );
+
+      setLog((l) => {
+        const entry = {
+          id: Date.now(),
           name: c.name,
           tag: c.cat,
           preview: out.length > 160 ? out.slice(0, 160) + "…" : out,
-        },
-        ...l,
-      ]);
+          beforeText,
+        };
+        if (l.length === 0) {
+          const originalEntry = {
+            id: "original",
+            name: "Original",
+            tag: "",
+            preview: beforeText.length > 160 ? beforeText.slice(0, 160) + "…" : beforeText,
+            beforeText,
+          };
+          return [originalEntry, entry];
+        }
+        return [l[0], entry, ...l.slice(1)];
+      });
       setLogOpen(true);
       setMenu(null);
       setPalette(false);
@@ -552,6 +539,23 @@ export default function WritingStudio() {
       setToast(`Error: ${err.message}`);
       setTimeout(() => setToast(null), 3000);
     }
+  }
+
+  function handleUndo(entryId) {
+    const entryIndex = log.findIndex((l) => l.id === entryId);
+    if (entryIndex === -1) return;
+    const entry = log[entryIndex];
+    setProseHtml(entry.beforeText);
+    const w = entry.beforeText ? entry.beforeText.split(/\s+/).length : 0;
+    const cCount = entry.beforeText.length;
+    setDocs((prev) =>
+      prev.map((d) =>
+        d.id === activeId
+          ? { ...d, content: entry.beforeText, words: w, chars: cCount, edited: "just now", dirty: true }
+          : d
+      )
+    );
+    setLog((prev) => prev.slice(0, entryIndex));
   }
 
   function chooseConstraint(c) {
@@ -655,7 +659,7 @@ export default function WritingStudio() {
         </div>
       </div>
 
-      {logOpen && <ConstraintLog items={log} onClose={() => setLogOpen(false)} />}
+      {logOpen && <ConstraintLog items={log} onClose={() => setLogOpen(false)} onUndo={handleUndo} />}
 
       {revOpen && (
         <RevisionLog
@@ -758,6 +762,46 @@ export default function WritingStudio() {
           }}
         >
           <Icon name="dices" size={15} /> {toast}
+        </div>
+      )}
+
+      <button
+        className="ws-kofi-btn"
+        onClick={() => setKofiOpen(true)}
+        title="Support us on Ko-fi"
+      >
+        <Icon name="coffee" size={14} />
+        <span>Support us!</span>
+      </button>
+
+      {kofiOpen && (
+        <div
+          className="ws-scrim"
+          onClick={(e) => {
+            if (e.target === e.currentTarget) setKofiOpen(false);
+          }}
+        >
+          <div className="ws-dialog ws-kofi-modal">
+            <div className="ws-dialog__h" style={{ display: "flex", alignItems: "center", justifyContent: "space-between" }}>
+              <div className="t">Support Applied Poetics</div>
+              <button
+                className="ws-btn ws-btn--icon"
+                onClick={() => setKofiOpen(false)}
+                title="Close"
+                style={{ marginLeft: "auto" }}
+              >
+                <Icon name="x" size={16} />
+              </button>
+            </div>
+            <div className="ws-dialog__b" style={{ padding: 0 }}>
+              <iframe
+                id="kofiframe"
+                src="https://ko-fi.com/appliedpoetics/?hidefeed=true&widget=true&embed=true&preview=true"
+                style={{ border: "none", width: "100%", height: 712, background: "#f9f9f9", display: "block" }}
+                title="appliedpoetics"
+              />
+            </div>
+          </div>
         </div>
       )}
     </div>

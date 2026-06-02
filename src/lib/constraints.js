@@ -59,17 +59,6 @@ export const CONSTRAINTS = [
     ],
   },
   {
-    id: "belle-absente",
-    name: "Belle Absente",
-    cat: "Oulipean",
-    icon: "minus-circle",
-    desc: "The beautiful outlaw — every letter appears except one.",
-    api: { category: "oulipean", method: "belle_absente" },
-    params: [
-      { key: "letters", label: "Letter to omit", placeholder: "e", default: "e" },
-    ],
-  },
-  {
     id: "homoconsonantism",
     name: "Homoconsonantism",
     cat: "Oulipean",
@@ -78,28 +67,8 @@ export const CONSTRAINTS = [
     api: { category: "oulipean", method: "homoconsonantism" },
     params: [],
   },
-  {
-    id: "prisoner",
-    name: "Prisoner's Constraint",
-    cat: "Oulipean",
-    icon: "lock",
-    desc: "Forbid all letters with ascenders or descenders.",
-    api: { category: "oulipean", method: "prisoners_constraint" },
-    params: [],
-  },
 
   // Grammar / Syntax
-  {
-    id: "pos",
-    name: "Parts of Speech",
-    cat: "Grammar",
-    icon: "tags",
-    desc: "Reveal the grammatical part of each word.",
-    api: { category: "grammar", method: "parts_of_speech" },
-    params: [
-      { key: "tag", label: "Part of speech", placeholder: "nouns, verbs, adjectives, adverbs", default: "nouns" },
-    ],
-  },
   {
     id: "anagram",
     name: "Anagram",
@@ -107,15 +76,6 @@ export const CONSTRAINTS = [
     icon: "shuffle",
     desc: "Rearrange the letters of each word.",
     api: { category: "grammar", method: "anagram" },
-    params: [],
-  },
-  {
-    id: "synonymize",
-    name: "Synonymizer",
-    cat: "Grammar",
-    icon: "repeat",
-    desc: "Swap each word for one of its kin.",
-    api: { category: "grammar", method: "synonymizer" },
     params: [],
   },
   {
@@ -131,15 +91,6 @@ export const CONSTRAINTS = [
     ],
   },
   {
-    id: "homophonic",
-    name: "Homophonic Translation",
-    cat: "Grammar",
-    icon: "ear",
-    desc: "Re-spell the text by how it sounds, not what it means.",
-    api: { category: "grammar", method: "homophonic_translation" },
-    params: [],
-  },
-  {
     id: "abcquence",
     name: "ABC-quence",
     cat: "Grammar",
@@ -151,26 +102,6 @@ export const CONSTRAINTS = [
 
   // Algorithmic
   {
-    id: "markov",
-    name: "Markov",
-    cat: "Algorithmic",
-    icon: "waves",
-    desc: "Scramble by word frequency — higher orders read more fluently.",
-    api: { category: "algorithmic", method: "markov" },
-    params: [
-      { key: "n", label: "Order", placeholder: "2", default: "2", type: "number" },
-    ],
-  },
-  {
-    id: "travesty",
-    name: "Travesty",
-    cat: "Algorithmic",
-    icon: "sparkles",
-    desc: "Generate plausible nonsense from letter statistics.",
-    api: { category: "algorithmic", method: "travesty" },
-    params: [],
-  },
-  {
     id: "edit-distance",
     name: "Edit Distance",
     cat: "Algorithmic",
@@ -180,26 +111,6 @@ export const CONSTRAINTS = [
     params: [
       { key: "distance", label: "Max distance", placeholder: "2", default: "2", type: "number" },
     ],
-  },
-  {
-    id: "color-field",
-    name: "Color Field",
-    cat: "Algorithmic",
-    icon: "palette",
-    desc: "Map words to a field of color by value.",
-    api: { category: "algorithmic", method: "color_field" },
-    params: [
-      { key: "mode", label: "Mode", placeholder: "sentences, letters, anagrams, list", default: "sentences" },
-    ],
-  },
-  {
-    id: "proof-of-work",
-    name: "Proof of Work",
-    cat: "Algorithmic",
-    icon: "cpu",
-    desc: "Hash the text until it earns its keep.",
-    api: { category: "algorithmic", method: "proof_of_work" },
-    params: [],
   },
 
   // Formic
@@ -267,27 +178,9 @@ export const CONSTRAINTS = [
     api: { category: "pop", method: "powerball" },
     params: [],
   },
-  {
-    id: "lost",
-    name: "The LOST Numbers",
-    cat: "Pop Culture",
-    icon: "radio",
-    desc: "4 8 15 16 23 42 — select words by the hatch sequence.",
-    api: { category: "pop", method: "lost_numbers" },
-    params: [],
-  },
-  {
-    id: "weather",
-    name: "Weather Forecast",
-    cat: "Pop Culture",
-    icon: "cloud-sun",
-    desc: "Reshape the text by today's forecast.",
-    api: { category: "pop", method: "weather_forecast" },
-    params: [],
-  },
 ];
 
-export const QUICK_OPS = ["lipogram", "anagram", "synonymize", "markov"];
+export const QUICK_OPS = ["lipogram", "anagram", "nth-word", "powerball"];
 
 export const SEED_DOCS = [
   { id: "d1", title: "The Vowel Thief", words: 248, edited: "2m", cat: "draft" },

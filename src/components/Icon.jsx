@@ -42,6 +42,8 @@ import {
   LogOut,
   Pencil,
   History,
+  Coffee,
+  Undo,
 } from "lucide-react";
 
 const ICON_MAP = {
@@ -87,6 +89,8 @@ const ICON_MAP = {
   "log-out": LogOut,
   pencil: Pencil,
   history: History,
+  coffee: Coffee,
+  undo: Undo,
 };
 
 export default function Icon({ name, size = 18, style }) {

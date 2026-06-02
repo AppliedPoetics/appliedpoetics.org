@@ -42,6 +42,9 @@ body {
 .ws-doc__t { font: 500 14px var(--font-sans); color: #E8F0EE; white-space: nowrap; overflow: hidden; text-overflow: ellipsis; display: flex; align-items: center; gap: 6px; }
 .ws-doc__dot { width: 6px; height: 6px; border-radius: var(--r-pill); background: var(--ap-yellow); flex-shrink: 0; }
 .ws-doc__m { font: var(--t-mono-sm); color: #8BA39E; display: flex; gap: 8px; }
+.ws-side__kofi { display: flex; align-items: center; justify-content: center; gap: 8px; margin: 10px 14px 8px; padding: 10px 14px; border-radius: 8px; background: #FF5E5B; color: #fff; font: 700 13px var(--font-sans); text-decoration: none; letter-spacing: 0.02em; transition: background var(--dur) var(--ease), transform var(--dur-fast) var(--ease); }
+.ws-side__kofi:hover { background: #E54D4A; transform: translateY(-1px); }
+.ws-side__kofi:active { transform: translateY(0); }
 .ws-side__foot { padding: 13px 18px; border-top: 1px solid var(--lab-rule); display: flex; align-items: center; gap: 10px; }
 .ws-side__foot .av { width: 28px; height: 28px; border-radius: var(--r-pill); background: var(--ap-teal); color: #022222; display: flex; align-items: center; justify-content: center; font: 700 12px var(--font-display); }
 .ws-side__foot .nm { font: 500 13px var(--font-sans); color: #C9D8D4; }
@@ -125,9 +128,26 @@ body {
 .ws-log__scroll { flex: 1; overflow-y: auto; padding: 12px 14px; display: flex; flex-direction: column; gap: 10px; }
 .ws-logitem { border: 1px solid var(--line-soft); border-radius: var(--r-md); padding: 11px 12px; background: var(--surface); }
 .ws-logitem__h { display: flex; align-items: center; justify-content: space-between; margin-bottom: 5px; }
-.ws-logitem__nm { font: 600 13px var(--font-sans); color: var(--fg-1); }
-.ws-logitem__tag { font: var(--t-mono-sm); text-transform: uppercase; letter-spacing: 0.06em; padding: 2px 8px; border-radius: var(--r-pill); background: var(--ap-ink); color: var(--ap-yellow); }
+.ws-logitem__nm { font: 600 14px var(--font-sans); color: var(--fg-1); margin-right: 1rem; }
+.ws-logitem__tag { margin-left: auto; font: var(--t-mono-sm); color: var(--fg-4); text-transform: uppercase; letter-spacing: 0.06em; }
 .ws-logitem__prev { font: 400 13px/1.5 var(--font-serif); color: var(--fg-2); }
+.ws-logitem__undo {
+  display: flex;
+  align-items: center;
+  gap: 4px;
+  margin-left: auto;
+  padding: 3px 8px;
+  border: none;
+  border-radius: var(--r-sm);
+  background: transparent;
+  color: var(--ap-teal);
+  font: 600 11px var(--font-sans);
+  cursor: pointer;
+  transition: background 0.15s ease;
+}
+.ws-logitem__undo:hover { background: var(--teal-tint); }
+.ws-logitem--original { background: var(--teal-tint); border-color: var(--teal-tint-2); }
+.ws-logitem--original .ws-logitem__nm { color: var(--ap-teal-deep); }
 .ws-log__empty { flex: 1; display: flex; flex-direction: column; align-items: center; justify-content: center; text-align: center; padding: 40px 28px; gap: 14px; }
 .ws-log__empty img { width: 96px; opacity: 0.85; }
 .ws-log__empty .t { font: 600 14px var(--font-sans); color: var(--fg-2); }
@@ -187,3 +207,44 @@ body {
 .ws-rev__meta { font: var(--t-mono-sm); color: var(--fg-4); display: flex; gap: 8px; margin-top: 4px; }
 .ws-rev-diff { border: 1px solid var(--line-soft); border-radius: var(--r-sm); padding: 12px; background: var(--surface); }
 .ws-rev-diff span { border-radius: 2px; }
+
+/* ---- Ko-fi donate button & modal ---------------------------------------- */
+.ws-kofi-btn {
+  position: fixed;
+  bottom: 20px;
+  right: 20px;
+  z-index: 90;
+  display: flex;
+  align-items: center;
+  gap: 8px;
+  padding: 10px 16px;
+  border: none;
+  border-radius: var(--r-pill);
+  background: var(--ap-teal);
+  color: #fff;
+  font: 600 13px var(--font-sans);
+  cursor: pointer;
+  box-shadow: var(--shadow-md);
+  transition: background 0.15s ease;
+}
+.ws-kofi-btn:hover { background: var(--ap-teal-deep); }
+
+.ws-kofi-modal {
+  width: 420px;
+  max-width: 96vw;
+  display: flex;
+  flex-direction: column;
+  height: auto;
+}
+.ws-kofi-modal .ws-dialog__b {
+  overflow: hidden;
+}
+.ws-kofi-modal iframe {
+  width: 100%;
+  height: 712px;
+  border: none;
+  background: #f9f9f9;
+  display: block;
+}
+
+

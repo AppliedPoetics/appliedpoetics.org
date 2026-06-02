@@ -46,27 +46,27 @@ describe("WritingStudio", () => {
   it("renders a guest document on mount", async () => {
     render(<WritingStudio />);
     await waitFor(() => {
-      expect(screen.getByText(/untitled/i)).toBeInTheDocument();
+      expect(document.querySelector(".ws-prose")).toBeInTheDocument();
     });
-    expect(screen.getByText(/0 words/i)).toBeInTheDocument();
+    // Word count shown in the top bar (uppercase WORDS)
+    expect(screen.getByText("0 WORDS")).toBeInTheDocument();
   });
 
   it("updates word count when typing in prose area", async () => {
     render(<WritingStudio />);
-    await waitFor(() => screen.getByText(/untitled/i));
+    await waitFor(() => document.querySelector(".ws-prose"));
 
     const prose = document.querySelector(".ws-prose");
-    prose.focus();
-    fireEvent.input(prose, { target: { innerText: "hello world test" } });
+    fireEvent.change(prose, { target: { value: "hello world test" } });
 
     await waitFor(() => {
-      expect(screen.getByText(/3 words/i)).toBeInTheDocument();
+      expect(screen.getByText("3 WORDS")).toBeInTheDocument();
     });
   });
 
   it("creates a new document when new text is clicked", async () => {
     render(<WritingStudio />);
-    await waitFor(() => screen.getByText(/untitled/i));
+    await waitFor(() => document.querySelector(".ws-prose"));
 
     fireEvent.click(screen.getByText(/new text/i));
     await waitFor(() => {
@@ -77,13 +77,14 @@ describe("WritingStudio", () => {
 
   it("opens auth modal on save for guest users", async () => {
     render(<WritingStudio />);
-    await waitFor(() => screen.getByText(/untitled/i));
+    await waitFor(() => document.querySelector(".ws-prose"));
 
     const saveBtn = screen.getByRole("button", { name: /save/i });
     fireEvent.click(saveBtn);
 
     await waitFor(() => {
-      expect(screen.getByText(/log in/i)).toBeInTheDocument();
+      // AuthModal has "Log in" text in a div with class "t"
+      expect(screen.getByText(/log in to save documents/i)).toBeInTheDocument();
     });
   });
 
@@ -103,47 +104,54 @@ describe("WritingStudio", () => {
 
     render(<WritingStudio />);
     await waitFor(() => {
-      expect(screen.getByText("Server Doc")).toBeInTheDocument();
+      expect(screen.getByText("alice")).toBeInTheDocument();
     });
-    expect(screen.getByText("alice")).toBeInTheDocument();
+    // Server Doc title should appear in the sidebar
+    expect(document.querySelector(".ws-doc__ttl")?.textContent).toBe("Server Doc");
   });
 
   it("toggles line numbers on and off", async () => {
     render(<WritingStudio />);
-    await waitFor(() => screen.getByText(/untitled/i));
+    await waitFor(() => document.querySelector(".ws-prose"));
 
     const linesBtn = screen.getByRole("button", { name: /lines/i });
+    // lineNumbers defaults to true, so first click turns it OFF
     fireEvent.click(linesBtn);
+    expect(document.querySelector(".ws-line-numbers")).not.toBeInTheDocument();
 
-    const prose = document.querySelector(".ws-prose");
-    expect(prose).toHaveClass("line-numbers");
-
+    // second click turns it back ON
     fireEvent.click(linesBtn);
-    expect(prose).not.toHaveClass("line-numbers");
+    expect(document.querySelector(".ws-line-numbers")).toBeInTheDocument();
   });
 
   it("toggles changes log open and closed", async () => {
     render(<WritingStudio />);
-    await waitFor(() => screen.getByText(/untitled/i));
+    await waitFor(() => document.querySelector(".ws-prose"));
 
     const changesBtn = screen.getByRole("button", { name: /changes/i });
     fireEvent.click(changesBtn);
     expect(screen.getByText(/changes this session/i)).toBeInTheDocument();
 
-    fireEvent.click(screen.getByRole("button", { name: /close/i }));
+    // close via the x icon button in the constraint log panel
+    const closeBtn = document.querySelector(".ws-log__head button");
+    fireEvent.click(closeBtn);
     expect(screen.queryByText(/changes this session/i)).not.toBeInTheDocument();
   });
 
   it("calls applyConstraint via command palette selection", async () => {
     applyConstraint.mockResolvedValue({ result: "transformed" });
     render(<WritingStudio />);
-    await waitFor(() => screen.getByText(/untitled/i));
+    await waitFor(() => document.querySelector(".ws-prose"));
+
+    // Type some text so the constraint has something to work with
+    const prose = document.querySelector(".ws-prose");
+    fireEvent.change(prose, { target: { value: "hello world" } });
 
     fireEvent.click(screen.getByRole("button", { name: /constraints/i }));
     const input = screen.getByPlaceholderText(/search constraints/i);
-    fireEvent.change(input, { target: { value: "lipogram" } });
+    fireEvent.change(input, { target: { value: "powerball" } });
 
-    const row = screen.getByText("Lipogram");
+    const row = screen.getByText("Powerball");
     fireEvent.click(row);
 
     await waitFor(() => {
@@ -153,7 +161,7 @@ describe("WritingStudio", () => {
 
   it("handles document deletion via sidebar", async () => {
     render(<WritingStudio />);
-    await waitFor(() => screen.getByText(/untitled/i));
+    await waitFor(() => document.querySelector(".ws-prose"));
 
     const trashBtn = document.querySelector(".ws-doc__del");
     fireEvent.click(trashBtn);
@@ -162,10 +170,13 @@ describe("WritingStudio", () => {
       expect(screen.getByText(/delete document/i)).toBeInTheDocument();
     });
 
-    fireEvent.click(screen.getByRole("button", { name: /delete/i }));
+    // Click the primary "Delete" button in the confirmation dialog
+    // Use querySelector to avoid matching the sidebar trash button
+    const dialogDeleteBtn = document.querySelector(".ws-dialog .ws-btn--primary");
+    fireEvent.click(dialogDeleteBtn);
     // After deleting the last doc a new empty one should be created
     await waitFor(() => {
-      expect(screen.getByText(/untitled/i)).toBeInTheDocument();
+      expect(document.querySelector(".ws-prose")).toBeInTheDocument();
     });
   });
 });

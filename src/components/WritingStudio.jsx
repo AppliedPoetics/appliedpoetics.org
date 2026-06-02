@@ -92,44 +92,33 @@ export default function WritingStudio() {
     try { return localStorage.getItem("ap-side-pinned") === "true"; } catch { return false; }
   });
   const proseRef = useRef(null);
+  const lineNumRef = useRef(null);
 
   const activeDoc = docs.find((d) => d.id === activeId) || docs[0];
 
   function getProseText() {
-    return proseRef.current ? proseRef.current.innerText.trim() : "";
+    return activeDoc?.content || "";
   }
 
   function getSelectionOffsets() {
-    const sel = window.getSelection();
-    if (!sel || sel.rangeCount === 0 || sel.isCollapsed) return null;
-    const range = sel.getRangeAt(0);
-    if (!proseRef.current.contains(range.commonAncestorContainer)) return null;
-    const preRange = range.cloneRange();
-    preRange.selectNodeContents(proseRef.current);
-    preRange.setEnd(range.startContainer, range.startOffset);
-    const start = preRange.toString().length;
-    const end = start + range.toString().length;
+    const el = proseRef.current;
+    if (!el) return null;
+    const start = el.selectionStart;
+    const end = el.selectionEnd;
+    if (start === end) return null;
     return { start, end };
   }
 
   function setProseHtml(content) {
-    if (!proseRef.current) return;
-    if (!content) {
-      proseRef.current.innerHTML = "";
-      return;
-    }
-    const blocks = content.split("\n").map((block) => {
-      if (!block) return "<div><br></div>";
-      return `<div>${block}</div>`;
-    });
-    proseRef.current.innerHTML = blocks.join("");
+    setDocs((prev) =>
+      prev.map((d) =>
+        d.id === activeId ? { ...d, content: content || "" } : d
+      )
+    );
   }
 
-  /* Read count straight from the DOM on every render so the UI
-     is never stale regardless of state batching. */
-  const text = getProseText();
-  const words = text ? text.split(/\s+/).length : 0;
-  const chars = text.length;
+  /* counts are kept in document state and updated on input */
+  const text = activeDoc?.content || "";
 
   /* ── init: load server docs if logged in, otherwise local / seed ────── */
   useEffect(() => {
@@ -173,13 +162,7 @@ export default function WritingStudio() {
 
   /* ── no localStorage fallback: guests work in memory only ───────────── */
 
-  /* ── keep prose content in sync with active doc ────────────────────── */
-  useEffect(() => {
-    if (!activeId) return;
-    const doc = docs.find((d) => d.id === activeId);
-    if (doc) setProseHtml(doc.content);
-    // eslint-disable-next-line react-hooks/exhaustive-deps
-  }, [activeId]);
+  /* active doc content is bound directly to the textarea value */
 
   /* ── keyboard shortcuts ──────────────────────────────────────────────── */
   useEffect(() => {
@@ -194,28 +177,25 @@ export default function WritingStudio() {
     return () => window.removeEventListener("keydown", key);
   }, []);
 
-  /* ── native input listener on the contentEditable field (more reliable
-     than React's synthetic onInput for contentEditable in React 19) ───── */
-  useEffect(() => {
-    const el = proseRef.current;
-    if (!el) return;
+  /* ── textarea change handler (keeps state & counts in sync) ────────── */
+  function handleProseChange(e) {
+    const t = e.target.value;
+    const w = t.trim() === "" ? 0 : t.trim().split(/\s+/).length;
+    const c = t.length;
+    setDocs((prev) =>
+      prev.map((d) =>
+        d.id === activeId
+          ? { ...d, content: t, words: w, chars: c, edited: "just now", dirty: true }
+          : d
+      )
+    );
+  }
 
-    function onNativeInput() {
-      const t = getProseText();
-      const w = t ? t.split(/\s+/).length : 0;
-      const c = t.length;
-      setDocs((prev) =>
-        prev.map((d) =>
-          d.id === activeId
-            ? { ...d, words: w, chars: c, edited: "just now", content: t, dirty: true }
-            : d
-        )
-      );
+  function handleProseScroll(e) {
+    if (lineNumRef.current) {
+      lineNumRef.current.scrollTop = e.target.scrollTop;
     }
-
-    el.addEventListener("input", onNativeInput);
-    return () => el.removeEventListener("input", onNativeInput);
-  }, [activeId]);
+  }
 
   /* ── auto-save revision every 60 seconds while typing ───────────────── */
   useEffect(() => {
@@ -238,20 +218,28 @@ export default function WritingStudio() {
   /* ── selection → contextual menu ─────────────────────────────────────── */
   const onMouseUp = useCallback(() => {
     setTimeout(() => {
-      const sel = window.getSelection();
-      if (!sel || sel.isCollapsed || !sel.toString().trim()) {
+      const el = proseRef.current;
+      if (!el || document.activeElement !== el) {
         setMenu(null);
         return;
       }
-      const node = sel.anchorNode;
-      if (!proseRef.current || !proseRef.current.contains(node)) return;
-      const rect = sel.getRangeAt(0).getBoundingClientRect();
-      const host = proseRef.current.closest(".ws-canvas").getBoundingClientRect();
-      const scroll = proseRef.current.closest(".ws-canvas").scrollTop;
-      const selText = sel.toString().trim();
+      const start = el.selectionStart;
+      const end = el.selectionEnd;
+      if (start === end) {
+        setMenu(null);
+        return;
+      }
+      const selText = el.value.slice(start, end).trim();
+      if (!selText) {
+        setMenu(null);
+        return;
+      }
+      const rect = el.getBoundingClientRect();
+      const host = el.closest(".ws-canvas").getBoundingClientRect();
+      const scroll = el.closest(".ws-canvas").scrollTop;
       setMenu({
-        x: Math.min(rect.left - host.left + 8, host.width - 290),
-        y: rect.bottom - host.top + scroll + 8,
+        x: Math.min(rect.left - host.left + rect.width / 2, host.width - 290),
+        y: rect.bottom - host.top + scroll - 40,
         wordCount: selText.split(/\s+/).length,
         text: selText,
       });
@@ -504,14 +492,14 @@ export default function WritingStudio() {
       );
 
       let newContent = out;
+      let cursorPos = 0;
       if (menu) {
         const offsets = getSelectionOffsets();
         if (offsets) {
-          const fullText = beforeText;
-          newContent = fullText.slice(0, offsets.start) + out + fullText.slice(offsets.end);
+          newContent = beforeText.slice(0, offsets.start) + out + beforeText.slice(offsets.end);
+          cursorPos = offsets.start + out.length;
         }
       }
-      setProseHtml(newContent);
       const w = newContent ? newContent.split(/\s+/).length : 0;
       const cCount = newContent.length;
       setDocs((prev) =>
@@ -521,6 +509,11 @@ export default function WritingStudio() {
             : d
         )
       );
+      if (proseRef.current) {
+        requestAnimationFrame(() => {
+          proseRef.current.setSelectionRange(cursorPos, cursorPos);
+        });
+      }
 
       setLog((l) => {
         const entry = {
@@ -548,7 +541,6 @@ export default function WritingStudio() {
       setParamFor(null);
       setToast(`${c.name} applied`);
       setTimeout(() => setToast(null), 1800);
-      window.getSelection().removeAllRanges();
     } catch (err) {
       setToast(`Error: ${err.message}`);
       setTimeout(() => setToast(null), 3000);
@@ -605,8 +597,8 @@ export default function WritingStudio() {
       <div className="ws-main">
         <TopBar
           title={activeDoc?.title || "Untitled"}
-          words={words}
-          chars={chars}
+          words={activeDoc?.words ?? 0}
+          chars={activeDoc?.chars ?? 0}
           logOpen={logOpen}
           lineNumbers={lineNumbers}
           onOpenPalette={() => setPalette(true)}
@@ -657,13 +649,25 @@ export default function WritingStudio() {
               <span>·</span>
               <span>edited {activeDoc?.edited || "just now"}</span>
             </div>
-            <div
-              className={`ws-prose${lineNumbers ? " line-numbers" : ""}`}
-              ref={proseRef}
-              contentEditable
-              suppressContentEditableWarning
-              spellCheck={false}
-            />
+            <div className="ws-prose-wrap">
+              {lineNumbers && (
+                <div className="ws-line-numbers" ref={lineNumRef}>
+                  {(activeDoc?.content || "").split('\n').map((_, i) => (
+                    <div key={i} className="ws-line-num">{i + 1}</div>
+                  ))}
+                </div>
+              )}
+              <textarea
+                className="ws-prose"
+                ref={proseRef}
+                value={activeDoc?.content || ""}
+                onChange={handleProseChange}
+                onMouseUp={onMouseUp}
+                onScroll={handleProseScroll}
+                spellCheck={false}
+                placeholder="Start writing..."
+              />
+            </div>
           </div>
 
           {menu && (

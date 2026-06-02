@@ -11,6 +11,8 @@ export default function Sidebar({
   user,
   onLogin,
   onLogout,
+  sidePinned,
+  onTogglePin,
 }) {
   const activeRef = useRef(null);
 
@@ -31,7 +33,17 @@ export default function Sidebar({
         </div>
       </div>
       <button className="ws-side__new" onClick={onNew}>
-        <Icon name="plus" size={15} /> New text
+        <Icon name="plus" size={15} />
+        <span className="btn-lbl">New text</span>
+      </button>
+
+      <button
+        className="ws-side__pin"
+        onClick={onTogglePin}
+        title={sidePinned ? "Unpin menu" : "Pin menu"}
+      >
+        <Icon name={sidePinned ? "pin-off" : "pin"} size={14} />
+        <span className="btn-lbl">{sidePinned ? "Unpin menu" : "Pin menu"}</span>
       </button>
 
       <div className="ws-side__sec">Workspace</div>
@@ -43,12 +55,13 @@ export default function Sidebar({
             className={`ws-doc${d.id === activeId ? " active" : ""}`}
             onClick={() => onSelect(d.id)}
           >
+            <span className="ws-doc__ic"><Icon name="file-text" size={16} /></span>
             <div className="ws-doc__t" onDoubleClick={(e) => {
               e.stopPropagation();
               const next = window.prompt("Rename document", d.title);
               if (next) onRename(d.id, next);
             }}>
-              {d.title}
+              <span className="ws-doc__ttl">{d.title}</span>
               {d.dirty && <span className="ws-doc__dot" title="Unsaved changes" />}
             </div>
             <div className="ws-doc__m">
@@ -59,7 +72,6 @@ export default function Sidebar({
                 <button
                   className="ws-btn ws-btn--icon ws-doc__del"
                   title="Delete"
-                  style={{ marginLeft: "auto" }}
                   onClick={(e) => {
                     e.stopPropagation();
                     if (window.confirm(`Delete "${d.title}"?`)) onDelete(d.id);
@@ -81,12 +93,13 @@ export default function Sidebar({
             </div>
             <div className="nm">{user.username}</div>
             <button
-              className="ws-btn ws-btn--ghost"
-              style={{ marginLeft: "auto", padding: "4px 8px" }}
+              className="ws-btn ws-btn--ghost ws-side__act"
+              style={{ padding: "4px 8px" }}
               onClick={onLogout}
               title="Log out"
             >
               <Icon name="log-out" size={14} />
+              <span className="btn-lbl">Log out</span>
             </button>
           </>
         ) : (
@@ -98,11 +111,12 @@ export default function Sidebar({
               Guest
             </div>
             <button
-              className="ws-btn ws-btn--primary"
-              style={{ marginLeft: "auto", padding: "6px 12px", fontSize: 12 }}
+              className="ws-btn ws-btn--primary ws-side__act"
+              style={{ padding: "6px 12px", fontSize: 12 }}
               onClick={onLogin}
             >
-              <Icon name="log-in" size={13} /> Log in
+              <Icon name="log-in" size={13} />
+              <span className="btn-lbl">Log in</span>
             </button>
           </>
         )}

@@ -6,7 +6,7 @@ export default function ConstraintLog({ items, onClose, onUndo }) {
   return (
     <aside className="ws-log">
       <div className="ws-log__head">
-        <span className="t">Changes</span>
+        <span className="t">Changes this session</span>
         <Button variant="ghost" icon="x" onClick={onClose} />
       </div>
 

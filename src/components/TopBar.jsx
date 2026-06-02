@@ -15,9 +15,11 @@ export default function TopBar({
   revOpen,
   onSave,
   saving,
+  sidePinned,
+  onToggleSide,
 }) {
   return (
-    <header className="ws-top">
+    <header className={`ws-top${sidePinned ? " side-pinned" : ""}`}>
       <div className="ws-top__crumb">
         <Icon name="folder" size={14} />
         <span>Workspace</span>
@@ -33,33 +35,34 @@ export default function TopBar({
       </div>
 
       <div className="ws-top__btns">
+        <Button variant="ghost" icon="panel-left" onClick={onToggleSide} className="ws-top__side" />
         <Button variant="ghost" icon="terminal-square" onClick={onOpenPalette}>
-          Constraints
-          <kbd style={{ font: "var(--t-mono-sm)", color: "var(--fg-4)", marginLeft: 4 }}>⌘K</kbd>
+          <span className="btn-lbl">Constraints</span>
+          <span className="btn-kbd"><kbd style={{ font: "var(--t-mono-sm)", color: "var(--fg-4)", marginLeft: 4 }}>⌘K</kbd></span>
         </Button>
         <Button
           variant={lineNumbers ? "ink" : "ghost"}
           icon="list-ordered"
           onClick={onToggleLineNumbers}
         >
-          Lines
+          <span className="btn-lbl">Lines</span>
         </Button>
         <Button
           variant={logOpen ? "ink" : "ghost"}
           icon="dices"
           onClick={onToggleLog}
         >
-          Changes
+          <span className="btn-lbl">Changes</span>
         </Button>
         <Button
           variant={revOpen ? "ink" : "ghost"}
           icon="rotate-3d"
           onClick={onToggleRevisions}
         >
-          Revisions
+          <span className="btn-lbl">Revisions</span>
         </Button>
         <Button variant="primary" icon="save" onClick={onSave}>
-          {saving ? "Saving…" : "Save"}
+          <span className="btn-lbl">{saving ? "Saving…" : "Save"}</span>
         </Button>
       </div>
     </header>

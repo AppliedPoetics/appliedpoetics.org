@@ -1,10 +1,10 @@
 import React from "react";
 import Icon from "./Icon.jsx";
 
-export default function Button({ variant = "ghost", icon, children, onClick, style }) {
+export default function Button({ variant = "ghost", icon, children, onClick, style, className = "" }) {
   return (
     <button
-      className={`ws-btn ws-btn--${variant}${!children ? " ws-btn--icon" : ""}`}
+      className={`ws-btn ws-btn--${variant}${!children ? " ws-btn--icon" : ""} ${className}`}
       onClick={onClick}
       style={style}
     >

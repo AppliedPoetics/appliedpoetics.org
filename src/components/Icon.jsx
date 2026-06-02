@@ -28,6 +28,8 @@ import {
   CloudSun,
   Folder,
   ChevronRight,
+  PanelLeft,
+  Menu,
   TerminalSquare,
   Dices,
   Share2,
@@ -44,6 +46,9 @@ import {
   History,
   Coffee,
   Undo,
+  FileText,
+  Pin,
+  PinOff,
 } from "lucide-react";
 
 const ICON_MAP = {
@@ -75,6 +80,8 @@ const ICON_MAP = {
   "cloud-sun": CloudSun,
   folder: Folder,
   "chevron-right": ChevronRight,
+  "panel-left": PanelLeft,
+  menu: Menu,
   "terminal-square": TerminalSquare,
   dices: Dices,
   "share-2": Share2,
@@ -91,6 +98,9 @@ const ICON_MAP = {
   history: History,
   coffee: Coffee,
   undo: Undo,
+  "file-text": FileText,
+  pin: Pin,
+  "pin-off": PinOff,
 };
 
 export default function Icon({ name, size = 18, style }) {

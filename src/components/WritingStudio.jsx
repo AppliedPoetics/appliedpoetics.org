@@ -86,6 +86,10 @@ export default function WritingStudio() {
   const [toast, setToast] = useState(null);
   const [lineNumbers, setLineNumbers] = useState(true);
   const [kofiOpen, setKofiOpen] = useState(false);
+  const [sideOpen, setSideOpen] = useState(false);
+  const [sidePinned, setSidePinned] = useState(() => {
+    try { return localStorage.getItem("ap-side-pinned") === "true"; } catch { return false; }
+  });
   const proseRef = useRef(null);
 
   const activeDoc = docs.find((d) => d.id === activeId) || docs[0];
@@ -160,6 +164,11 @@ export default function WritingStudio() {
     }
     init();
   }, []);
+
+  /* ── persist sidebar pin preference ───────────────────────────────────── */
+  useEffect(() => {
+    try { localStorage.setItem("ap-side-pinned", String(sidePinned)); } catch {}
+  }, [sidePinned]);
 
   /* ── no localStorage fallback: guests work in memory only ───────────── */
 
@@ -570,18 +579,22 @@ export default function WritingStudio() {
 
   /* ── render ────────────────────────────────────────────────────────── */
   return (
-    <div className={`ws-app${logOpen || revOpen ? " rail-open" : ""}`}>
+    <div className={`ws-app${logOpen || revOpen ? " rail-open" : ""}${sideOpen ? " side-open" : ""}${sidePinned ? " side-pinned" : ""}`}>
       <Sidebar
         docs={docs}
         activeId={activeId}
-        onSelect={setActiveId}
+        onSelect={(id) => { setActiveId(id); setSideOpen(false); }}
         onNew={handleNewDoc}
         onDelete={handleDeleteDoc}
         onRename={handleRenameDoc}
         user={user}
         onLogin={() => setAuthOpen(true)}
         onLogout={handleLogout}
+        sidePinned={sidePinned}
+        onTogglePin={() => setSidePinned((p) => !p)}
       />
+
+      <div className="ws-scrim--side" onClick={() => setSideOpen(false)} />
 
       <div className="ws-main">
         <TopBar
@@ -591,12 +604,14 @@ export default function WritingStudio() {
           logOpen={logOpen}
           lineNumbers={lineNumbers}
           onOpenPalette={() => setPalette(true)}
-          onToggleLog={() => { setLogOpen((o) => !o); setRevOpen(false); }}
+          onToggleLog={() => { setLogOpen((o) => !o); setRevOpen(false); setSideOpen(false); }}
           onToggleLineNumbers={() => setLineNumbers((n) => !n)}
-          onToggleRevisions={() => { setRevOpen((o) => !o); setLogOpen(false); }}
+          onToggleRevisions={() => { setRevOpen((o) => !o); setLogOpen(false); setSideOpen(false); }}
           revOpen={revOpen}
           onSave={handleSave}
           saving={saving}
+          sidePinned={sidePinned}
+          onToggleSide={() => { setSideOpen((o) => !o); setLogOpen(false); setRevOpen(false); }}
         />
 
         <div
@@ -771,7 +786,7 @@ export default function WritingStudio() {
         title="Support us on Ko-fi"
       >
         <Icon name="coffee" size={14} />
-        <span>Support us!</span>
+        <span className="btn-lbl">Support us!</span>
       </button>
 
       {kofiOpen && (
@@ -797,7 +812,7 @@ export default function WritingStudio() {
               <iframe
                 id="kofiframe"
                 src="https://ko-fi.com/appliedpoetics/?hidefeed=true&widget=true&embed=true&preview=true"
-                style={{ border: "none", width: "100%", height: 712, background: "#f9f9f9", display: "block" }}
+                style={{ border: "none", width: "100%", height: "75vh", background: "#f9f9f9", display: "block" }}
                 title="appliedpoetics"
               />
             </div>

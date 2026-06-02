@@ -2,7 +2,7 @@ import React from "react";
 import Button from "./Button.jsx";
 import Icon from "./Icon.jsx";
 
-export default function ConstraintLog({ items, onClose, onUndo }) {
+export default function ConstraintLog({ items, onClose, onUndo, onRedo, onRemove }) {
   return (
     <aside className="ws-log">
       <div className="ws-log__head">
@@ -27,13 +27,29 @@ export default function ConstraintLog({ items, onClose, onUndo }) {
                 <span className="ws-logitem__nm">{it.name}</span>
                 {it.tag && <span className="ws-logitem__tag">{it.tag}</span>}
                 {it.id !== "original" && (
-                  <button
-                    className="ws-logitem__undo"
-                    onClick={() => onUndo(it.id)}
-                    title="Undo to this state"
-                  >
-                    <Icon name="undo" size={14} />
-                  </button>
+                  <div className="ws-logitem__actions">
+                    <button
+                      className="ws-logitem__act"
+                      onClick={() => onUndo(it.id)}
+                      title="Undo to this state"
+                    >
+                      <Icon name="undo" size={14} />
+                    </button>
+                    <button
+                      className="ws-logitem__act"
+                      onClick={() => onRedo(it.id)}
+                      title="Redo this state"
+                    >
+                      <Icon name="redo" size={14} />
+                    </button>
+                    <button
+                      className="ws-logitem__act ws-logitem__act--remove"
+                      onClick={() => onRemove(it.id)}
+                      title="Remove from history"
+                    >
+                      <Icon name="x" size={14} />
+                    </button>
+                  </div>
                 )}
               </div>
               <div className="ws-logitem__prev">{it.preview}</div>

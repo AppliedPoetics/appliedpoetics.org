@@ -157,21 +157,27 @@ body {
 .ws-logitem__nm { font: 600 14px var(--font-sans); color: var(--fg-1); margin-right: 1rem; }
 .ws-logitem__tag { margin-left: auto; font: var(--t-mono-sm); color: var(--fg-4); text-transform: uppercase; letter-spacing: 0.06em; }
 .ws-logitem__prev { font: 400 13px/1.5 var(--font-serif); color: var(--fg-2); }
-.ws-logitem__undo {
+.ws-logitem__actions {
   display: flex;
   align-items: center;
-  gap: 4px;
+  gap: 2px;
   margin-left: auto;
-  padding: 3px 8px;
+}
+.ws-logitem__act {
+  display: flex;
+  align-items: center;
+  justify-content: center;
+  padding: 4px;
   border: none;
   border-radius: var(--r-sm);
   background: transparent;
   color: var(--ap-teal);
-  font: 600 11px var(--font-sans);
   cursor: pointer;
   transition: background 0.15s ease;
 }
-.ws-logitem__undo:hover { background: var(--teal-tint); }
+.ws-logitem__act:hover { background: var(--teal-tint); }
+.ws-logitem__act--remove { color: var(--fg-3); }
+.ws-logitem__act--remove:hover { color: var(--ap-red, #FF5E5B); background: rgba(255,94,91,0.08); }
 .ws-logitem--original { background: var(--teal-tint); border-color: var(--teal-tint-2); }
 .ws-logitem--original .ws-logitem__nm { color: var(--ap-teal-deep); }
 .ws-log__empty { flex: 1; display: flex; flex-direction: column; align-items: center; justify-content: center; text-align: center; padding: 40px 28px; gap: 14px; }

@@ -577,6 +577,7 @@ export default function WritingStudio() {
           tag: c.cat,
           preview: out.length > 160 ? out.slice(0, 160) + "…" : out,
           beforeText,
+          afterText: newContent,
         };
         if (l.length === 0) {
           const originalEntry = {
@@ -585,6 +586,7 @@ export default function WritingStudio() {
             tag: "",
             preview: beforeText.length > 160 ? beforeText.slice(0, 160) + "…" : beforeText,
             beforeText,
+            afterText: beforeText,
           };
           return [originalEntry, entry];
         }
@@ -603,9 +605,8 @@ export default function WritingStudio() {
   }
 
   function handleUndo(entryId) {
-    const entryIndex = log.findIndex((l) => l.id === entryId);
-    if (entryIndex === -1) return;
-    const entry = log[entryIndex];
+    const entry = log.find((l) => l.id === entryId);
+    if (!entry) return;
     setProseHtml(entry.beforeText);
     const w = entry.beforeText ? entry.beforeText.split(/\s+/).length : 0;
     const cCount = entry.beforeText.length;
@@ -616,7 +617,25 @@ export default function WritingStudio() {
           : d
       )
     );
-    setLog((prev) => prev.slice(0, entryIndex));
+  }
+
+  function handleRedo(entryId) {
+    const entry = log.find((l) => l.id === entryId);
+    if (!entry) return;
+    setProseHtml(entry.afterText);
+    const w = entry.afterText ? entry.afterText.split(/\s+/).length : 0;
+    const cCount = entry.afterText.length;
+    setDocs((prev) =>
+      prev.map((d) =>
+        d.id === activeId
+          ? { ...d, content: entry.afterText, words: w, chars: cCount, edited: "just now", dirty: true }
+          : d
+      )
+    );
+  }
+
+  function handleRemoveLogEntry(entryId) {
+    setLog((prev) => prev.filter((l) => l.id !== entryId));
   }
 
   function chooseConstraint(c) {
@@ -747,7 +766,7 @@ export default function WritingStudio() {
         </div>
       </div>
 
-      {logOpen && <ConstraintLog items={log} onClose={() => setLogOpen(false)} onUndo={handleUndo} />}
+      {logOpen && <ConstraintLog items={log} onClose={() => setLogOpen(false)} onUndo={handleUndo} onRedo={handleRedo} onRemove={handleRemoveLogEntry} />}
 
       {revOpen && (
         <RevisionLog

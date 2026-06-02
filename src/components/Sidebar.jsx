@@ -7,6 +7,7 @@ export default function Sidebar({
   onSelect,
   onNew,
   onDelete,
+  onRequestDelete,
   onRename,
   user,
   onLogin,
@@ -74,7 +75,7 @@ export default function Sidebar({
                   title="Delete"
                   onClick={(e) => {
                     e.stopPropagation();
-                    if (window.confirm(`Delete "${d.title}"?`)) onDelete(d.id);
+                    onRequestDelete(d.id, d.title);
                   }}
                 >
                   <Icon name="trash" size={12} />

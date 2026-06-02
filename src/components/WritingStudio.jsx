@@ -83,6 +83,7 @@ export default function WritingStudio() {
   const [palette, setPalette] = useState(false);
   const [paramFor, setParamFor] = useState(null);
   const [restorePrompt, setRestorePrompt] = useState(null);
+  const [deletePrompt, setDeletePrompt] = useState(null);
   const [toast, setToast] = useState(null);
   const [lineNumbers, setLineNumbers] = useState(true);
   const [kofiOpen, setKofiOpen] = useState(false);
@@ -272,6 +273,10 @@ export default function WritingStudio() {
     setDocs((prev) => [newDoc, ...prev]);
     setActiveId(id);
     setPalette(false);
+  }
+
+  function handleRequestDelete(id, title) {
+    setDeletePrompt({ id, title });
   }
 
   async function handleDeleteDoc(id) {
@@ -586,6 +591,7 @@ export default function WritingStudio() {
         onSelect={(id) => { setActiveId(id); setSideOpen(false); }}
         onNew={handleNewDoc}
         onDelete={handleDeleteDoc}
+        onRequestDelete={handleRequestDelete}
         onRename={handleRenameDoc}
         user={user}
         onLogin={() => setAuthOpen(true)}
@@ -751,6 +757,41 @@ export default function WritingStudio() {
                 }}
               >
                 Change to revision title
+              </button>
+            </div>
+          </div>
+        </div>
+      )}
+
+      {deletePrompt && (
+        <div
+          className="ws-scrim"
+          onClick={(e) => {
+            if (e.target === e.currentTarget) setDeletePrompt(null);
+          }}
+        >
+          <div className="ws-dialog" style={{ width: 380, maxWidth: "92vw" }}>
+            <div className="ws-dialog__h">
+              <div className="t">Delete document?</div>
+              <div className="d">
+                "{deletePrompt.title}" will be permanently removed. This cannot be undone.
+              </div>
+            </div>
+            <div className="ws-dialog__f">
+              <button
+                className="ws-btn ws-btn--ghost"
+                onClick={() => setDeletePrompt(null)}
+              >
+                Cancel
+              </button>
+              <button
+                className="ws-btn ws-btn--primary"
+                onClick={() => {
+                  handleDeleteDoc(deletePrompt.id);
+                  setDeletePrompt(null);
+                }}
+              >
+                Delete
               </button>
             </div>
           </div>

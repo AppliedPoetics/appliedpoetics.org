@@ -220,6 +220,7 @@ body {
 .ws-side__foot .ws-btn--primary:hover { background: var(--ap-teal-deep); }
 .ws-side__foot .ws-btn--ghost { color: #8BA39E; }
 .ws-side__foot .ws-btn--ghost:hover { color: #F4FBFA; background: rgba(255,255,255,0.06); }
+.ws-side__act { margin-left: auto; }
 
 /* ---- REVISIONS ---------------------------------------------------------- */
 .ws-rev { cursor: pointer; }
@@ -289,7 +290,7 @@ body {
   .ws-doc__ic { display: flex; align-items: center; justify-content: center; width: 24px; height: 24px; margin: 0 auto; color: #8BA39E; }
   .ws-doc.active .ws-doc__ic { color: var(--ap-teal); }
   .ws-doc__m { display: none; }
-  .ws-side__foot { justify-content: center; padding: 13px 0; }
+  .ws-side__foot { flex-direction: column; align-items: center; gap: 8px; padding: 13px 0; }
   .ws-side__foot .nm { display: none; }
   .ws-side__foot .ws-side__act { margin-left: 0; }
   .ws-side__foot .ws-side__act .btn-lbl { display: none; }
@@ -346,7 +347,7 @@ body {
   .ws-doc__t { display: flex; }
   .ws-doc__ic { display: none; }
   .ws-doc__m { display: flex; }
-  .ws-side__foot { justify-content: flex-start; padding: 13px 18px; }
+  .ws-side__foot { flex-direction: row; justify-content: flex-start; padding: 13px 18px; }
   .ws-side__foot .nm { display: block; }
   .ws-side__foot .ws-side__act { margin-left: auto; }
   .ws-side__foot .ws-side__act .btn-lbl { display: inline; }

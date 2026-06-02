@@ -93,6 +93,8 @@ export default function WritingStudio() {
   });
   const proseRef = useRef(null);
   const lineNumRef = useRef(null);
+  const lineMirrorRef = useRef(null);
+  const [lineHeights, setLineHeights] = useState([]);
 
   const activeDoc = docs.find((d) => d.id === activeId) || docs[0];
 
@@ -196,6 +198,59 @@ export default function WritingStudio() {
       lineNumRef.current.scrollTop = e.target.scrollTop;
     }
   }
+
+  /* ── line-number height measurement (mirror div) ───────────────────── */
+  const measureLineHeights = useCallback(() => {
+    if (!lineMirrorRef.current || !proseRef.current) return;
+    const ta = proseRef.current;
+    const mirror = lineMirrorRef.current;
+    const text = activeDoc?.content || "";
+    const lines = text.split("\n");
+
+    /* copy the textarea’s box-model / font so wrapping is identical */
+    const cs = window.getComputedStyle(ta);
+    const padL = parseFloat(cs.paddingLeft);
+    const padR = parseFloat(cs.paddingRight);
+    mirror.style.width = (ta.clientWidth - padL - padR) + "px";
+    mirror.style.font = cs.font;
+    mirror.style.lineHeight = cs.lineHeight;
+    mirror.style.letterSpacing = cs.letterSpacing;
+    mirror.style.wordSpacing = cs.wordSpacing;
+    mirror.style.textIndent = cs.textIndent;
+    mirror.style.boxSizing = "border-box";
+    mirror.style.padding = "0";
+    mirror.style.border = "none";
+    mirror.style.whiteSpace = "pre-wrap";
+    mirror.style.wordWrap = "break-word";
+    mirror.style.overflowWrap = "break-word";
+
+    /* rebuild mirror content */
+    mirror.innerHTML = "";
+    for (const line of lines) {
+      const div = document.createElement("div");
+      /* zero-width space keeps empty lines from collapsing to 0 height */
+      div.textContent = line || "\u200B";
+      mirror.appendChild(div);
+    }
+
+    /* read rendered heights */
+    const heights = Array.from(mirror.children).map((c) => c.offsetHeight);
+    setLineHeights(heights);
+  }, [activeDoc?.content]);
+
+  /* debounced re-measure on text change / resize */
+  useEffect(() => {
+    if (!lineNumbers) return;
+    const timer = setTimeout(measureLineHeights, 120);
+    return () => clearTimeout(timer);
+  }, [measureLineHeights, lineNumbers]);
+
+  useEffect(() => {
+    if (!lineNumbers) return;
+    const onResize = () => measureLineHeights();
+    window.addEventListener("resize", onResize);
+    return () => window.removeEventListener("resize", onResize);
+  }, [measureLineHeights, lineNumbers]);
 
   /* ── auto-save revision every 60 seconds while typing ───────────────── */
   useEffect(() => {
@@ -653,10 +708,18 @@ export default function WritingStudio() {
               {lineNumbers && (
                 <div className="ws-line-numbers" ref={lineNumRef}>
                   {(activeDoc?.content || "").split('\n').map((_, i) => (
-                    <div key={i} className="ws-line-num">{i + 1}</div>
+                    <div
+                      key={i}
+                      className="ws-line-num"
+                      style={{ height: lineHeights[i] || undefined }}
+                    >
+                      {i + 1}
+                    </div>
                   ))}
                 </div>
               )}
+              {/* hidden mirror for measuring wrapped line heights */}
+              <div ref={lineMirrorRef} className="ws-line-mirror" aria-hidden="true" />
               <textarea
                 className="ws-prose"
                 ref={proseRef}

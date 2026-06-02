@@ -80,7 +80,7 @@ body {
 .ws-page__byline { font: var(--t-mono-sm); color: var(--fg-3); margin-bottom: 34px; display: flex; gap: 12px; }
 .ws-prose-wrap { position: relative; }
 .ws-prose {
-  font: 400 19px/1.15 var(--font-serif);
+  font: 400 19px/1.6 var(--font-serif);
   color: var(--fg-1);
   outline: none;
   cursor: text;
@@ -107,8 +107,26 @@ body {
   pointer-events: none;
   color: var(--fg-4);
   opacity: 0.6;
-  font: var(--t-mono-sm);
-  line-height: 1.15;
+  /* same typeface as the writing area so baselines stay in sync */
+  font: 400 13px/1.6 var(--font-serif);
+}
+.ws-line-num {
+  /* each row must be exactly as tall as one line of prose text */
+  line-height: calc(19px * 1.6);
+  display: flex;
+  align-items: center;
+  justify-content: flex-end;
+}
+
+/* Hidden mirror used to measure wrapped line heights */
+.ws-line-mirror {
+  position: absolute;
+  visibility: hidden;
+  top: -9999px;
+  left: -9999px;
+  white-space: pre-wrap;
+  word-wrap: break-word;
+  overflow-wrap: break-word;
 }
 
 /* ---- CONTEXTUAL OPERATIONS MENU (signature) ------------------------------ */
@@ -366,7 +384,7 @@ body {
 
   /* Canvas */
   .ws-page { padding: 24px 20px 120px; }
-  .ws-prose { font-size: 17px; line-height: 1.25; }
+  .ws-prose { font-size: 17px; line-height: 1.6; }
 
   /* Top bar */
   .ws-top { padding: 0 12px; gap: 8px; height: 52px; }
@@ -375,6 +393,7 @@ body {
 
   /* Line numbers */
   .ws-line-numbers { width: 20px; padding-right: 4px; }
+  .ws-line-num { line-height: calc(17px * 1.6); }
   .ws-prose { padding-left: 26px; }
 
   /* Touch targets */

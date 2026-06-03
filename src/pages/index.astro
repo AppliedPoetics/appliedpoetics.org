@@ -35,8 +35,9 @@ const pageTitle = "Applied Poetics — a lab for constrained writing";
         <div class="eyebrow">A lab for constrained writing</div>
         <h1>Take a chance <br />and read what <em>changes</em>.</h1>
         <p class="hero__sub">
-          Applied Poetics is a writing space built on the Oulipo tradition and a
-          century of computational text. Bring a poem; remove a letter, sort the
+          Applied Poetics is a writing space built on the 
+          <a href = "https://en.wikipedia.org/wiki/Oulipo" target = "_blank">OuLiPean tradition</a> 
+          and nearly a century of computational text. Bring a poem; remove a letter, sort the
           words by length, let the digits of&nbsp;π decide what survives. Inhabit
           a space where the aleatory meets the constrained.
         </p>
@@ -81,18 +82,11 @@ const pageTitle = "Applied Poetics — a lab for constrained writing";
   <!-- ===== MANIFESTO ===== -->
   <section class="manifesto" id="about">
     <div class="wrap">
-      <div class="att_grid">
-        <p>
-          The wager of constrained writing is that a constraint does not limit a poem
-          but <em>casts</em> into a realm of possibilities. The machine
-          here is not the author. It is a peculiar collaborator, a creative partner.
-        </p>
-        <div class="facts">
-          <div class="fact"><div class="n">2014</div><div class="l">Began as the Found Poetry Review's "Oulipost."</div></div>
-          <div class="fact"><div class="n">A labor of love</div><div class="l">Built &amp; kept by Doug Luman — poet, book designer, coder.</div></div>
-          <div class="fact"><div class="n">A journal of learning</div><div class="l">Deprecated text tools, restored; new ones, invented.</div></div>
-        </div>
-      </div>
+      <p>
+        The wager of constrained writing is that a constraint does not limit a poem
+        but <em>casts</em> into a realm of possibilities. The machine
+        here is not the author, but a peculiar collaborator.
+      </p>
     </div>
   </section>
 
@@ -134,13 +128,13 @@ const pageTitle = "Applied Poetics — a lab for constrained writing";
         <div class="step">
           <div class="step__n">01</div>
           <div class="step__ic"><span class="ico" data-lucide="file-pen"></span></div>
-          <h3>Write or paste</h3>
-          <p>Start from a blank page or bring a text you already have. The writing space stays the center of the experience.</p>
+          <h3>Write, paste, or import</h3>
+          <p>Start from a blank page, bring a text you already have, or pull one from Wikipedia or Project Gutenberg. The writing space stays the center of the experience.</p>
         </div>
         <div class="step">
           <div class="step__n">02</div>
           <div class="step__ic"><span class="ico" data-lucide="dices"></span></div>
-          <h3>Select &amp; cast</h3>
+          <h3>Apply an operation</h3>
           <p>Highlight any passage and a contextual menu offers a constraint to cast on it — drop a letter, sort by length, let π choose what survives.</p>
         </div>
         <div class="step">
@@ -158,7 +152,7 @@ const pageTitle = "Applied Poetics — a lab for constrained writing";
     <div class="wrap">
       <img class="closing__mark" src="/assets/logo.png" alt="" />
       <h2>Bring a text. <em>Change</em> it.</h2>
-      <p>It's free; something interesting is always one constraint away.</p>
+      <p>It's free; something interesting is always one operation away.</p>
       <a class="btn btn--yellow" href="/lab">
          <span class="ico" data-lucide="pen-line"></span> Start writing
        </a>
@@ -342,7 +336,9 @@ const pageTitle = "Applied Poetics — a lab for constrained writing";
     /* ---- landing page styles ---- */
     html { scroll-behavior: smooth; }
     .wrap { max-width: 1160px; margin: 0 auto; padding: 0 32px; }
-    .hdr a, .hero a, .manifesto a, #library a, #how a, .closing a, footer a { text-decoration: none; }
+    .ap a, .hdr a, .hero a, .manifesto a, #library a, #how a, .closing a, footer a { text-decoration: none; }
+    .hero a:not(.btn), .closing a:not(.btn) { color: var(--ap-teal); }
+    .hero a:not(.btn):hover, .closing a:not(.btn):hover { color: var(--fg-on-ink); }
     .eyebrow { font: var(--t-mono-sm); text-transform: uppercase; letter-spacing: 0.18em; color: var(--ap-teal-deep); }
     .hero .eyebrow { color: var(--ap-teal); }
 
@@ -352,7 +348,7 @@ const pageTitle = "Applied Poetics — a lab for constrained writing";
     .btn--yellow:hover { background: var(--ap-yellow-deep); }
     .btn--teal { background: var(--ap-teal); color: #F4FBFA; }
     .btn--teal:hover { background: var(--ap-teal-deep); }
-    .btn--ghost-dark { background: transparent; color: var(--fg-on-ink); border-color: rgba(255,255,255,0.18); }
+    .btn--ghost-dark { background: transparent; color: var(--ap-yellow-deep) !important; border-color: rgba(255,255,255,0.18); }
     .btn--ghost-dark:hover { background: rgba(255,255,255,0.07); }
     .btn--ghost { background: transparent; color: var(--fg-2); border-color: var(--line); }
     .btn--ghost:hover { background: var(--surface-2); color: var(--fg-1); }
@@ -400,14 +396,9 @@ const pageTitle = "Applied Poetics — a lab for constrained writing";
     .sec-head p { font: 400 19px/1.7 var(--font-serif); color: var(--fg-2); margin: 16px 0 0; }
 
     /* manifesto band */
-    .manifesto { background: var(--surface); border-top: 1px solid var(--line); border-bottom: 1px solid var(--line); }
-    .manifesto p { font: 400 30px/1.5 var(--font-serif); color: var(--fg-1); max-width: 22em; margin: 0; text-wrap: pretty; }
+    .manifesto { background: var(--surface); border-top: 1px solid var(--line); border-bottom: 1px solid var(--line); text-align: center; }
+    .manifesto p { font: 400 30px/1.5 var(--font-serif); color: var(--fg-1); max-width: 34em; margin: 0 auto; text-wrap: pretty; }
     .manifesto em { font-style: italic; color: var(--ap-teal-deep); }
-    .manifesto .att_grid { display: grid; grid-template-columns: 1.4fr 1fr; gap: 56px; align-items: center; }
-    .manifesto .facts { display: flex; flex-direction: column; gap: 22px; }
-    .fact { border-left: 2px solid var(--ap-teal); padding-left: 16px; }
-    .fact .n { font: 600 28px var(--font-display); color: var(--fg-1); letter-spacing: 0.01em; }
-    .fact .l { font: var(--t-body-sm); color: var(--fg-3); margin-top: 2px; }
 
     /* library grid */
     .cats { display: flex; flex-wrap: wrap; gap: 8px; margin: 30px 0 36px; }
@@ -450,7 +441,7 @@ const pageTitle = "Applied Poetics — a lab for constrained writing";
     .foot__bottom { margin-top: 44px; padding-top: 22px; border-top: 1px solid var(--line-soft); display: flex; justify-content: space-between; align-items: center; flex-wrap: wrap; gap: 12px; font: var(--t-mono-sm); color: var(--fg-4); }
 
     @media (max-width: 900px) {
-      .hero__in, .manifesto .att_grid, .foot__in { grid-template-columns: 1fr; gap: 40px; }
+      .hero__in, .foot__in { grid-template-columns: 1fr; gap: 40px; }
       .grid, .steps { grid-template-columns: 1fr; }
       .hero h1 { font-size: 46px; }
       .nav { display: none; }

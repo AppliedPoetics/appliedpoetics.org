@@ -1,6 +1,6 @@
 import { describe, it, expect, vi, beforeEach } from "vitest";
 import { render, screen, fireEvent, waitFor } from "@testing-library/react";
-import WritingStudio from "../WritingStudio.jsx";
+import WritingLab from "../WritingLab.jsx";
 
 vi.mock("../../lib/api.js", () => ({
   applyConstraint: vi.fn(),
@@ -37,14 +37,14 @@ vi.mock("../../lib/docsApi.js", () => ({
 import { applyConstraint } from "../../lib/api.js";
 import { getToken, getMe, listDocuments } from "../../lib/docsApi.js";
 
-describe("WritingStudio", () => {
+describe("WritingLab", () => {
   beforeEach(() => {
     vi.clearAllMocks();
     getToken.mockReturnValue(null);
   });
 
   it("renders a guest document on mount", async () => {
-    render(<WritingStudio />);
+    render(<WritingLab />);
     await waitFor(() => {
       expect(document.querySelector(".ws-prose")).toBeInTheDocument();
     });
@@ -53,7 +53,7 @@ describe("WritingStudio", () => {
   });
 
   it("updates word count when typing in prose area", async () => {
-    render(<WritingStudio />);
+    render(<WritingLab />);
     await waitFor(() => document.querySelector(".ws-prose"));
 
     const prose = document.querySelector(".ws-prose");
@@ -65,7 +65,7 @@ describe("WritingStudio", () => {
   });
 
   it("creates a new document when new text is clicked", async () => {
-    render(<WritingStudio />);
+    render(<WritingLab />);
     await waitFor(() => document.querySelector(".ws-prose"));
 
     fireEvent.click(screen.getByText(/new text/i));
@@ -76,7 +76,7 @@ describe("WritingStudio", () => {
   });
 
   it("opens auth modal on save for guest users", async () => {
-    render(<WritingStudio />);
+    render(<WritingLab />);
     await waitFor(() => document.querySelector(".ws-prose"));
 
     const saveBtn = screen.getByRole("button", { name: /save/i });
@@ -102,7 +102,7 @@ describe("WritingStudio", () => {
       },
     ]);
 
-    render(<WritingStudio />);
+    render(<WritingLab />);
     await waitFor(() => {
       expect(screen.getByText("alice")).toBeInTheDocument();
     });
@@ -111,7 +111,7 @@ describe("WritingStudio", () => {
   });
 
   it("toggles line numbers on and off", async () => {
-    render(<WritingStudio />);
+    render(<WritingLab />);
     await waitFor(() => document.querySelector(".ws-prose"));
 
     const linesBtn = screen.getByRole("button", { name: /lines/i });
@@ -125,7 +125,7 @@ describe("WritingStudio", () => {
   });
 
   it("toggles changes log open and closed", async () => {
-    render(<WritingStudio />);
+    render(<WritingLab />);
     await waitFor(() => document.querySelector(".ws-prose"));
 
     const changesBtn = screen.getByRole("button", { name: /changes/i });
@@ -140,7 +140,7 @@ describe("WritingStudio", () => {
 
   it("calls applyConstraint via command palette selection", async () => {
     applyConstraint.mockResolvedValue({ result: "transformed" });
-    render(<WritingStudio />);
+    render(<WritingLab />);
     await waitFor(() => document.querySelector(".ws-prose"));
 
     // Type some text so the constraint has something to work with
@@ -160,7 +160,7 @@ describe("WritingStudio", () => {
   });
 
   it("handles document deletion via sidebar", async () => {
-    render(<WritingStudio />);
+    render(<WritingLab />);
     await waitFor(() => document.querySelector(".ws-prose"));
 
     const trashBtn = document.querySelector(".ws-doc__del");

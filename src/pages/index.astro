@@ -1,12 +1,12 @@
 ---
 import BaseLayout from '../layouts/BaseLayout.astro';
-const pageTitle = "Applied Poetics — a studio for constrained writing";
+const pageTitle = "Applied Poetics — a lab for constrained writing";
 ---
 <BaseLayout pageTitle={pageTitle}>
   <script is:inline>
     (function() {
       const hasToken = document.cookie.match(/(^|;)\s*ap_token=([^;]*)/);
-      if (hasToken) location.replace('/studio');
+      if (hasToken) location.replace('/lab');
     })();
   </script>
   <!-- ===== HEADER ===== -->
@@ -22,7 +22,7 @@ const pageTitle = "Applied Poetics — a studio for constrained writing";
         <a href="#about">About</a>
       </nav>
       <div class="hdr__cta">
-        <a class="btn btn--yellow" href="/studio">Start writing</a>
+        <a class="btn btn--yellow" href="/lab">Start writing</a>
       </div>
     </div>
   </header>
@@ -32,7 +32,7 @@ const pageTitle = "Applied Poetics — a studio for constrained writing";
     <img class="hero__bg" src="/assets/logo.png" alt="" />
     <div class="wrap hero__in">
       <div>
-        <div class="eyebrow">A studio for constrained writing</div>
+        <div class="eyebrow">A lab for constrained writing</div>
         <h1>Take a chance <br />and read what <em>changes</em>.</h1>
         <p class="hero__sub">
           Applied Poetics is a writing space built on the Oulipo tradition and a
@@ -41,9 +41,9 @@ const pageTitle = "Applied Poetics — a studio for constrained writing";
           a space where the aleatory meets the constrained.
         </p>
         <div class="hero__cta">
-          <a class="btn btn--yellow" href="/studio">
-            <span class="ico" data-lucide="pen-line"></span> Start writing
-          </a>
+          <a class="btn btn--yellow" href="/lab">
+             <span class="ico" data-lucide="pen-line"></span> Start writing
+           </a>
           <a class="btn btn--ghost-dark" href="#how">See how it works</a>
         </div>
         <div class="hero__meta">
@@ -159,9 +159,9 @@ const pageTitle = "Applied Poetics — a studio for constrained writing";
       <img class="closing__mark" src="/assets/logo.png" alt="" />
       <h2>Bring a text. <em>Change</em> it.</h2>
       <p>It's free; something interesting is always one constraint away.</p>
-      <a class="btn btn--yellow" href="/studio">
-        <span class="ico" data-lucide="pen-line"></span> Start writing
-      </a>
+      <a class="btn btn--yellow" href="/lab">
+         <span class="ico" data-lucide="pen-line"></span> Start writing
+       </a>
     </div>
   </section>
 
@@ -174,14 +174,14 @@ const pageTitle = "Applied Poetics — a studio for constrained writing";
             <img src="/assets/logo.png" alt="" />
             <span class="wm-dark">Applied&nbsp;Poetics</span>
           </div>
-          <p>A studio for constrained writing — where chance and rule make strange, beautiful text. Built and maintained by Doug Luman.</p>
+          <p>A lab for constrained writing — where chance and rule make strange, beautiful text. Built and maintained by Doug Luman.</p>
         </div>
         <div class="foot__col">
           <h4>Explore</h4>
           <a href="#library">The constraint library</a>
           <a href="#how">How it works</a>
           <a href="#about">About the project</a>
-          <a href="/studio">Open the studio</a>
+          <a href="/lab">Open the lab</a>
         </div>
       </div>
       <div class="foot__bottom">

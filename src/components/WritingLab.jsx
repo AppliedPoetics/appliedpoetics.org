@@ -62,7 +62,7 @@ function splitDocuments(all) {
   return { real, revMap };
 }
 
-export default function WritingStudio() {
+export default function WritingLab() {
   /* ── documents & auth ──────────────────────────────────────────────── */
   const [docs, setDocs] = useState([]);
   const [activeId, setActiveId] = useState(null);
@@ -76,7 +76,7 @@ export default function WritingStudio() {
   const [viewingRev, setViewingRev] = useState(null);
   const autoSaveRef = useRef(null);
 
-  /* ── studio chrome ─────────────────────────────────────────────────── */
+  /* ── lab chrome ─────────────────────────────────────────────────── */
   const [logOpen, setLogOpen] = useState(false);
   const [log, setLog] = useState([]);
   const [menu, setMenu] = useState(null);

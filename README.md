@@ -1,6 +1,6 @@
 # Applied Poetics
 
-> A studio for constrained writing — where chance and rule make strange, beautiful text.
+> A lab for constrained writing — where chance and rule make strange, beautiful text.
 
 [![Astro](https://img.shields.io/badge/built%20with-Astro-BC52EE?logo=astro)](https://astro.build)
 [![React](https://img.shields.io/badge/React-19-61DAFB?logo=react)](https://react.dev)
@@ -19,7 +19,7 @@ The project began in 2014 as the *Found Poetry Review*'s "Oulipost" and has grow
 ## Features
 
 - **40+ Constraints** — Lipogram, Snowball, Markov, Anagram, Sestina, Nth Word, Univocalism, Travesty, Concordance, Pi-thon, The LOST Numbers, and more
-- **Interactive Writing Studio** — Rich text editor with contextual constraint menus, command palette (⌘K), and a persistent changes log
+- **Interactive Writing Lab** — Rich text editor with contextual constraint menus, command palette (⌘K), and a persistent changes log
 - **Constraint Catalog** — Browse constraints by lineage with descriptions and live parameter dialogs
 - **Real-time API Integration** — Constraints powered by the [Applied Poetics API](https://api.appliedpoetics.org)
 - **Responsive Design** — Built with a custom design system, works on desktop and mobile
@@ -32,7 +32,7 @@ The project began in 2014 as the *Found Poetry Review*'s "Oulipost" and has grow
 | Framework | [Astro](https://astro.build) 5.x (static site generation) |
 | UI | [React](https://react.dev) 19.x (islands architecture via `@astrojs/react`) |
 | Icons | [Lucide React](https://lucide.dev) |
-| Styling | Custom CSS design system (`design-system.css`, `studio.css`) |
+| Styling | Custom CSS design system (`design-system.css`, `lab.css`) |
 | Testing | [Vitest](https://vitest.dev) 4.x + [Testing Library](https://testing-library.com) + jsdom |
 | API | `fetch` client → `https://api.appliedpoetics.org/v1/{category}/{method}` |
 
@@ -61,7 +61,7 @@ npm install
 npm run dev
 ```
 
-Open [http://localhost:4321](http://localhost:4321) to view the landing page, and [http://localhost:4321/studio](http://localhost:4321/studio) for the writing studio.
+Open [http://localhost:4321](http://localhost:4321) to view the landing page, and [http://localhost:4321/lab](http://localhost:4321/lab) for the writing lab.
 
 ### Build
 
@@ -93,7 +93,7 @@ npx vitest --ui
 Test files live alongside components in `src/components/__tests__/` and are picked up by the glob `src/**/*.test.{js,jsx}`. The test setup file is at `src/test/setup.js` and configures jsdom polyfills for DOM APIs like `innerText` and `getSelection`.
 
 Current test coverage includes:
-- `WritingStudio` — mount, word counting, document CRUD, constraints, auth modal, line numbers
+- `WritingLab` — mount, word counting, document CRUD, constraints, auth modal, line numbers
 - `ConstraintLog` — empty state, rendering, undo/redo/remove actions
 - `CommandPalette` — search, category filtering, keyboard navigation
 - `Sidebar` — document list, active state, delete button visibility
@@ -111,7 +111,7 @@ appliedpoetics.org/
 │   │   └── logo.png                  # AP logo (flask mark)
 │   ├── style/
 │   │   ├── design-system.css         # CSS variables, tokens, utilities
-│   │   └── studio.css                # Writing Studio component styles
+│       │   └── lab.css                   # Writing Lab component styles
 │   ├── favicon.svg                   # SVG favicon (dark-mode aware)
 │   ├── favicon.ico                   # Legacy .ico fallback
 │   ├── favicon-96x96.png             # PNG favicon
@@ -122,11 +122,11 @@ appliedpoetics.org/
 │   │   └── BaseLayout.astro          # Shared HTML shell (<head>, favicons, CSS)
 │   ├── pages/
 │   │   ├── index.astro               # Landing page (marketing site)
-│   │   └── studio.astro              # Writing Studio (React island)
+│       │   └── lab.astro                 # Writing Lab (React island)
 │   ├── components/
-│   │   ├── WritingStudio.jsx         # Main studio orchestrator
+│       │   ├── WritingLab.jsx            # Main lab orchestrator
 │   │   ├── Sidebar.jsx               # Document sidebar
-│   │   ├── TopBar.jsx                # Studio toolbar
+│   │   ├── TopBar.jsx                # Lab toolbar
 │   │   ├── ContextMenu.jsx           # Text-selection constraint menu
 │   │   ├── CommandPalette.jsx        # ⌘K constraint search
 │   │   ├── ParamDialog.jsx           # Parameter input dialogs
@@ -163,7 +163,7 @@ This is a **static site** — `npm run build` outputs HTML, CSS, and JS to `./di
 
 ## API
 
-The writing studio calls constraints via the Applied Poetics API:
+The writing lab calls constraints via the Applied Poetics API:
 
 ```
 POST https://api.appliedpoetics.org/v1/{category}/{method}

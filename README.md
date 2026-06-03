@@ -33,6 +33,7 @@ The project began in 2014 as the *Found Poetry Review*'s "Oulipost" and has grow
 | UI | [React](https://react.dev) 19.x (islands architecture via `@astrojs/react`) |
 | Icons | [Lucide React](https://lucide.dev) |
 | Styling | Custom CSS design system (`design-system.css`, `studio.css`) |
+| Testing | [Vitest](https://vitest.dev) 4.x + [Testing Library](https://testing-library.com) + jsdom |
 | API | `fetch` client → `https://api.appliedpoetics.org/v1/{category}/{method}` |
 
 ## Getting Started
@@ -72,6 +73,35 @@ npm run build
 npm run preview
 ```
 
+The build produces a static site in `./dist/` that can be deployed to any static host (Netlify, Vercel, GitHub Pages, Cloudflare Pages, S3, etc.). There is no server-side runtime required.
+
+### Testing
+
+The project uses [Vitest](https://vitest.dev) with jsdom and Testing Library for component tests.
+
+```bash
+# Run all tests once (CI mode)
+npx vitest run
+
+# Run tests in watch mode (development)
+npx vitest
+
+# Run with UI (if vitest-ui is installed)
+npx vitest --ui
+```
+
+Test files live alongside components in `src/components/__tests__/` and are picked up by the glob `src/**/*.test.{js,jsx}`. The test setup file is at `src/test/setup.js` and configures jsdom polyfills for DOM APIs like `innerText` and `getSelection`.
+
+Current test coverage includes:
+- `WritingStudio` — mount, word counting, document CRUD, constraints, auth modal, line numbers
+- `ConstraintLog` — empty state, rendering, undo/redo/remove actions
+- `CommandPalette` — search, category filtering, keyboard navigation
+- `Sidebar` — document list, active state, delete button visibility
+- `TopBar` — button rendering, count display
+- `ContextMenu` — mount, selection display
+- `Button` — variants, icons, labels
+- `Icon` — name mapping, size, style props
+
 ## Project Structure
 
 ```text
@@ -107,10 +137,29 @@ appliedpoetics.org/
 │       ├── constraints.js              # Constraint catalog + API mapping
 │       └── api.js                    # Fetch client for AP API
 ├── astro.config.mjs                  # Astro config (React integration)
+├── vitest.config.js                  # Vitest + jsdom test config
 ├── package.json
 ├── tsconfig.json
 └── README.md
 ```
+
+## Deployment
+
+This is a **static site** — `npm run build` outputs HTML, CSS, and JS to `./dist/`. No Node.js server or database is required at runtime.
+
+### Recommended hosts
+
+- **Netlify** — Drag `./dist/` into the deploy UI, or connect the Git repo for continuous deployment.
+- **Vercel** — Import the project; Vercel auto-detects Astro and runs `npm run build`.
+- **GitHub Pages** — Use the `deploy.yml` GitHub Action (or `astro build` + ` peaceiris/actions-gh-pages`).
+- **Cloudflare Pages** — Connect the repo and set the build command to `npm run build` with output directory `dist`.
+- **Any static host** — Upload the contents of `./dist/` after running `npm run build`.
+
+### Environment considerations
+
+- The site makes `fetch` calls to `https://api.appliedpoetics.org` and `https://docs.appliedpoetics.org`. No API keys or environment variables are required for the public constraint endpoints.
+- Authentication tokens for document persistence are stored in cookies with a 30-day `Max-Age` (`ap_token`).
+- There are no `.env` files committed to the repo. If you fork the project and need to point to a different API, modify `src/lib/api.js` and `src/lib/docsApi.js` directly.
 
 ## API
 
@@ -137,10 +186,13 @@ Constraint definitions (categories, parameters, descriptions) live in [`src/lib/
 | Command | Action |
 | :------ | :----- |
 | `npm install` | Install dependencies |
-| `npm run dev` | Start dev server at `localhost:4321` |
+| `npm run dev` | Start Astro dev server at `localhost:4321` |
 | `npm run build` | Build production site to `./dist/` |
-| `npm run preview` | Preview the build locally |
+| `npm run preview` | Preview the production build locally |
 | `npm run astro` | Run Astro CLI commands |
+| `npx vitest run` | Run all tests once (CI mode) |
+| `npx vitest` | Run tests in watch mode |
+| `npx vite --host` | Start Vite dev server directly (useful for isolated component testing)
 
 ## Favicon Structure
 

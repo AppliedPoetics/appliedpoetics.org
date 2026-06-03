@@ -4,7 +4,7 @@
 
 [![Astro](https://img.shields.io/badge/built%20with-Astro-BC52EE?logo=astro)](https://astro.build)
 [![React](https://img.shields.io/badge/React-19-61DAFB?logo=react)](https://react.dev)
-[![License](https://img.shields.io/badge/license-ISC-blue.svg)](LICENSE)
+[![License](https://img.shields.io/badge/license-CC0--1.0-lightgrey.svg)](LICENSE)
 
 [appliedpoetics.org](https://appliedpoetics.org)
 
@@ -237,6 +237,6 @@ This project is open source. See [LICENSE](LICENSE) for details.
 
 ---
 
-*© 2014–2026 Applied Poetics · a journal of learning*
+*🄯 2014–2026 Applied Poetics · a journal of learning*
 
 *Put a text to chance, and read what changes.*

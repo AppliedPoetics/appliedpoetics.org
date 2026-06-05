@@ -1,0 +1,23 @@
+---
+const { pageTitle } = Astro.props;
+---
+<!DOCTYPE html>
+<html lang="en">
+  <head>
+    <link rel="stylesheet" href="/style/design-system.css" />
+    <link rel="stylesheet" href="/style/lab.css" />
+    <meta charset="utf-8" />
+    <meta name="viewport" content="width=device-width" />
+    <meta name="generator" content={Astro.generator} />
+    <title>{pageTitle}</title>
+    <link rel="icon" type="image/svg+xml" href="/favicon.svg" />
+    <link rel="icon" type="image/png" href="/favicon-96x96.png" sizes="96x96" />
+    <link rel="icon" type="image/x-icon" href="/favicon.ico" />
+    <link rel="apple-touch-icon" sizes="180x180" href="/apple-touch-icon.png" />
+    <meta name="apple-mobile-web-app-title" content="appliedpoetics.org" />
+    <link rel="manifest" href="/site.webmanifest" />
+  </head>
+  <body class="ap">
+    <slot />
+  </body>
+</html>

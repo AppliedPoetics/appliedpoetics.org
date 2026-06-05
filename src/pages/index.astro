@@ -1,0 +1,450 @@
+---
+import BaseLayout from '../layouts/BaseLayout.astro';
+const pageTitle = "Applied Poetics — a lab for constrained writing";
+---
+<BaseLayout pageTitle={pageTitle}>
+  <script is:inline>
+    (function() {
+      const hasToken = document.cookie.match(/(^|;)\s*ap_token=([^;]*)/);
+      if (hasToken) location.replace('/lab');
+    })();
+  </script>
+  <!-- ===== HEADER ===== -->
+  <header class="hdr">
+    <div class="wrap hdr__in">
+      <a class="brand" href="/">
+        <img src="/assets/logo.png" alt="Applied Poetics" />
+        <span class="wm">Applied&nbsp;Poetics</span>
+      </a>
+      <nav class="nav">
+        <a href="#library">The library</a>
+        <a href="#how">How it works</a>
+        <a href="#about">About</a>
+      </nav>
+      <div class="hdr__cta">
+        <a class="btn btn--yellow" href="/lab">Start writing</a>
+      </div>
+    </div>
+  </header>
+
+  <!-- ===== HERO ===== -->
+  <section class="hero" style="padding:0">
+    <img class="hero__bg" src="/assets/logo.png" alt="" />
+    <div class="wrap hero__in">
+      <div>
+        <div class="eyebrow">A lab for constrained writing</div>
+        <h1>Take a chance <br />and read what <em>changes</em>.</h1>
+        <p class="hero__sub">
+          Applied Poetics is a writing space built on the 
+          <a href = "https://en.wikipedia.org/wiki/Oulipo" target = "_blank">OuLiPean tradition</a> 
+          and nearly a century of computational text. Bring a text; remove a letter, sort the
+          words by length, let the digits of&nbsp;π decide what survives. Inhabit
+          a space where the aleatory meets the constrained.
+        </p>
+        <div class="hero__cta">
+          <a class="btn btn--yellow" href="/lab">
+             <span class="ico" data-lucide="pen-line"></span> Start writing
+           </a>
+          <a class="btn btn--ghost-dark" href="#how">See how it works</a>
+        </div>
+        <div class="hero__meta">
+          <span>40+ constraints</span><span>·</span>
+          <span>Oulipean · algorithmic · formic</span><span>·</span>
+          <span>free &amp; open</span>
+        </div>
+      </div>
+
+      <!-- interactive demo -->
+      <div class="demo">
+        <div class="demo__bar">
+          <span class="t">Cast a constraint</span>
+          <span class="badge" id="demoBadge">original</span>
+        </div>
+        <div class="demo__text" id="demoText"></div>
+        <div class="demo__ops">
+          <button class="chip-btn" data-op="lipogram">
+            <span class="ico" data-lucide="eraser"></span> Lipogram — drop "e"
+          </button>
+          <button class="chip-btn" data-op="snowball">
+            <span class="ico" data-lucide="triangle"></span> Snowball
+          </button>
+          <button class="chip-btn" data-op="anagram">
+            <span class="ico" data-lucide="shuffle"></span> Anagram
+          </button>
+          <button class="chip-btn chip-btn--reset" data-op="reset">
+            <span class="ico" data-lucide="rotate-ccw"></span> Reset
+          </button>
+        </div>
+      </div>
+    </div>
+  </section>
+
+  <!-- ===== MANIFESTO ===== -->
+  <section class="manifesto" id="about">
+    <div class="wrap">
+      <p>
+        The wager of constrained writing is that a constraint does not limit a text
+        but <em>casts</em> into a realm of possibilities. The machine
+        is not the author, but a peculiar collaborator.
+      </p>
+    </div>
+  </section>
+
+  <!-- ===== LIBRARY ===== -->
+  <section id="library">
+    <div class="wrap">
+      <div class="sec-head">
+        <div class="eyebrow">The constraint library</div>
+        <h2>Forty ways to engage a text</h2>
+        <p>
+          Constraints are grouped by lineage — from the OuLiPo workshop to
+          algorithms and received forms. Each runs an operation, then leaves the
+          writing to you.
+        </p>
+      </div>
+
+      <div class="cats">
+        <span class="cat">Oulipean</span>
+        <span class="cat">Grammar</span>
+        <span class="cat">Algorithmic</span>
+        <span class="cat">Formic</span>
+        <span class="cat">Numerology</span>
+        <span class="cat">Pop Culture</span>
+      </div>
+
+      <div class="grid" id="libGrid"></div>
+      <p class="lib-note">…and many more inside — Univocalism, Homophonic Translation, Pi-thon, The LOST Numbers, Travesty, Concordance.</p>
+    </div>
+  </section>
+
+  <!-- ===== HOW IT WORKS ===== -->
+  <section id="how" style="background:var(--surface);border-top:1px solid var(--line)">
+    <div class="wrap">
+      <div class="sec-head">
+        <div class="eyebrow">How it works</div>
+        <h2>Write, restrict, and take a new direction.</h2>
+      </div>
+      <div class="steps">
+        <div class="step">
+          <div class="step__n">01</div>
+          <div class="step__ic"><span class="ico" data-lucide="file-pen"></span></div>
+          <h3>Write, paste, or import</h3>
+          <p>Start from a blank page, bring a text you already have, or pull one from Wikipedia or Project Gutenberg. The writing space stays the center of the experience.</p>
+        </div>
+        <div class="step">
+          <div class="step__n">02</div>
+          <div class="step__ic"><span class="ico" data-lucide="dices"></span></div>
+          <h3>Apply an operation</h3>
+          <p>Highlight any passage and a contextual menu offers available operations; highlight a passage or change everything.</p>
+        </div>
+        <div class="step">
+          <div class="step__n">03</div>
+          <div class="step__ic"><span class="ico" data-lucide="history"></span></div>
+          <h3>Keep what changes</h3>
+          <p>Every operation lands in your Changes log. Keep it, revise it by hand, or apply a new constraint. The text remembers each turn of chance.</p>
+        </div>
+      </div>
+    </div>
+  </section>
+
+  <!-- ===== CLOSING ===== -->
+  <section class="closing">
+    <div class="wrap">
+      <img class="closing__mark" src="/assets/logo.png" alt="" />
+      <h2>Bring a text. <em>Change</em> it.</h2>
+      <p>It's free; something interesting is always one operation away.</p>
+      <a class="btn btn--yellow" href="/lab">
+         <span class="ico" data-lucide="pen-line"></span> Start writing
+       </a>
+    </div>
+  </section>
+
+  <!-- ===== FOOTER ===== -->
+  <footer>
+    <div class="wrap">
+      <div class="foot__in">
+        <div class="foot">
+          <div class="foot__brand">
+            <img src="/assets/logo.png" alt="" />
+            <span class="wm-dark">Applied&nbsp;Poetics</span>
+          </div>
+          <p>A lab for constrained writing — where chance and rule make strange, beautiful text. Built and maintained by Doug Luman.</p>
+        </div>
+        <div class="foot__col">
+          <h4>Explore</h4>
+          <a href="#library">The constraint library</a>
+          <a href="#how">How it works</a>
+          <a href="#about">About the project</a>
+          <a href="/lab">Open the lab</a>
+        </div>
+      </div>
+      <div class="foot__bottom">
+        <span><a href="https://creativecommons.org/publicdomain/zero/1.0/" target="_blank" rel="noopener">🄯 CC0 1.0</a></span>
+        <span>Take a chance, and read what changes.</span>
+      </div>
+    </div>
+  </footer>
+
+  <script src="https://unpkg.com/lucide@0.460.0/dist/umd/lucide.min.js"></script>
+  <script is:inline>
+    /* ============================================================================
+       Applied Poetics — landing page behavior
+       ========================================================================== */
+    const LIB = [
+      { nm: "Lipogram",   cat: "Oulipean",    icon: "eraser",        ds: "Erase every word containing a chosen letter." },
+      { nm: "Snowball",   cat: "Oulipean",    icon: "triangle",      ds: "Order words so each is one letter longer than the last." },
+      { nm: "Markov",     cat: "Algorithmic", icon: "waves",         ds: "Scramble by word frequency — higher orders read more fluently." },
+      { nm: "Anagram",    cat: "Grammar",     icon: "shuffle",       ds: "Rearrange the letters within each word." },
+      { nm: "Sestina",    cat: "Formic",      icon: "rotate-3d",     ds: "Spin six end-words through the canonical permutation." },
+      { nm: "Nth Word",   cat: "Numerology",  icon: "hash",          ds: "Keep only every Nth word of the passage." },
+    ];
+
+    function renderLibrary() {
+      const grid = document.getElementById("libGrid");
+      if (!grid) return;
+      grid.innerHTML = LIB.map((c) => `
+        <div class="ccard">
+          <div class="ccard__h">
+            <div class="ccard__ic"><span class="ico" data-lucide="${c.icon}"></span></div>
+            <span class="ccard__cat">${c.cat}</span>
+          </div>
+          <div class="ccard__nm">${c.nm}</div>
+          <div class="ccard__ds">${c.ds}</div>
+        </div>`).join("");
+    }
+
+    const API_BASE = "https://api.appliedpoetics.org";
+    const ORIGINAL = "A word turns on the line like a tossed coin, and the sentence settles into a shape the writer did not intend.";
+
+    /* Local fallbacks used when the API is unreachable */
+    function localLipogram(text, letter) {
+      return text.split(/\s+/)
+        .filter((w) => !w.toLowerCase().replace(/[^a-z]/g, "").includes(letter))
+        .join(" ")
+        .replace(/\s+([,.])/g, "$1");
+    }
+    function localSnowball(text) {
+      return text.replace(/[.,]/g, "").split(/\s+/)
+        .sort((a, b) => a.length - b.length).join(" ") + ".";
+    }
+    function localAnagram(text) {
+      return text.replace(/[a-z]+/gi, (w) => {
+        if (w.length < 4) return w;
+        const s = w.split("");
+        for (let i = s.length - 1; i > 0; i--) { const j = (Math.random() * (i + 1)) | 0; [s[i], s[j]] = [s[j], s[i]]; }
+        return s.join("");
+      });
+    }
+
+    const DEMO_LOCAL = {
+      reset:    () => ORIGINAL,
+      lipogram: () => localLipogram(ORIGINAL, "e"),
+      snowball: () => localSnowball(ORIGINAL),
+      anagram:  () => localAnagram(ORIGINAL),
+    };
+
+    const DEMO_API = {
+      lipogram: { label: "lipogram · −e", endpoint: "oulipean/lipogram", params: { letters: "e" } },
+      snowball: { label: "snowball",      endpoint: "oulipean/snowball", params: { order: "asc" } },
+      anagram:  { label: "anagram",       endpoint: "grammar/anagram",   params: {} },
+    };
+
+    async function callApi(endpoint, text, params) {
+      const res = await fetch(`${API_BASE}/v1/${endpoint}`, {
+        method: "POST",
+        headers: { "Content-Type": "application/json" },
+        body: JSON.stringify({ text, ...params }),
+      });
+      if (!res.ok) throw new Error(`API error ${res.status}`);
+      const data = await res.json();
+      return data.result ?? "";
+    }
+
+    let demoLoading = false;
+
+    async function setDemo(op) {
+      if (demoLoading) return;
+      const textEl = document.getElementById("demoText");
+      const badge = document.getElementById("demoBadge");
+      if (!textEl || !badge) return;
+
+      if (op === "reset") {
+        textEl.style.opacity = "0";
+        setTimeout(() => {
+          textEl.textContent = ORIGINAL;
+          badge.textContent = "original";
+          textEl.style.opacity = "1";
+        }, 180);
+        document.querySelectorAll(".chip-btn").forEach((b) => b.classList.remove("active"));
+        return;
+      }
+
+      const apiDef = DEMO_API[op];
+      if (!apiDef) return;
+
+      demoLoading = true;
+      document.querySelectorAll(".chip-btn").forEach((b) => b.disabled = true);
+      textEl.style.opacity = "0.4";
+      badge.textContent = "casting…";
+
+      try {
+        const result = await callApi(apiDef.endpoint, ORIGINAL, apiDef.params);
+        textEl.style.opacity = "0";
+        setTimeout(() => {
+          textEl.textContent = result;
+          badge.textContent = apiDef.label;
+          textEl.style.opacity = "1";
+        }, 180);
+        document.querySelectorAll(".chip-btn").forEach((b) => {
+          b.classList.toggle("active", b.dataset.op === op);
+        });
+      } catch (err) {
+        /* Fallback to local implementation on API failure */
+        const fallback = DEMO_LOCAL[op]();
+        textEl.style.opacity = "0";
+        setTimeout(() => {
+          textEl.textContent = fallback;
+          badge.textContent = apiDef.label + " (offline)";
+          textEl.style.opacity = "1";
+        }, 180);
+        document.querySelectorAll(".chip-btn").forEach((b) => {
+          b.classList.toggle("active", b.dataset.op === op);
+        });
+      } finally {
+        demoLoading = false;
+        document.querySelectorAll(".chip-btn").forEach((b) => b.disabled = false);
+      }
+    }
+
+    function initDemo() {
+      const textEl = document.getElementById("demoText");
+      if (!textEl) return;
+      textEl.textContent = ORIGINAL;
+      document.querySelectorAll(".chip-btn").forEach((b) => {
+        b.addEventListener("click", () => setDemo(b.dataset.op));
+      });
+    }
+
+    document.addEventListener("DOMContentLoaded", () => {
+      renderLibrary();
+      initDemo();
+      if (window.lucide) window.lucide.createIcons();
+    });
+  </script>
+
+  <style is:global>
+    /* ---- landing page styles ---- */
+    html { scroll-behavior: smooth; }
+    .wrap { max-width: 1160px; margin: 0 auto; padding: 0 32px; }
+    .ap a, .hdr a, .hero a, .manifesto a, #library a, #how a, .closing a, footer a { text-decoration: none; }
+    .hero a:not(.btn), .closing a:not(.btn) { color: var(--ap-teal); }
+    .hero a:not(.btn):hover, .closing a:not(.btn):hover { color: var(--fg-on-ink); }
+    .eyebrow { font: var(--t-mono-sm); text-transform: uppercase; letter-spacing: 0.18em; color: var(--ap-teal-deep); }
+    .hero .eyebrow { color: var(--ap-teal); }
+
+    /* buttons */
+    .btn { display: inline-flex; align-items: center; gap: 8px; font: 600 14px var(--font-sans); padding: 12px 20px; border-radius: var(--r-sm); border: 1px solid transparent; cursor: pointer; transition: all var(--dur) var(--ease); white-space: nowrap; }
+    .btn--yellow { background: var(--ap-yellow); color: var(--ap-ink); }
+    .btn--yellow:hover { background: var(--ap-yellow-deep); }
+    .btn--teal { background: var(--ap-teal); color: #F4FBFA; }
+    .btn--teal:hover { background: var(--ap-teal-deep); }
+    .btn--ghost-dark { background: transparent; color: var(--ap-yellow-deep) !important; border-color: rgba(255,255,255,0.18); }
+    .btn--ghost-dark:hover { background: rgba(255,255,255,0.07); }
+    .btn--ghost { background: transparent; color: var(--fg-2); border-color: var(--line); }
+    .btn--ghost:hover { background: var(--surface-2); color: var(--fg-1); }
+    .ico { width: 1em; height: 1em; display: inline-flex; }
+    .ico svg { width: 1em; height: 1em; stroke-width: 1.75; }
+
+    /* header */
+    .hdr { position: sticky; top: 0; z-index: 50; background: rgba(2,34,34,0.92); backdrop-filter: blur(8px); border-bottom: 1px solid rgba(255,255,255,0.06); }
+    .hdr__in { display: flex; align-items: center; gap: 28px; height: 64px; }
+    .brand { display: flex; align-items: center; gap: 11px; }
+    .brand img { height: 30px; }
+    .brand .wm { font: 500 16px/1 var(--font-display); text-transform: uppercase; letter-spacing: 0.09em; color: #F4FBFA; }
+    .nav { display: flex; gap: 26px; margin-left: 12px; }
+    .nav a { font: 500 14px var(--font-sans); color: #B7C9C5; transition: color var(--dur) var(--ease); }
+    .nav a:hover { color: #F4FBFA; }
+    .hdr__cta { margin-left: auto; display: flex; align-items: center; gap: 10px; }
+
+    /* hero */
+    .hero { position: relative; background: var(--ap-ink); color: var(--fg-on-ink); overflow: hidden; }
+    .hero__bg { position: absolute; right: -120px; top: 50%; transform: translateY(-50%); width: 560px; opacity: 0.05; pointer-events: none; }
+    .hero__in { position: relative; display: grid; grid-template-columns: 1.05fr 0.95fr; gap: 56px; align-items: center; padding-top: 92px; padding-bottom: 100px; }
+    .hero h1 { font: 400 60px/1.06 var(--font-serif); letter-spacing: -0.015em; margin: 18px 0 0; color: #F6FBFA; text-wrap: balance; }
+    .hero h1 em { font-style: italic; color: var(--ap-yellow); }
+    .hero__sub { font: 400 19px/1.65 var(--font-serif); color: #B7C9C5; margin: 22px 0 0; max-width: 30em; }
+    .hero__cta { display: flex; gap: 12px; margin-top: 34px; }
+    .hero__meta { margin-top: 26px; font: var(--t-mono-sm); color: #839E98; display: flex; gap: 18px; flex-wrap: wrap; }
+
+    /* demo card */
+    .demo { background: var(--surface); border-radius: var(--r-lg); box-shadow: var(--shadow-lg); overflow: hidden; }
+    .demo__bar { display: flex; align-items: center; justify-content: space-between; padding: 13px 18px; border-bottom: 1px solid var(--line-soft); }
+    .demo__bar .t { font: var(--t-label); text-transform: uppercase; letter-spacing: 0.12em; color: var(--fg-3); }
+    .demo__bar .badge { font: var(--t-mono-sm); padding: 3px 9px; border-radius: var(--r-pill); background: var(--ap-ink); color: var(--ap-yellow); }
+    .demo__text { padding: 26px 22px; min-height: 150px; font: 400 22px/1.6 var(--font-serif); color: var(--fg-1); transition: opacity var(--dur-slow) var(--ease); }
+    .demo__ops { display: flex; flex-wrap: wrap; gap: 8px; padding: 0 18px 18px; }
+    .chip-btn { font: 500 13px var(--font-sans); padding: 8px 13px; border-radius: var(--r-sm); border: 1px solid var(--line); background: var(--surface); color: var(--fg-2); cursor: pointer; transition: all var(--dur) var(--ease); display: inline-flex; align-items: center; gap: 7px; }
+    .chip-btn:hover { border-color: var(--ap-teal); color: var(--ap-teal-deep); background: var(--teal-tint); }
+    .chip-btn.active { background: var(--ap-ink); color: var(--ap-yellow); border-color: var(--ap-ink); }
+    .chip-btn:disabled { opacity: 0.5; cursor: not-allowed; }
+    .chip-btn--reset { margin-left: auto; color: var(--fg-3); }
+
+    /* generic section */
+    section { padding: 96px 0; }
+    .sec-head { max-width: 720px; }
+    .sec-head h2 { font: 600 34px/1.12 var(--font-display); text-transform: uppercase; letter-spacing: 0.03em; margin: 12px 0 0; color: var(--fg-1); }
+    .sec-head p { font: 400 19px/1.7 var(--font-serif); color: var(--fg-2); margin: 16px 0 0; }
+
+    /* manifesto band */
+    .manifesto { background: var(--surface); border-top: 1px solid var(--line); border-bottom: 1px solid var(--line); text-align: center; }
+    .manifesto p { font: 400 30px/1.5 var(--font-serif); color: var(--fg-1); max-width: 34em; margin: 0 auto; text-wrap: pretty; }
+    .manifesto em { font-style: italic; color: var(--ap-teal-deep); }
+
+    /* library grid */
+    .cats { display: flex; flex-wrap: wrap; gap: 8px; margin: 30px 0 36px; }
+    .cat { font: var(--t-mono-sm); text-transform: uppercase; letter-spacing: 0.08em; padding: 6px 13px; border-radius: var(--r-pill); background: var(--teal-tint); color: var(--ap-teal-deep); border: 1px solid var(--teal-tint-2); white-space: nowrap; }
+    .grid { display: grid; grid-template-columns: repeat(3, 1fr); gap: 16px; }
+    .ccard { background: var(--surface); border: 1px solid var(--line-soft); border-radius: var(--r-md); padding: 20px; transition: box-shadow var(--dur) var(--ease), transform var(--dur) var(--ease); }
+    .ccard:hover { box-shadow: var(--shadow-md); transform: translateY(-2px); }
+    .ccard__h { display: flex; align-items: center; justify-content: space-between; margin-bottom: 10px; }
+    .ccard__ic { width: 34px; height: 34px; border-radius: var(--r-sm); background: var(--surface-2); color: var(--ap-teal-deep); display: flex; align-items: center; justify-content: center; font-size: 18px; }
+    .ccard__cat { font: var(--t-mono-sm); text-transform: uppercase; color: var(--fg-4); }
+    .ccard__nm { font: 600 18px var(--font-sans); color: var(--fg-1); margin-bottom: 6px; }
+    .ccard__ds { font: 400 14.5px/1.55 var(--font-sans); color: var(--fg-2); }
+    .lib-note { font: var(--t-body-sm); color: var(--fg-3); margin-top: 24px; }
+
+    /* how it works */
+    .steps { display: grid; grid-template-columns: repeat(3, 1fr); gap: 28px; margin-top: 44px; }
+    .step__n { font: var(--t-mono); color: var(--ap-teal-deep); }
+    .step__ic { width: 46px; height: 46px; border-radius: var(--r-md); background: var(--ap-ink); color: var(--ap-yellow); display: flex; align-items: center; justify-content: center; font-size: 22px; margin: 14px 0 16px; }
+    .step h3 { font: 600 20px var(--font-sans); margin: 0 0 8px; color: var(--fg-1); }
+    .step p { font: 400 16px/1.6 var(--font-serif); color: var(--fg-2); margin: 0; }
+
+    /* closing cta */
+    .closing { background: var(--ap-ink); color: var(--fg-on-ink); text-align: center; }
+    .closing__mark { height: 56px; opacity: 0.95; }
+    .closing h2 { font: 400 44px/1.1 var(--font-serif); margin: 22px 0 0; color: #F6FBFA; text-wrap: balance; }
+    .closing h2 em { font-style: italic; color: var(--ap-yellow); }
+    .closing p { font: 400 18px/1.6 var(--font-serif); color: #B7C9C5; margin: 16px auto 0; max-width: 34em; }
+    .closing .btn { margin-top: 30px; }
+
+    /* footer */
+    footer { background: var(--surface); border-top: 1px solid var(--line); padding: 56px 0 40px; }
+    .foot__in { display: grid; grid-template-columns: 1.4fr 1fr 1fr; gap: 40px; }
+    .foot .wm-dark { font: 500 16px/1 var(--font-display); text-transform: uppercase; letter-spacing: 0.09em; color: var(--fg-1); }
+    .foot__brand { display: flex; align-items: center; gap: 10px; margin-bottom: 14px; }
+    .foot__brand img { height: 26px; }
+    .foot p { font: 400 15px/1.65 var(--font-serif); color: var(--fg-2); max-width: 34em; margin: 0; }
+    .foot__col h4 { font: var(--t-label); text-transform: uppercase; letter-spacing: 0.12em; color: var(--fg-3); margin: 0 0 14px; }
+    .foot__col a { display: block; font: 400 14px var(--font-sans); color: var(--fg-2); margin-bottom: 10px; transition: color var(--dur) var(--ease); }
+    .foot__col a:hover { color: var(--ap-teal-deep); }
+    .foot__bottom { margin-top: 44px; padding-top: 22px; border-top: 1px solid var(--line-soft); display: flex; justify-content: space-between; align-items: center; flex-wrap: wrap; gap: 12px; font: var(--t-mono-sm); color: var(--fg-4); }
+
+    @media (max-width: 900px) {
+      .hero__in, .foot__in { grid-template-columns: 1fr; gap: 40px; }
+      .grid, .steps { grid-template-columns: 1fr; }
+      .hero h1 { font-size: 46px; }
+      .nav { display: none; }
+    }
+  </style>
+</BaseLayout>

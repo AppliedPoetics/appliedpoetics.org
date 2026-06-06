@@ -70,7 +70,7 @@ body {
 
 /* ---- WRITING CANVAS ------------------------------------------------------ */
 .ws-canvas { flex: 1; overflow-y: auto; background: var(--paper); position: relative; }
-.ws-page { max-width: 720px; margin: 0 auto; padding: 64px 40px 240px; }
+.ws-page { max-width: 90%; margin: 0 auto; padding: 64px 20px 240px; }
 .ws-page__h-wrap { display: flex; align-items: center; gap: 10px; margin: 0 0 6px; }
 .ws-page__h-wrap .ws-ico { color: var(--fg-4); opacity: 0.5; transition: opacity var(--dur-fast) var(--ease); }
 .ws-page__h-wrap:hover .ws-ico { opacity: 1; color: var(--ap-teal-deep); }

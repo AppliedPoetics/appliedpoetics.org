@@ -2,7 +2,8 @@
 import BaseLayout from '../layouts/BaseLayout.astro';
 import WritingLab from '../components/WritingLab.jsx';
 const pageTitle = "Applied Poetics · Writing Lab";
+const description = "Write, paste, or import a text and apply 40+ constraints — Lipogram, Snowball, Markov, Anagram, Sestina, and more. Keep what changes.";
 ---
-<BaseLayout pageTitle={pageTitle}>
+<BaseLayout pageTitle={pageTitle} description={description}>
   <WritingLab client:only="react" />
 </BaseLayout>

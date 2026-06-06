@@ -1,8 +1,9 @@
 ---
 import BaseLayout from '../layouts/BaseLayout.astro';
 const pageTitle = "Applied Poetics — a lab for constrained writing";
+const description = "Applied Poetics is a writing space built on the Oulipo tradition and nearly a century of computational text. Bring a text; remove a letter, sort the words by length, let the digits of π decide what survives.";
 ---
-<BaseLayout pageTitle={pageTitle}>
+<BaseLayout pageTitle={pageTitle} description={description}>
   <script is:inline>
     (function() {
       const hasToken = document.cookie.match(/(^|;)\s*ap_token=([^;]*)/);
